@@ -16,11 +16,12 @@ import { FormsModule } from '@angular/forms';
           alt="Canal Clima"
           class="h-8 w-auto"
         >
-        <button (click)="toggleLanguage()" class="text-gray-600 hover:text-gray-900 text-sm font-medium flex items-center gap-2 transition-colors">
+        <button (click)="toggleLanguage()" class="text-gray-600 hover:text-gray-900 text-sm font-medium flex items-center gap-2 border border-gray-300 rounded-full px-4 py-1.5 hover:border-gray-400 transition-colors">
           <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
           </svg>
-          {{ language === 'es' ? 'Español' : 'English' }}
+          Español / English
+          <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
         </button>
       </div>
 
@@ -53,7 +54,7 @@ import { FormsModule } from '@angular/forms';
         </div>
 
         <!-- Right side - Login Form -->
-        <div class="w-full md:w-1/2 bg-gradient-to-b from-blue-900 to-blue-950 flex items-center justify-center p-6 md:p-12">
+        <div class="w-full md:w-1/2 flex items-center justify-center p-6 md:p-12" style="background: linear-gradient(to bottom, #0c1a36, #060e1f)">
           <div class="w-full max-w-sm">
             <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-10">
               <h1 class="text-2xl md:text-3xl font-mulish font-bold text-center text-gray-900 mb-2">{{ loginTitle }}</h1>
@@ -107,7 +108,7 @@ import { FormsModule } from '@angular/forms';
               </div>
 
               <p class="text-center text-xs text-gray-500 mt-6 font-georama leading-relaxed">
-                {{ contactText }} <span class="font-semibold">+57 316 584 7114</span> {{ contactText2 }}
+                {{ contactText }} <span class="font-semibold">+57 318 566 7114</span> {{ contactText2 }}
               </p>
             </div>
           </div>
@@ -115,8 +116,16 @@ import { FormsModule } from '@angular/forms';
       </div>
 
       <!-- Footer -->
-      <div class="bg-white border-t border-gray-200 px-6 py-4 text-center text-xs text-gray-500 font-georama">
-        <p>© 2024 ClimateConnector. {{ footerText }}</p>
+      <div class="bg-white border-t border-gray-200 px-6 py-4 font-georama">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-2">
+          <p class="text-xs text-gray-500">© 2024 ClimateConnector. {{ footerText }}</p>
+          <div class="flex items-center gap-4 text-xs text-gray-500">
+            <a href="#" class="hover:text-gray-700 transition-colors">Privacidad</a>
+            <a href="#" class="hover:text-gray-700 transition-colors">Términos de Uso</a>
+            <a href="#" class="hover:text-gray-700 transition-colors">Soporte Técnico</a>
+            <a href="#" class="hover:text-gray-700 transition-colors">Mapa del Sitio</a>
+          </div>
+        </div>
       </div>
     </div>
   `,
