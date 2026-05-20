@@ -43,12 +43,12 @@ import { RouterLink } from '@angular/router';
           </div>
 
           <!-- Error Lines animation -->
-          <div class="mb-8 flex justify-center gap-1">
-            <div class="w-1 h-6 bg-cyan-400 rounded-full animate-pulse" style="animation-delay: 0s;"></div>
-            <div class="w-1 h-6 bg-cyan-400 rounded-full animate-pulse" style="animation-delay: 0.2s;"></div>
-            <div class="w-1 h-6 bg-cyan-400 rounded-full animate-pulse" style="animation-delay: 0.4s;"></div>
-            <div class="w-1 h-6 bg-cyan-400 rounded-full animate-pulse" style="animation-delay: 0.6s;"></div>
-            <div class="w-1 h-6 bg-cyan-400 rounded-full animate-pulse" style="animation-delay: 0.8s;"></div>
+          <div class="mb-8 flex justify-center">
+            <img
+              src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2F593a2263825d4694bc60f27de988c6a7"
+              alt="Loading animation"
+              class="w-12 h-12"
+            >
           </div>
 
           <!-- Error Message -->
@@ -58,7 +58,7 @@ import { RouterLink } from '@angular/router';
           <!-- Back Button -->
           <a
             routerLink="/login"
-            class="cc-btn"
+            class="inline-block bg-cyan-400 hover:bg-cyan-500 text-white font-semibold py-3 px-8 rounded-3xl transition-all duration-300 ease-out transform hover:scale-105 active:scale-95"
           >
             VOLVER AL INICIO
           </a>
