@@ -8,111 +8,115 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, RouterLink, FormsModule],
   template: `
-    <div class="min-h-screen flex flex-col bg-slate-950 text-slate-100">
-      <div class="flex-1 flex flex-col xl:flex-row">
-        <div class="hidden xl:flex xl:w-1/2 bg-slate-50">
-          <div class="m-auto max-w-xl px-10 py-12">
-            <img
-              src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2F637d28ba8e164481b22cf6c6cf2c694c"
-              alt="Canal Clima"
-              class="h-12 w-auto mb-10"
-            >
+    <div class="min-h-screen bg-gray-100 flex flex-col font-georama">
+      <!-- Header -->
+      <div class="bg-white border-b border-gray-200 px-6 py-4 md:px-12 flex items-center justify-between">
+        <img
+          src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2F637d28ba8e164481b22cf6c6cf2c694c"
+          alt="Canal Clima"
+          class="h-8 w-auto"
+        >
+        <button (click)="toggleLanguage()" class="text-gray-600 hover:text-gray-900 text-sm font-medium flex items-center gap-2 transition-colors">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
+          </svg>
+          {{ language === 'es' ? 'Español' : 'English' }}
+        </button>
+      </div>
 
-            <div class="rounded-[32px] bg-white p-10 shadow-2xl border border-slate-200">
-              <div class="flex items-center gap-4 mb-8">
-                <img
-                  src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Ff1b475d8e3524a109c692b143fa540bf"
-                  alt="Climate Connector"
-                  class="h-20 w-auto"
-                >
-              </div>
+      <!-- Main Content -->
+      <div class="flex-1 flex">
+        <!-- Left side - Branding -->
+        <div class="hidden md:flex md:w-1/2 flex-col justify-center items-start p-12 bg-gray-100">
+          <!-- Canal Clima Logo -->
+          <img
+            src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2F637d28ba8e164481b22cf6c6cf2c694c"
+            alt="Canal Clima"
+            class="h-12 w-auto mb-16"
+          >
 
-              <p class="text-slate-700 text-base leading-8 font-georama">
-                <span class="font-semibold">Canal Clima</span> provee pronósticos del estado del tiempo en español para
-                <span class="font-bold text-slate-900"> Colombia, Latinoamérica</span> y el mundo.
-              </p>
+          <div class="max-w-sm">
+            <!-- Climate Connector Logo -->
+            <div class="flex items-center gap-4 mb-12">
+              <img
+                src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Ff1b475d8e3524a109c692b143fa540bf"
+                alt="Climate Connector"
+                class="h-20 w-auto"
+              >
             </div>
+
+            <p class="text-gray-700 mb-2 font-georama text-sm">
+              <span class="font-bold">Canal Clima</span> provee pronósticos del estado del tiempo en español para
+            </p>
+            <p class="text-gray-800 font-bold font-georama text-sm">Colombia, Latinoamérica y el mundo.</p>
           </div>
         </div>
 
-        <div class="w-full xl:w-1/2 relative bg-[radial-gradient(circle_at_top_right,_rgba(6,30,61,0.9),_rgba(4,11,22,0.96))]">
-          <div class="absolute inset-x-0 top-6 px-6 xl:px-12">
-            <div class="flex items-center justify-between gap-3">
-              <button class="rounded-full bg-white/10 px-5 py-2 text-sm text-slate-100 ring-1 ring-slate-700 backdrop-blur-sm hover:bg-white/15 transition">
-                {{ loginBtn }} →
-              </button>
-              <button (click)="toggleLanguage()" class="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900/90 px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 transition">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
-                </svg>
-                Español / English
-                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
-              </button>
-            </div>
-          </div>
+        <!-- Right side - Login Form -->
+        <div class="w-full md:w-1/2 bg-gradient-to-b from-blue-900 to-blue-950 flex items-center justify-center p-6 md:p-12">
+          <div class="w-full max-w-sm">
+            <div class="bg-white rounded-3xl p-8 md:p-10">
+              <h1 class="text-2xl md:text-3xl font-mulish font-bold text-center text-gray-900 mb-2">{{ loginTitle }}</h1>
+              <p class="text-center text-sm text-gray-600 mb-8 font-georama">{{ loginSubtitle }}</p>
 
-          <div class="relative flex min-h-[calc(100vh-96px)] items-center justify-center px-6 py-12 xl:px-16">
-            <div class="w-full max-w-md">
-              <div class="rounded-[32px] bg-white p-10 shadow-2xl ring-1 ring-slate-200">
-                <h1 class="text-3xl font-semibold text-slate-950 text-center mb-2">{{ loginTitle }}</h1>
-                <p class="text-center text-sm text-slate-500 mb-8">{{ loginSubtitle }}</p>
-
-                <form (ngSubmit)="onLogin()" class="space-y-5">
-                  <div>
-                    <label class="block text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 mb-2">
-                      {{ usernameLbl }}
-                    </label>
-                    <input
-                      type="text"
-                      [(ngModel)]="username"
-                      name="username"
-                      [placeholder]="usernamePlaceholder"
-                      class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-200"
-                    >
-                  </div>
-
-                  <div>
-                    <label class="block text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 mb-2">
-                      {{ passwordLbl }}
-                    </label>
-                    <input
-                      type="password"
-                      [(ngModel)]="password"
-                      name="password"
-                      [placeholder]="passwordPlaceholder"
-                      class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 shadow-sm outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-200"
-                    >
-                  </div>
-
-                  <button
-                    type="submit"
-                    class="w-full rounded-2xl bg-cyan-500 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-600 active:scale-[0.99]"
+              <form (ngSubmit)="onLogin()" class="space-y-5">
+                <div>
+                  <label class="block text-xs font-mulish font-semibold text-gray-700 uppercase tracking-wider mb-2">
+                    {{ usernameLbl }}
+                  </label>
+                  <input
+                    type="text"
+                    [(ngModel)]="username"
+                    name="username"
+                    [placeholder]="usernamePlaceholder"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg font-georama text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
                   >
-                    {{ loginBtn }} →
-                  </button>
-                </form>
-
-                <div class="mt-8 border-t border-slate-200/70 pt-6">
-                  <p class="text-center text-sm text-slate-600 mb-2">{{ forgotPasswordText }}</p>
-                  <a
-                    routerLink="/forgot-password"
-                    class="block text-center text-cyan-600 hover:text-cyan-700 font-semibold text-sm transition"
-                  >
-                    {{ requestAccessText }}
-                  </a>
                 </div>
 
-                <p class="text-center text-xs text-slate-500 mt-6 leading-relaxed">
-                  {{ contactText }} <span class="font-semibold text-slate-700">+57 318 566 7114</span> {{ contactText2 }}
+                <div>
+                  <label class="block text-xs font-mulish font-semibold text-gray-700 uppercase tracking-wider mb-2">
+                    {{ passwordLbl }}
+                  </label>
+                  <input
+                    type="password"
+                    [(ngModel)]="password"
+                    name="password"
+                    [placeholder]="passwordPlaceholder"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg font-georama text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
+                  >
+                </div>
+
+                <button
+                  type="submit"
+                  class="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-mulish font-semibold py-3 rounded-3xl transition-all duration-300 ease-out transform hover:scale-105 active:scale-95"
+                >
+                  {{ loginBtn }} →
+                </button>
+              </form>
+
+              <div class="mt-6 pt-6 border-t border-gray-200">
+                <p class="text-center text-sm text-gray-600 mb-2 font-georama">
+                  {{ forgotPasswordText }}
                 </p>
+                <a
+                  routerLink="/forgot-password"
+                  class="block text-center text-cyan-500 hover:text-cyan-600 font-georama font-semibold text-sm transition-colors"
+                >
+                  {{ requestAccessText }}
+                </a>
               </div>
+
+              <p class="text-center text-xs text-gray-500 mt-6 font-georama leading-relaxed">
+                {{ contactText }} <span class="font-semibold">+57 316 584 7114</span> {{ contactText2 }}
+              </p>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="bg-slate-950 text-slate-500 text-center text-xs py-4 px-6 border-t border-slate-800">
-        © 2024 ClimateConnector. {{ footerText }}
+      <!-- Footer -->
+      <div class="bg-white border-t border-gray-200 px-6 py-4 text-center text-xs text-gray-500 font-georama">
+        <p>© 2024 ClimateConnector. {{ footerText }}</p>
       </div>
     </div>
   `,

@@ -7,6 +7,9 @@ module.exports = {
         mulish: ['Mulish', 'sans-serif'],
         georama: ['Georama', 'sans-serif'],
       },
+      borderRadius: {
+        '3xl': '12px',
+      },
       colors: {
         navy: {
           800: '#1a2a4e',

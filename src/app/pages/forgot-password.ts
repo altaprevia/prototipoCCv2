@@ -38,7 +38,7 @@ import { FormsModule } from '@angular/forms';
       <!-- Right side - Forgot Password Form -->
       <div class="w-full md:w-1/2 flex items-center justify-center p-6 md:p-12">
         <div class="w-full max-w-sm">
-          <div class="bg-white rounded-2xl shadow-xl p-8 md:p-10">
+          <div class="bg-white rounded-3xl p-8 md:p-10">
             <h1 class="text-2xl md:text-3xl font-bold text-center text-slate-900 mb-2">RECUPERAR CONTRASEÑA</h1>
             <p class="text-center text-sm text-slate-600 mb-8">Ingresa tu correo electrónico institucional para recibir las instrucciones de recuperación.</p>
 
@@ -59,13 +59,13 @@ import { FormsModule } from '@angular/forms';
               <div class="flex gap-3">
                 <a
                   routerLink="/login"
-                  class="flex-1 text-center bg-white border-2 border-cyan-400 text-cyan-500 hover:bg-cyan-50 font-semibold py-3 rounded-lg transition-all duration-300 ease-out transform hover:scale-105 active:scale-95"
+                  class="flex-1 text-center bg-white border-2 border-cyan-400 text-cyan-500 hover:bg-cyan-50 font-semibold py-3 rounded-3xl transition-all duration-300 ease-out transform hover:scale-105 active:scale-95"
                 >
                   CANCELAR
                 </a>
                 <button
                   type="submit"
-                  class="flex-1 bg-cyan-400 hover:bg-cyan-500 text-white font-semibold py-3 rounded-lg transition-all duration-300 ease-out transform hover:scale-105 active:scale-95 shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                  class="flex-1 bg-cyan-400 hover:bg-cyan-500 text-white font-semibold py-3 rounded-3xl transition-all duration-300 ease-out transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2"
                 >
                   RESTABLECER CONTRASEÑA <span>→</span>
                 </button>

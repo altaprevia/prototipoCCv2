@@ -21,7 +21,7 @@ import { RouterLink } from '@angular/router';
 
       <!-- 404 Content -->
       <div class="flex-1 flex items-center justify-center p-6">
-        <div class="max-w-md w-full bg-white rounded-2xl border border-slate-300 p-8 md:p-12 text-center">
+        <div class="max-w-md w-full bg-white rounded-3xl border border-slate-300 p-8 md:p-12 text-center">
           <!-- 404 Cloud Icon -->
           <div class="mb-8 relative inline-block">
             <div class="inline-block">
@@ -58,7 +58,7 @@ import { RouterLink } from '@angular/router';
           <!-- Back Button -->
           <a
             routerLink="/login"
-            class="inline-block bg-cyan-400 hover:bg-cyan-500 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 ease-out transform hover:scale-105 active:scale-95 shadow-md hover:shadow-lg"
+            class="inline-block bg-cyan-400 hover:bg-cyan-500 text-white font-semibold py-3 px-8 rounded-3xl transition-all duration-300 ease-out transform hover:scale-105 active:scale-95"
           >
             VOLVER AL INICIO
           </a>
