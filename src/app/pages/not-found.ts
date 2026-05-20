@@ -18,7 +18,9 @@ import { CommonModule } from '@angular/common';
           >
         </div>
         <div class="flex-1"></div>
-        <div class="flex items-center gap-4">
+
+        <!-- Desktop: mostrar todo -->
+        <div class="hidden md:flex items-center gap-4">
           <button class="p-2 hover:bg-gray-100 rounded-full transition-colors">
             <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
@@ -40,35 +42,62 @@ import { CommonModule } from '@angular/common';
             {{ logoutText }}
           </button>
         </div>
+
+        <!-- Mobile: mostrar logo, notificaciones, avatar y hamburguesa -->
+        <div class="flex md:hidden items-center gap-3">
+          <button class="p-2 hover:bg-gray-100 rounded-full transition-colors">
+            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+            </svg>
+          </button>
+          <div class="w-8 h-8 rounded-full overflow-hidden border border-gray-200">
+            <img src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2F9af5d64fbec94756a2836871198fcdd9" alt="User" class="w-full h-full object-cover">
+          </div>
+          <button (click)="toggleMenu()" class="p-2 hover:bg-gray-100 rounded-full transition-colors">
+            <svg *ngIf="!menuOpen" class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+            <svg *ngIf="menuOpen" class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div *ngIf="menuOpen" class="md:hidden bg-white border-b border-gray-200 px-6 py-4">
+        <div class="flex flex-col gap-3">
+          <button
+            (click)="toggleLanguage(); closeMenu()"
+            class="cc-btn cc-btn-compact flex items-center gap-2 justify-start w-full"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+            </svg>
+            {{ language === 'es' ? 'Español' : 'English' }}
+          </button>
+          <button
+            (click)="logout(); closeMenu()"
+            class="cc-btn cc-btn-compact flex items-center gap-2 justify-start w-full"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+            </svg>
+            {{ logoutText }}
+          </button>
+        </div>
       </div>
 
       <!-- 404 Content -->
       <div class="flex-1 flex items-center justify-center p-6 bg-gradient-to-br from-slate-50 to-slate-100">
         <div class="max-w-2xl w-full bg-gray-100 rounded-xl border border-gray-400 p-12 text-center">
-          <!-- Cloud with 404 -->
-          <div class="mb-8 relative inline-block">
-            <svg class="w-40 h-40 mx-auto" viewBox="0 0 100 100">
-              <g>
-                <path d="M20 60 Q15 45, 25 35 Q30 30, 40 30 Q45 15, 60 15 Q75 15, 80 30 Q85 35, 85 50 Q85 65, 70 70 L25 70 Q15 68, 20 60 Z" fill="url(#cloudGradient404)"/>
-                <text x="50" y="55" font-size="20" font-weight="bold" text-anchor="middle" fill="white" font-family="Arial">404</text>
-                <defs>
-                  <linearGradient id="cloudGradient404" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color:rgb(0, 107, 138);stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:rgb(0, 80, 110);stop-opacity:1" />
-                  </linearGradient>
-                </defs>
-              </g>
-            </svg>
-          </div>
-
-          <!-- Error Lines animation -->
-          <div class="mb-8 flex justify-center gap-1">
-            <div class="w-1 h-8 bg-cyan-500 rounded-full animate-pulse"></div>
-            <div class="w-1 h-12 bg-cyan-500 rounded-full animate-pulse" style="animation-delay: 0.1s"></div>
-            <div class="w-1 h-6 bg-cyan-500 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
-            <div class="w-1 h-10 bg-cyan-500 rounded-full animate-pulse" style="animation-delay: 0.3s"></div>
-            <div class="w-1 h-7 bg-cyan-500 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
-            <div class="w-1 h-9 bg-cyan-500 rounded-full animate-pulse" style="animation-delay: 0.5s"></div>
+          <!-- 404 Image -->
+          <div class="mb-8">
+            <img
+              src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2F2dd52e62a986422ebee6a11c3f8d64a6"
+              alt="404 Error"
+              class="w-40 h-40 mx-auto"
+            >
           </div>
 
           <!-- Error Message -->
@@ -78,7 +107,7 @@ import { CommonModule } from '@angular/common';
           <!-- Back Button -->
           <button
             (click)="goHome()"
-            class="bg-cyan-50 border border-cyan-300 text-cyan-700 font-semibold py-3 px-8 rounded-xl transition-all duration-300 ease-out hover:bg-cyan-100"
+            class="cc-btn"
           >
             {{ backButtonText }}
           </button>
@@ -108,6 +137,7 @@ import { CommonModule } from '@angular/common';
 })
 export class NotFoundComponent {
   language: 'es' | 'en' = 'es';
+  menuOpen = false;
 
   private en = {
     pageNotFoundTitle: 'PAGE NOT FOUND',
@@ -135,6 +165,14 @@ export class NotFoundComponent {
 
   toggleLanguage() {
     this.language = this.language === 'es' ? 'en' : 'es';
+  }
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  closeMenu() {
+    this.menuOpen = false;
   }
 
   logout() {
