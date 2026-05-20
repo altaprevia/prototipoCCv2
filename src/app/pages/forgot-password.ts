@@ -36,8 +36,16 @@ import { FormsModule } from '@angular/forms';
         </div>
 
         <!-- Right side - Forgot Password Form -->
-        <div class="w-full md:w-1/2 bg-slate-900 flex flex-col">
-          <div class="flex justify-end p-6">
+        <div class="w-full md:w-1/2 bg-gray-100 md:bg-slate-900 flex flex-col">
+          <div class="flex justify-between items-center p-6">
+            <a href="https://canalclima.com/" target="_blank" class="md:hidden">
+              <img
+                src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2F637d28ba8e164481b22cf6c6cf2c694c"
+                alt="Canal Clima"
+                class="h-10 w-auto"
+              >
+            </a>
+            <div class="flex-1"></div>
             <button (click)="toggleLanguage()" class="cc-btn cc-btn-compact flex items-center gap-2">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
@@ -50,6 +58,13 @@ import { FormsModule } from '@angular/forms';
             <div class="w-full max-w-md">
               <div class="bg-white rounded-xl p-8 md:p-10 shadow-xl">
                 <div *ngIf="!submitted">
+                  <div class="md:hidden text-center mb-6">
+                    <img
+                      src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
+                      alt="Climate Connector"
+                      class="w-auto max-w-xs mx-auto"
+                    >
+                  </div>
                   <h1 class="text-2xl md:text-3xl font-mulish font-bold text-center text-gray-900 mb-2">{{ title }}</h1>
                   <p class="text-center text-sm text-gray-600 mb-8 font-georama">{{ subtitle }}</p>
 
