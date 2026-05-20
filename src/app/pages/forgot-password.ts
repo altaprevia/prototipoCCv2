@@ -79,7 +79,7 @@ import { FormsModule } from '@angular/forms';
                 </div>
 
                 <div *ngIf="submitted" class="text-center">
-                  <svg class="w-16 h-16 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #2d6281;">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                   </svg>
                   <h2 class="text-2xl font-mulish font-bold text-gray-900 mb-2">{{ successTitle }}</h2>
