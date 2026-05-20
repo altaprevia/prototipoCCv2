@@ -23,13 +23,13 @@ import { FormsModule } from '@angular/forms';
           </div>
           <div class="flex-1 flex flex-col justify-center items-center p-12">
             <img
-              src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Ff1b475d8e3524a109c692b143fa540bf"
+              src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
               alt="Climate Connector"
-              class="h-52 w-auto mb-4"
+              class="w-full max-w-sm h-auto object-contain mb-4"
             >
             <div class="max-w-md text-center">
               <p class="text-gray-800 font-georama text-lg">
-                <span class="font-bold">Canal Clima</span> provee pronósticos del estado del tiempo en español para <span class="font-bold">Colombia, Latinoamérica y el mundo.</span>
+                {{ brandingText }}
               </p>
             </div>
           </div>
@@ -98,10 +98,10 @@ import { FormsModule } from '@angular/forms';
         <div class="flex flex-wrap items-center justify-between gap-4 text-xs text-gray-500 font-georama">
           <p>© 2024 ClimateConnector. {{ footerText }}</p>
           <div class="flex gap-6">
-            <a href="#" class="hover:text-gray-700 transition-colors">Privacidad</a>
-            <a href="#" class="hover:text-gray-700 transition-colors">Términos de Uso</a>
-            <a href="#" class="hover:text-gray-700 transition-colors">Soporte Técnico</a>
-            <a href="#" class="hover:text-gray-700 transition-colors">Mapa del Sitio</a>
+            <a href="#" class="hover:text-gray-700 transition-colors">{{ privacyText }}</a>
+            <a href="#" class="hover:text-gray-700 transition-colors">{{ termsText }}</a>
+            <a href="#" class="hover:text-gray-700 transition-colors">{{ supportText }}</a>
+            <a href="#" class="hover:text-gray-700 transition-colors">{{ sitemapText }}</a>
           </div>
         </div>
       </div>
@@ -123,26 +123,36 @@ export class ForgotPasswordComponent {
     title: 'RECOVER PASSWORD',
     subtitle: 'Enter your institutional email to receive the recovery instructions.',
     emailLbl: 'EMAIL',
-    emailPlaceholder: 'user@institution.com',
+    emailPlaceholder: 'Enter your email',
     cancelBtn: 'CANCEL',
     submitBtn: 'SEND',
     successTitle: 'Email Sent!',
     successMessage: 'Recovery instructions have been sent to your email.',
     backToLoginBtn: 'BACK TO LOGIN',
-    footerText: 'All rights reserved. Professional climate monitoring network.'
+    footerText: 'All rights reserved. Professional climate monitoring network.',
+    brandingText: 'Canal Clima provides weather forecasts in Spanish for Colombia, Latin America and the world.',
+    privacyText: 'Privacy',
+    termsText: 'Terms of Use',
+    supportText: 'Technical Support',
+    sitemapText: 'Site Map'
   };
 
   private es = {
     title: 'RECUPERAR CONTRASEÑA',
     subtitle: 'Ingresa tu correo electrónico institucional para recibir las instrucciones de recuperación.',
     emailLbl: 'CORREO ELECTRÓNICO',
-    emailPlaceholder: 'usuario@institucion.com',
+    emailPlaceholder: 'Ingrese su correo',
     cancelBtn: 'CANCELAR',
     submitBtn: 'ENVIAR',
     successTitle: '¡Correo Enviado!',
     successMessage: 'Se han enviado las instrucciones de recuperación a tu correo electrónico.',
     backToLoginBtn: 'VOLVER AL LOGIN',
-    footerText: 'Todos los derechos reservados. Red de monitoreo climático profesional.'
+    footerText: 'Todos los derechos reservados. Red de monitoreo climático profesional.',
+    brandingText: 'Canal Clima provee pronósticos del estado del tiempo en español para Colombia, Latinoamérica y el mundo.',
+    privacyText: 'Privacidad',
+    termsText: 'Términos de Uso',
+    supportText: 'Soporte Técnico',
+    sitemapText: 'Mapa del Sitio'
   };
 
   get title() { return this.language === 'es' ? this.es.title : this.en.title; }
@@ -155,6 +165,11 @@ export class ForgotPasswordComponent {
   get successMessage() { return this.language === 'es' ? this.es.successMessage : this.en.successMessage; }
   get backToLoginBtn() { return this.language === 'es' ? this.es.backToLoginBtn : this.en.backToLoginBtn; }
   get footerText() { return this.language === 'es' ? this.es.footerText : this.en.footerText; }
+  get brandingText() { return this.language === 'es' ? this.es.brandingText : this.en.brandingText; }
+  get privacyText() { return this.language === 'es' ? this.es.privacyText : this.en.privacyText; }
+  get termsText() { return this.language === 'es' ? this.es.termsText : this.en.termsText; }
+  get supportText() { return this.language === 'es' ? this.es.supportText : this.en.supportText; }
+  get sitemapText() { return this.language === 'es' ? this.es.sitemapText : this.en.sitemapText; }
 
   toggleLanguage() {
     this.language = this.language === 'es' ? 'en' : 'es';

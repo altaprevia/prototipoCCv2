@@ -1,35 +1,71 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-loading',
   standalone: true,
+  imports: [CommonModule],
   template: `
-    <div class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex flex-col items-center justify-center">
+    <div class="min-h-screen flex flex-col font-georama">
       <!-- Header -->
-      <div class="absolute top-0 left-0 right-0 h-16 bg-white border-b border-slate-200 flex items-center px-6">
+      <div class="h-16 bg-white border-b border-gray-200 flex items-center px-6">
         <div class="flex items-center gap-2">
-          <div class="w-8 h-8 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-full flex items-center justify-center shadow-md">
-            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
+          <img
+            src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
+            alt="Climate Connector"
+            class="h-8 w-auto"
+          >
+        </div>
+        <div class="flex-1"></div>
+        <div class="flex items-center gap-4">
+          <button class="p-2 hover:bg-gray-100 rounded-full transition-colors">
+            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
             </svg>
+          </button>
+          <div class="w-8 h-8 rounded-full overflow-hidden border border-gray-200">
+            <img src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2F9af5d64fbec94756a2836871198fcdd9" alt="User" class="w-full h-full object-cover">
           </div>
-          <span class="text-slate-800 font-semibold">Climate connector</span>
+          <button (click)="toggleLanguage()" class="cc-btn cc-btn-compact flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+            </svg>
+            {{ language === 'es' ? 'Español' : 'English' }}
+          </button>
+          <button (click)="logout()" class="cc-btn cc-btn-compact flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+            </svg>
+            {{ logoutText }}
+          </button>
         </div>
       </div>
 
       <!-- Loading Animation -->
-      <div class="flex flex-col items-center justify-center gap-8">
-        <!-- Animated SVG -->
-        <img
-          src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2F593a2263825d4694bc60f27de988c6a7"
-          alt="Loading animation"
-          class="w-20 h-20"
-        >
+      <div class="flex-1 flex flex-col items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100">
+        <div class="flex flex-col items-center justify-center gap-8">
+          <img
+            src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2F593a2263825d4694bc60f27de988c6a7"
+            alt="Loading animation"
+            class="w-60 h-60"
+          >
+          <div class="text-center">
+            <p class="text-slate-600 text-lg font-medium font-georama">{{ loadingText }}</p>
+          </div>
+        </div>
+      </div>
 
-        <!-- Loading Text -->
-        <div class="text-center">
-          <p class="text-slate-600 text-sm font-medium">Cargando Dashboard...</p>
+      <!-- Footer -->
+      <div class="bg-white border-t border-gray-200 px-6 py-4">
+        <div class="flex flex-wrap items-center justify-between gap-4 text-xs text-gray-500 font-georama">
+          <p>© 2024 ClimateConnector. {{ footerText }}</p>
+          <div class="flex gap-6">
+            <a href="#" class="hover:text-gray-700 transition-colors">Privacidad</a>
+            <a href="#" class="hover:text-gray-700 transition-colors">Términos de Uso</a>
+            <a href="#" class="hover:text-gray-700 transition-colors">Soporte Técnico</a>
+            <a href="#" class="hover:text-gray-700 transition-colors">Mapa del Sitio</a>
+          </div>
         </div>
       </div>
     </div>
@@ -42,11 +78,37 @@ import { Router } from '@angular/router';
   `]
 })
 export class LoadingComponent implements OnInit {
+  language: 'es' | 'en' = 'es';
+
+  private en = {
+    loadingText: 'Loading Dashboard...',
+    logoutText: 'Exit',
+    footerText: 'All rights reserved. Professional climate monitoring network.'
+  };
+
+  private es = {
+    loadingText: 'Cargando Dashboard...',
+    logoutText: 'Salir',
+    footerText: 'Todos los derechos reservados. Red de monitoreo climático profesional.'
+  };
+
+  get loadingText() { return this.language === 'es' ? this.es.loadingText : this.en.loadingText; }
+  get logoutText() { return this.language === 'es' ? this.es.logoutText : this.en.logoutText; }
+  get footerText() { return this.language === 'es' ? this.es.footerText : this.en.footerText; }
+
   constructor(private router: Router) {}
 
   ngOnInit() {
     setTimeout(() => {
       this.router.navigate(['/not-found']);
     }, 4000);
+  }
+
+  toggleLanguage() {
+    this.language = this.language === 'es' ? 'en' : 'es';
+  }
+
+  logout() {
+    this.router.navigate(['/login']);
   }
 }

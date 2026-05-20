@@ -23,13 +23,13 @@ import { FormsModule } from '@angular/forms';
           </div>
           <div class="flex-1 flex flex-col justify-center items-center p-12">
             <img
-              src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Ff1b475d8e3524a109c692b143fa540bf"
+              src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
               alt="Climate Connector"
-              class="h-52 w-auto mb-4"
+              class="w-full max-w-sm h-auto object-contain mb-4"
             >
             <div class="max-w-md text-center">
               <p class="text-gray-800 font-georama text-lg">
-                <span class="font-bold">Canal Clima</span> provee pronósticos del estado del tiempo en español para <span class="font-bold">Colombia, Latinoamérica y el mundo.</span>
+                {{ brandingText }}
               </p>
             </div>
           </div>
@@ -85,10 +85,10 @@ import { FormsModule } from '@angular/forms';
                 </form>
 
 <div class="mt-6 pt-6 border-t border-gray-200">
-                  <a routerLink="/forgot-password" class="block text-center text-cyan-500 hover:text-cyan-600 font-georama font-semibold text-sm transition-colors mb-2">
+                  <a routerLink="/forgot-password" class="block text-left text-[#006281] hover:text-[#004a63] font-georama font-semibold text-sm transition-colors mb-2">
                     {{ forgotPasswordText }}
                   </a>
-                  <a href="https://canalclima.com/index.php/contacto/" target="_blank" class="block text-center text-cyan-500 hover:text-cyan-600 font-georama font-semibold text-sm transition-colors">
+                  <a href="https://canalclima.com/index.php/contacto/" target="_blank" class="block text-left text-[#006281] hover:text-[#004a63] font-georama font-semibold text-sm transition-colors">
                     {{ requestAccessText }}
                   </a>
                 </div>
@@ -106,10 +106,10 @@ import { FormsModule } from '@angular/forms';
         <div class="flex flex-wrap items-center justify-between gap-4 text-xs text-gray-500 font-georama">
           <p>© 2024 ClimateConnector. {{ footerText }}</p>
           <div class="flex gap-6">
-            <a href="#" class="hover:text-gray-700 transition-colors">Privacidad</a>
-            <a href="#" class="hover:text-gray-700 transition-colors">Términos de Uso</a>
-            <a href="#" class="hover:text-gray-700 transition-colors">Soporte Técnico</a>
-            <a href="#" class="hover:text-gray-700 transition-colors">Mapa del Sitio</a>
+            <a href="#" class="hover:text-gray-700 transition-colors">{{ privacyText }}</a>
+            <a href="#" class="hover:text-gray-700 transition-colors">{{ termsText }}</a>
+            <a href="#" class="hover:text-gray-700 transition-colors">{{ supportText }}</a>
+            <a href="#" class="hover:text-gray-700 transition-colors">{{ sitemapText }}</a>
           </div>
         </div>
       </div>
@@ -131,30 +131,40 @@ export class LoginComponent {
     loginTitle: 'PLATFORM ACCESS',
     loginSubtitle: 'Access the control and monitoring panel',
     usernameLbl: 'USERNAME',
-    usernamePlaceholder: 'brayan.criollo.cc',
+    usernamePlaceholder: 'Enter your username',
     passwordLbl: 'PASSWORD',
-    passwordPlaceholder: '••••••••••',
+    passwordPlaceholder: 'Enter your password',
     loginBtn: 'LOGIN',
     forgotPasswordText: 'Forgot your password?',
     requestAccessText: 'Request access to the platform',
     contactText: 'If you are not a customer, we appreciate you contacting the sales area at phone',
     contactText2: 'to assign our services.',
-    footerText: 'All rights reserved. Professional climate monitoring network.'
+    footerText: 'All rights reserved. Professional climate monitoring network.',
+    brandingText: 'Canal Clima provides weather forecasts in Spanish for Colombia, Latin America and the world.',
+    privacyText: 'Privacy',
+    termsText: 'Terms of Use',
+    supportText: 'Technical Support',
+    sitemapText: 'Site Map'
   };
 
   private es = {
     loginTitle: 'INGRESO A LA PLATAFORMA',
     loginSubtitle: 'Acceda al panel de control y monitoreo',
     usernameLbl: 'NOMBRE DE USUARIO',
-    usernamePlaceholder: 'brayan.criollo.cc',
+    usernamePlaceholder: 'Ingrese su usuario',
     passwordLbl: 'CONTRASEÑA',
-    passwordPlaceholder: '••••••••••',
+    passwordPlaceholder: 'Ingrese su contraseña',
     loginBtn: 'INGRESAR',
     forgotPasswordText: '¿Olvidó su contraseña?',
     requestAccessText: 'Solicitar acceso a la plataforma',
     contactText: 'Si usted no es un cliente, agradecemos contactar con el área comercial al teléfono',
     contactText2: 'para asignar nuestros servicios.',
-    footerText: 'Todos los derechos reservados. Red de monitoreo climático profesional.'
+    footerText: 'Todos los derechos reservados. Red de monitoreo climático profesional.',
+    brandingText: 'Canal Clima provee pronósticos del estado del tiempo en español para Colombia, Latinoamérica y el mundo.',
+    privacyText: 'Privacidad',
+    termsText: 'Términos de Uso',
+    supportText: 'Soporte Técnico',
+    sitemapText: 'Mapa del Sitio'
   };
 
   get loginTitle() { return this.language === 'es' ? this.es.loginTitle : this.en.loginTitle; }
@@ -169,6 +179,11 @@ export class LoginComponent {
   get contactText() { return this.language === 'es' ? this.es.contactText : this.en.contactText; }
   get contactText2() { return this.language === 'es' ? this.es.contactText2 : this.en.contactText2; }
   get footerText() { return this.language === 'es' ? this.es.footerText : this.en.footerText; }
+  get brandingText() { return this.language === 'es' ? this.es.brandingText : this.en.brandingText; }
+  get privacyText() { return this.language === 'es' ? this.es.privacyText : this.en.privacyText; }
+  get termsText() { return this.language === 'es' ? this.es.termsText : this.en.termsText; }
+  get supportText() { return this.language === 'es' ? this.es.supportText : this.en.supportText; }
+  get sitemapText() { return this.language === 'es' ? this.es.sitemapText : this.en.sitemapText; }
 
   toggleLanguage() {
     this.language = this.language === 'es' ? 'en' : 'es';
