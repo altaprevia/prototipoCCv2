@@ -59,13 +59,13 @@ import { FormsModule } from '@angular/forms';
               <div class="flex gap-3">
                 <a
                   routerLink="/login"
-                  class="flex-1 text-center bg-white border-2 border-cyan-400 text-cyan-500 hover:bg-cyan-50 font-semibold py-3 rounded-3xl transition-all duration-300 ease-out transform hover:scale-105 active:scale-95"
+                  class="cc-btn flex-1 text-center"
                 >
                   CANCELAR
                 </a>
                 <button
                   type="submit"
-                  class="flex-1 bg-cyan-400 hover:bg-cyan-500 text-white font-semibold py-3 rounded-3xl transition-all duration-300 ease-out transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2"
+                  class="cc-btn flex-1"
                 >
                   RESTABLECER CONTRASEÑA <span>→</span>
                 </button>

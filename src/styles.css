@@ -16,15 +16,7 @@
 
 @layer components {
   button {
-    @apply transition-all duration-300 ease-out;
-  }
-
-  button:hover {
-    @apply scale-105;
-  }
-
-  button:active {
-    @apply scale-95;
+    @apply transition-colors duration-300 ease-out;
   }
 
   input {
@@ -33,6 +25,30 @@
 
   input:focus {
     @apply ring-offset-0;
+  }
+
+  .cc-btn {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-3 rounded-2xl font-mulish font-semibold transition-colors duration-300 ease-out;
+    background-color: #c9d8de;
+    color: #006281;
+    box-shadow: inset 0 0 0 2px #a0c8d6;
+    letter-spacing: 0.06em;
+  }
+
+  .cc-btn:hover {
+    background-color: #006281;
+    color: #ffffff;
+    box-shadow: inset 0 0 0 2px #a0c8d6;
+  }
+
+  .cc-btn:active {
+    background-color: #005873;
+    color: #ffffff;
+  }
+
+  .cc-btn-compact {
+    @apply px-4 py-2 rounded-xl text-xs;
+    letter-spacing: 0.03em;
   }
 }
 

@@ -58,7 +58,7 @@ import { RouterLink } from '@angular/router';
           <!-- Back Button -->
           <a
             routerLink="/login"
-            class="inline-block bg-cyan-400 hover:bg-cyan-500 text-white font-semibold py-3 px-8 rounded-3xl transition-all duration-300 ease-out transform hover:scale-105 active:scale-95"
+            class="cc-btn"
           >
             VOLVER AL INICIO
           </a>
