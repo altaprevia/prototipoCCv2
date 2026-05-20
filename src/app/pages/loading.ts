@@ -20,45 +20,16 @@ import { Router } from '@angular/router';
 
       <!-- Loading Animation -->
       <div class="flex flex-col items-center justify-center gap-8">
-        <!-- Weather Icon Animation -->
-        <div class="relative w-24 h-24">
-          <!-- Cloud -->
-          <svg class="absolute inset-0 w-24 h-24 animate-pulse" viewBox="0 0 100 100">
-            <path d="M20 60 Q15 45, 25 35 Q30 30, 40 30 Q45 15, 60 15 Q75 15, 80 30 Q85 35, 85 50 Q85 65, 70 70 L25 70 Q15 68, 20 60 Z" fill="url(#cloudGradient)" />
-            <defs>
-              <linearGradient id="cloudGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:rgb(34, 211, 238);stop-opacity:1" />
-                <stop offset="100%" style="stop-color:rgb(59, 130, 246);stop-opacity:1" />
-              </linearGradient>
-            </defs>
-          </svg>
+        <!-- Animated SVG -->
+        <img
+          src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2F593a2263825d4694bc60f27de988c6a7"
+          alt="Loading animation"
+          class="w-20 h-20"
+        >
 
-          <!-- Sun rays -->
-          <svg class="absolute top-0 left-0 w-6 h-6 animate-spin" viewBox="0 0 24 24" style="animation-duration: 4s;">
-            <rect x="11" y="1" width="2" height="6" fill="rgb(251, 191, 36)"/>
-            <rect x="11" y="17" width="2" height="6" fill="rgb(251, 191, 36)"/>
-            <rect x="1" y="11" width="6" height="2" fill="rgb(251, 191, 36)"/>
-            <rect x="17" y="11" width="6" height="2" fill="rgb(251, 191, 36)"/>
-          </svg>
-
-          <!-- Rain drops -->
-          <svg class="absolute bottom-0 right-2 w-6 h-6 animate-bounce" viewBox="0 0 24 24">
-            <ellipse cx="12" cy="18" rx="2" ry="3" fill="rgb(34, 211, 238)"/>
-            <ellipse cx="6" cy="20" rx="2" ry="3" fill="rgb(34, 211, 238)"/>
-            <ellipse cx="18" cy="20" rx="2" ry="3" fill="rgb(34, 211, 238)"/>
-          </svg>
-        </div>
-
-        <!-- Loading Text with progress indicator -->
+        <!-- Loading Text -->
         <div class="text-center">
           <p class="text-slate-600 text-sm font-medium">Cargando Dashboard...</p>
-          <div class="mt-4 flex justify-center gap-1">
-            <div class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style="animation-delay: 0s;"></div>
-            <div class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style="animation-delay: 0.2s;"></div>
-            <div class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style="animation-delay: 0.4s;"></div>
-            <div class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style="animation-delay: 0.6s;"></div>
-            <div class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style="animation-delay: 0.8s;"></div>
-          </div>
         </div>
       </div>
     </div>
