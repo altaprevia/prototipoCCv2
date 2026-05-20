@@ -46,7 +46,7 @@ import { CommonModule } from '@angular/common';
       <div class="flex-1 flex flex-col items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100">
         <div class="flex flex-col items-center justify-center gap-8">
           <img
-            src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2F593a2263825d4694bc60f27de988c6a7"
+            src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2F7dcadffdbe174274bb894c479911db30"
             alt="Loading animation"
             class="w-60 h-60"
           >
