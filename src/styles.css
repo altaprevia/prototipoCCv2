@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  button {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  button:hover {
+    @apply brightness-110;
+  }
+
+  button:active {
+    @apply brightness-95;
+  }
+
+  input {
+    @apply transition-all duration-200;
+  }
+
+  input:focus {
+    @apply ring-offset-0;
+  }
+}
+
+html, body {
+  @apply h-full w-full m-0 p-0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
