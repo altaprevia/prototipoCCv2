@@ -2,16 +2,38 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { GlobeBannerComponent } from '../components/globe-banner';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, GlobeBannerComponent],
   template: `
-    <div class="min-h-screen flex flex-col font-georama">
+    <!-- Globe background (fixed full-screen, z-0) -->
+    <app-globe-banner (animationComplete)="onGlobeReady()"></app-globe-banner>
+
+    <!-- Intro overlay: logo ARRIBA del planeta -->
+    <div
+      class="fixed inset-0 z-50 flex flex-col items-center pointer-events-none transition-opacity duration-1000"
+      [class.opacity-0]="!showingIntro"
+      style="padding-top: 5vh;"
+    >
+      <img
+        src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
+        alt="Climate Connector"
+        class="w-64 h-auto"
+      >
+    </div>
+
+    <!-- Main UI (z-10, hidden during intro) -->
+    <div
+      class="fixed inset-0 z-10 flex flex-col font-georama transition-opacity duration-1000"
+      [class.opacity-0]="showingIntro"
+      [class.pointer-events-none]="showingIntro"
+    >
       <div class="flex-1 flex">
-        <!-- Left side - Branding -->
-        <div class="hidden md:flex md:w-1/2 flex-col bg-gray-100">
+        <!-- Left side - Branding (transparent, globe visible behind) -->
+        <div class="hidden md:flex md:w-1/2 flex-col relative">
           <div class="p-6">
             <a href="https://canalclima.com/" target="_blank">
               <img
@@ -21,22 +43,22 @@ import { FormsModule } from '@angular/forms';
               >
             </a>
           </div>
-          <div class="flex-1 flex flex-col justify-center items-center p-12">
+          <div class="flex-1 flex flex-col justify-start items-center pt-16 pb-8 px-12">
             <img
               src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
               alt="Climate Connector"
-              class="w-full max-w-sm h-auto object-contain mb-4"
+              class="w-full max-w-sm h-auto object-contain mb-6"
             >
             <div class="max-w-md text-center">
-              <p class="text-gray-800 font-georama text-lg">
+              <p class="text-gray-900 font-georama text-lg px-4 py-2">
                 {{ brandingText }}
               </p>
             </div>
           </div>
         </div>
 
-        <!-- Right side - Login Form -->
-        <div class="w-full md:w-1/2 bg-gray-100 md:bg-slate-900 flex flex-col">
+        <!-- Right side - Login Form (blue background) -->
+        <div class="w-full md:w-1/2 bg-slate-900 flex flex-col">
           <div class="flex justify-between items-center p-6">
             <a href="https://canalclima.com/" target="_blank" class="md:hidden">
               <img
@@ -47,10 +69,10 @@ import { FormsModule } from '@angular/forms';
             </a>
             <div class="flex-1"></div>
             <button (click)="toggleLanguage()" class="cc-btn cc-btn-compact flex items-center gap-2">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
               </svg>
-              {{ language === 'es' ? 'Español' : 'English' }}
+              <span class="text-white">{{ language === 'es' ? 'Español' : 'English' }}</span>
             </button>
           </div>
 
@@ -99,7 +121,7 @@ import { FormsModule } from '@angular/forms';
                   </button>
                 </form>
 
-<div class="mt-6 pt-6 border-t border-gray-200">
+                <div class="mt-6 pt-6 border-t border-gray-200">
                   <a routerLink="/forgot-password" class="block text-left text-[#006281] hover:text-[#004a63] font-georama font-semibold text-sm transition-colors mb-2">
                     {{ forgotPasswordText }}
                   </a>
@@ -117,6 +139,7 @@ import { FormsModule } from '@angular/forms';
         </div>
       </div>
 
+      <!-- Footer (white background) -->
       <div class="bg-white border-t border-gray-200 px-6 py-4">
         <div class="flex flex-wrap items-center justify-between gap-4 text-xs text-gray-500 font-georama">
           <p>© 2024 ClimateConnector. {{ footerText }}</p>
@@ -135,12 +158,20 @@ import { FormsModule } from '@angular/forms';
       display: block;
       width: 100%;
     }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.8s ease-out forwards;
+    }
   `]
 })
 export class LoginComponent {
   username = '';
   password = '';
   language: 'es' | 'en' = 'es';
+  showingIntro = true;
 
   private en = {
     loginTitle: 'PLATFORM ACCESS',
@@ -202,6 +233,12 @@ export class LoginComponent {
 
   toggleLanguage() {
     this.language = this.language === 'es' ? 'en' : 'es';
+  }
+
+  onGlobeReady() {
+    setTimeout(() => {
+      this.showingIntro = false;
+    }, 300);
   }
 
   onLogin() {
