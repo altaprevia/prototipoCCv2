@@ -31,9 +31,10 @@ import { GlobeBannerComponent } from '../components/globe-banner';
       [class.opacity-0]="showingIntro"
       [class.pointer-events-none]="showingIntro"
     >
-      <div class="flex-1 flex">
+      <!-- Desktop layout -->
+      <div class="hidden md:flex flex-1">
         <!-- Left side - Branding (transparent, globe visible behind) -->
-        <div class="hidden md:flex md:w-1/2 flex-col relative">
+        <div class="md:w-1/2 flex-col relative">
           <div class="p-4">
             <a href="https://canalclima.com/" target="_blank">
               <img
@@ -58,15 +59,8 @@ import { GlobeBannerComponent } from '../components/globe-banner';
         </div>
 
         <!-- Right side - Login Form (blue background) -->
-        <div class="w-full md:w-1/2 bg-slate-900 flex flex-col">
+        <div class="md:w-1/2 bg-slate-900 flex flex-col">
           <div class="flex justify-between items-center p-4">
-            <a href="https://canalclima.com/" target="_blank" class="md:hidden">
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2F637d28ba8e164481b22cf6c6cf2c694c"
-                alt="Canal Clima"
-                class="h-8 w-auto"
-              >
-            </a>
             <div class="flex-1"></div>
             <button (click)="toggleLanguage()" class="cc-btn cc-btn-compact flex items-center gap-2">
               <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -76,17 +70,10 @@ import { GlobeBannerComponent } from '../components/globe-banner';
             </button>
           </div>
 
-          <div class="flex-1 flex items-center justify-center p-4 md:p-6">
+          <div class="flex-1 flex items-center justify-center p-6">
             <div class="w-full max-w-sm">
               <div class="bg-white rounded-xl p-6 shadow-xl">
-                <div class="md:hidden text-center mb-4">
-                  <img
-                    src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
-                    alt="Climate Connector"
-                    class="w-auto max-w-xs mx-auto"
-                  >
-                </div>
-                <h1 class="text-xl md:text-2xl font-mulish font-bold text-center text-gray-900 mb-1">{{ loginTitle }}</h1>
+                <h1 class="text-2xl font-mulish font-bold text-center text-gray-900 mb-1">{{ loginTitle }}</h1>
                 <p class="text-center text-xs text-gray-600 mb-4 font-georama">{{ loginSubtitle }}</p>
 
                 <form (ngSubmit)="onLogin()" class="space-y-3">
@@ -139,14 +126,109 @@ import { GlobeBannerComponent } from '../components/globe-banner';
         </div>
       </div>
 
-      <!-- Footer -->
-      <div class="bg-white border-t border-gray-200 px-4 py-2">
-        <div class="flex flex-wrap items-center justify-between gap-2 text-xs text-gray-500 font-georama">
+      <!-- Desktop footer -->
+      <div class="hidden md:flex bg-white border-t border-gray-200 px-4 py-2">
+        <div class="flex flex-wrap items-center justify-between gap-2 text-xs text-gray-500 font-georama w-full">
           <p>© 2024 ClimateConnector. {{ footerText }}</p>
           <div class="flex gap-4">
             <a href="#" class="hover:text-gray-700 transition-colors">Privacidad</a>
             <a href="#" class="hover:text-gray-700 transition-colors">Términos</a>
             <a href="#" class="hover:text-gray-700 transition-colors">Soporte</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile layout -->
+      <div class="md:hidden flex flex-col flex-1">
+        <!-- Header -->
+        <div class="flex justify-between items-center p-4">
+          <a href="https://canalclima.com/" target="_blank">
+            <img
+              src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2F637d28ba8e164481b22cf6c6cf2c694c"
+              alt="Canal Clima"
+              class="h-8 w-auto"
+            >
+          </a>
+          <button (click)="toggleLanguage()" class="cc-btn cc-btn-compact flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+            </svg>
+            <span class="text-sm">{{ language === 'es' ? 'ES' : 'EN' }}</span>
+          </button>
+        </div>
+
+        <!-- Branding section -->
+        <div class="flex flex-col items-center px-6 pt-2 pb-4">
+          <img
+            src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
+            alt="Climate Connector"
+            class="w-40 h-auto object-contain"
+          >
+        </div>
+
+        <!-- Spacer to push form down, globe visible here -->
+        <div class="flex-1 min-h-[25vh]"></div>
+
+        <!-- Login Form Section (blue background) -->
+        <div class="bg-slate-900 px-4 pt-6 pb-4">
+          <div class="bg-white rounded-xl p-5 shadow-xl">
+            <h1 class="text-lg font-mulish font-bold text-center text-gray-900 mb-1">{{ loginTitle }}</h1>
+            <p class="text-center text-xs text-gray-600 mb-4 font-georama">{{ loginSubtitle }}</p>
+
+            <form (ngSubmit)="onLogin()" class="space-y-3">
+              <div>
+                <label class="block text-xs font-mulish font-semibold text-gray-700 uppercase tracking-wider mb-1">
+                  {{ usernameLbl }}
+                </label>
+                <input
+                  type="text"
+                  [(ngModel)]="username"
+                  name="username"
+                  [placeholder]="usernamePlaceholder"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg font-georama text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
+                >
+              </div>
+
+              <div>
+                <label class="block text-xs font-mulish font-semibold text-gray-700 uppercase tracking-wider mb-1">
+                  {{ passwordLbl }}
+                </label>
+                <input
+                  type="password"
+                  [(ngModel)]="password"
+                  name="password"
+                  [placeholder]="passwordPlaceholder"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg font-georama text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
+                >
+              </div>
+
+              <button type="submit" class="cc-btn w-full">
+                {{ loginBtn }} →
+              </button>
+            </form>
+
+            <div class="mt-4 pt-3 border-t border-gray-200">
+              <a routerLink="/forgot-password" class="block text-left text-[#006281] hover:text-[#004a63] font-georama font-semibold text-xs transition-colors mb-1">
+                {{ forgotPasswordText }}
+              </a>
+              <a href="https://canalclima.com/index.php/contacto/" target="_blank" class="block text-left text-[#006281] hover:text-[#004a63] font-georama font-semibold text-xs transition-colors">
+                {{ requestAccessText }}
+              </a>
+            </div>
+
+            <p class="text-center text-xs text-gray-500 mt-3 font-georama leading-relaxed">
+              {{ contactText }} <span class="font-semibold">+57 316 584 7114</span> {{ contactText2 }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="px-4 py-3 text-center bg-slate-900">
+          <p class="text-xs text-gray-400 font-georama">© 2024 ClimateConnector. {{ footerText }}</p>
+          <div class="flex justify-center gap-4 mt-1">
+            <a href="#" class="text-xs text-gray-400 hover:text-gray-300 transition-colors">Privacidad</a>
+            <a href="#" class="text-xs text-gray-400 hover:text-gray-300 transition-colors">Términos</a>
+            <a href="#" class="text-xs text-gray-400 hover:text-gray-300 transition-colors">Soporte</a>
           </div>
         </div>
       </div>

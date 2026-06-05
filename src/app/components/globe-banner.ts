@@ -1,4 +1,4 @@
-import { Component, ElementRef, AfterViewInit, OnDestroy, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, OnDestroy, Output, EventEmitter, ViewChild, Input } from '@angular/core';
 import * as THREE from 'three';
 
 @Component({
@@ -33,6 +33,7 @@ import * as THREE from 'three';
 export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
   @ViewChild('container', { static: false }) container!: ElementRef;
   @Output() animationComplete = new EventEmitter<void>();
+  @Input() skipAnimation: boolean = false;
 
   private renderer: any;
   private scene: any;
@@ -66,6 +67,7 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
 
   private buildScene(containerEl: HTMLElement, width: number, height: number) {
     const R = 100;
+    const isMobile = window.innerWidth < 768;
 
     function latLngToVec3(lat: number, lng: number, radius: number) {
       const phi = (90 - lat) * Math.PI / 180;
@@ -102,9 +104,9 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
     this.renderer.setClearColor(0xffffff, 1);
     containerEl.appendChild(this.renderer.domElement);
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
     this.scene.add(ambientLight);
-    const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1.0);
     dirLight.position.set(500, 200, 500);
     this.scene.add(dirLight);
 
@@ -120,26 +122,51 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
     const introDuration = 4500;
     const startTime = performance.now();
 
-    const finalEarthPos = { x: -150, y: -80, z: 0 };
+    const finalEarthPos = isMobile
+      ? { x: 0, y: 10, z: 0 }
+      : { x: -150, y: -80, z: 0 };
     const finalEarthRot = { x: -0.4, y: 0.15, z: 0.15 };
-    const finalScale = 1;
+    const finalScale = isMobile ? 0.55 : 1;
 
     const introEarthPos = { x: 0, y: -150, z: 0 };
     const centerEarthPos = { x: 0, y: 0, z: 0 };
 
     const earthGeo = new THREE.SphereGeometry(R, 256, 256);
     const earthMat = new THREE.MeshPhongMaterial({
-      map: loader.load('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg'),
+      map: loader.load('https://threejs.org/examples/textures/planets/earth_lights_2048.png'),
       normalMap: loader.load('https://threejs.org/examples/textures/planets/earth_normal_2048.jpg'),
-      normalScale: new THREE.Vector2(0.85, 0.85),
-      specularMap: loader.load('https://threejs.org/examples/textures/planets/earth_specular_2048.jpg'),
-      specular: new THREE.Color(0x333333),
-      shininess: 15
+      normalScale: new THREE.Vector2(0.5, 0.5),
+      specular: new THREE.Color(0x111111),
+      shininess: 5,
+      emissive: new THREE.Color(0x111111),
+      emissiveIntensity: 0.3
     });
     const earth = new THREE.Mesh(earthGeo, earthMat);
     this.earthGroup.add(earth);
 
-    const atmosGeo = new THREE.SphereGeometry(R * 1.04, 128, 128);
+    // Grid lines (latitude/longitude)
+    const gridColor = 0x336699;
+    const gridOpacity = 0.25;
+    for (let lat = -60; lat <= 60; lat += 30) {
+      const pts: THREE.Vector3[] = [];
+      for (let lng = 0; lng <= 360; lng += 2) {
+        pts.push(latLngToVec3(lat, lng - 180, R * 1.002));
+      }
+      const gridGeo = new THREE.BufferGeometry().setFromPoints(pts);
+      const gridMat = new THREE.LineBasicMaterial({ color: gridColor, transparent: true, opacity: gridOpacity });
+      this.earthGroup.add(new THREE.Line(gridGeo, gridMat));
+    }
+    for (let lng = -180; lng < 180; lng += 30) {
+      const pts: THREE.Vector3[] = [];
+      for (let lat = -90; lat <= 90; lat += 2) {
+        pts.push(latLngToVec3(lat, lng, R * 1.002));
+      }
+      const gridGeo = new THREE.BufferGeometry().setFromPoints(pts);
+      const gridMat = new THREE.LineBasicMaterial({ color: gridColor, transparent: true, opacity: gridOpacity });
+      this.earthGroup.add(new THREE.Line(gridGeo, gridMat));
+    }
+
+    const atmosGeo = new THREE.SphereGeometry(R * 1.06, 128, 128);
     const atmosMat = new THREE.ShaderMaterial({
       transparent: true,
       side: THREE.BackSide,
@@ -155,8 +182,8 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
       fragmentShader: `
         varying vec3 vNormal;
         void main() {
-          float intensity = pow(0.65 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 2.0);
-          gl_FragColor = vec4(0.2, 0.5, 1.0, intensity);
+          float intensity = pow(0.7 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 2.5);
+          gl_FragColor = vec4(0.3, 0.6, 1.0, intensity * 0.35);
         }
       `
     });
@@ -165,8 +192,8 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
 
     loader.load('https://unpkg.com/three-globe@2.45.2/example/clouds/clouds.png', (tex: any) => {
       const clouds = new THREE.Mesh(
-        new THREE.SphereGeometry(R * 1.012, 75, 75),
-        new THREE.MeshPhongMaterial({ map: tex, transparent: true, opacity: 0.85 })
+        new THREE.SphereGeometry(R * 1.015, 75, 75),
+        new THREE.MeshPhongMaterial({ map: tex, transparent: true, opacity: 0.5 })
       );
       clouds.userData['isClouds'] = true;
       this.earthGroup.add(clouds);
@@ -176,9 +203,9 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
     starCanvas.width = 64; starCanvas.height = 64;
     const sctx = starCanvas.getContext('2d')!;
     const grad = sctx.createRadialGradient(32, 32, 0, 32, 32, 32);
-    grad.addColorStop(0, 'rgba(255, 100, 100, 1)');
-    grad.addColorStop(0.15, 'rgba(255, 50, 50, 1)');
-    grad.addColorStop(0.4, 'rgba(255, 50, 50, 0.4)');
+    grad.addColorStop(0, 'rgba(255, 100, 200, 1)');
+    grad.addColorStop(0.15, 'rgba(255, 50, 150, 1)');
+    grad.addColorStop(0.4, 'rgba(255, 50, 150, 0.5)');
     grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
     sctx.fillStyle = grad;
     sctx.fillRect(0, 0, 64, 64);
@@ -432,19 +459,37 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
       });
 
       this.earthGroup.children.forEach((child: any) => {
-        if (child.userData && child.userData['isClouds']) {
+        if (!isMobile && child.userData && child.userData['isClouds']) {
           child.rotation.y += 0.0003;
         }
       });
 
       this.renderer.render(this.scene, this.camera);
     };
+
+    if (this.skipAnimation) {
+      this.earthGroup.position.set(finalEarthPos.x, finalEarthPos.y, finalEarthPos.z);
+      this.earthGroup.rotation.set(finalEarthRot.x, finalEarthRot.y, finalEarthRot.z);
+      this.earthGroup.scale.setScalar(finalScale);
+      this.introCompleted = true;
+      this.animationComplete.emit();
+    }
     animate();
 
     this.resizeHandler = () => {
       this.camera.aspect = window.innerWidth / window.innerHeight;
       this.camera.updateProjectionMatrix();
       this.renderer.setSize(window.innerWidth, window.innerHeight);
+
+      if (this.introCompleted) {
+        const newIsMobile = window.innerWidth < 768;
+        if (newIsMobile !== isMobile) {
+          const pos = newIsMobile ? { x: 0, y: 10, z: 0 } : { x: -150, y: -80, z: 0 };
+          const scale = newIsMobile ? 0.55 : 1;
+          this.earthGroup.position.set(pos.x, pos.y, pos.z);
+          this.earthGroup.scale.setScalar(scale);
+        }
+      }
     };
     window.addEventListener('resize', this.resizeHandler);
   }
