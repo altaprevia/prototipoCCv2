@@ -1,6 +1,5 @@
 import { Component, ElementRef, AfterViewInit, OnDestroy, Output, EventEmitter, ViewChild } from '@angular/core';
-
-declare const THREE: any;
+import * as THREE from 'three';
 
 @Component({
   selector: 'app-globe-banner',
@@ -169,7 +168,7 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
         new THREE.SphereGeometry(R * 1.012, 75, 75),
         new THREE.MeshPhongMaterial({ map: tex, transparent: true, opacity: 0.85 })
       );
-      clouds.userData.isClouds = true;
+      clouds.userData['isClouds'] = true;
       this.earthGroup.add(clouds);
     });
 
@@ -433,7 +432,7 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
       });
 
       this.earthGroup.children.forEach((child: any) => {
-        if (child.userData && child.userData.isClouds) {
+        if (child.userData && child.userData['isClouds']) {
           child.rotation.y += 0.0003;
         }
       });
