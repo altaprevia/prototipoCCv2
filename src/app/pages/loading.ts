@@ -31,7 +31,7 @@ import { loadFull } from 'tsparticles';
 
       <!-- Main content area -->
       <div class="flex-1 flex relative">
-        <div class="w-full flex flex-col items-center justify-center overflow-hidden bg-slate-900 bg-grid relative">
+        <div class="w-full flex flex-col items-center justify-center bg-slate-900 bg-grid relative">
           <div id="particles-container" class="absolute inset-0 z-0 pointer-events-none"></div>
           <div #splashContent class="flex flex-col items-center gap-8 relative z-10">
             <div class="relative w-48 h-48 flex items-center justify-center">
@@ -62,10 +62,10 @@ import { loadFull } from 'tsparticles';
               </svg>
 
               <!-- Logo SVG -->
-              <div class="w-36 h-24 relative" style="filter: url(#softGlow)">
-                <svg #logoSvg width="155" height="103" viewBox="0 0 155 103" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+              <div class="w-36 h-24 overflow-visible relative" style="filter: url(#softGlow)">
+                <svg #logoSvg width="155" height="103" viewBox="0 0 155 103" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full overflow-visible">
                   <!-- NUBE outline -->
-                  <g transform="translate(0, 0)">
+                  <g transform="translate(-4, 0)">
                     <path #cloudEl d="M125.46 31.6585C119.206 25.7301 111.022 22.227 102.315 22.3871C94.776 22.6569 87.5212 25.0936 81.7433 30.0395L81.5868 30.1735C80.6027 30.9879 79.6834 31.9008 78.8524 32.8703C78.7159 33.0304 78.5785 33.1898 78.4408 33.3488L78.1904 33.6326C77.9209 33.9411 77.7087 34.1627 77.3267 34.3193C73.5915 31.5009 69.2353 29.7118 64.6395 28.88L64.3383 28.8261C62.7906 28.5322 61.2618 28.488 59.6903 28.4833L59.3637 28.4827C57.6308 28.4764 55.9449 28.558 54.235 28.8563L53.9801 28.9038C49.092 29.8132 44.4297 31.8552 40.5582 34.9877C40.4497 35.0761 40.3409 35.1642 40.2319 35.2521C38.8841 36.2803 37.6104 37.4895 36.5692 38.8278C35.856 39.4984 35.856 39.4984 34.8977 39.7878C34.4632 39.9258 34.0295 40.0655 33.5973 40.2105C28.6576 41.9059 24.453 45.8235 22.1582 50.4698L22.0482 50.6952C21.6231 51.5617 21.2431 52.4325 20.9527 53.3537L20.8727 53.6167C20.6521 54.3412 20.6521 54.3412 20.2817 56.1884H112.967H154.01C154.01 55.4079 154.01 55.4079 152.197 53.0095C152.063 52.8348 151.929 52.6603 151.797 52.4837C148.794 48.456 144.244 45.6319 139.323 44.6341L139.047 44.5802C137.269 44.2327 135.509 44.2357 133.705 44.2643L133.436 44.2692C133.332 44.0109 133.229 43.7523 133.129 43.4921C132.029 40.6017 130.605 37.8722 128.726 35.4047C128.587 35.2247 128.449 35.0447 128.312 34.8634C127.447 33.7158 126.495 32.6559 125.46 31.6585Z" fill="none" stroke="#00aeef" stroke-width="1.5"/>
                   </g>
 

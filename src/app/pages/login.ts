@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { GlobeBannerComponent } from '../components/globe-banner';
 
@@ -10,7 +10,7 @@ import { GlobeBannerComponent } from '../components/globe-banner';
   imports: [CommonModule, RouterLink, FormsModule, GlobeBannerComponent],
   template: `
     <!-- Globe background (fixed full-screen, z-0) -->
-    <app-globe-banner (animationComplete)="onGlobeReady()"></app-globe-banner>
+    <app-globe-banner (animationComplete)="onGlobeReady()" [skipAnimation]="skipIntro"></app-globe-banner>
 
     <!-- Intro overlay: logo ARRIBA del planeta -->
     <div
@@ -253,6 +253,12 @@ export class LoginComponent {
   password = '';
   language: 'es' | 'en' = 'es';
   showingIntro = true;
+  skipIntro = false;
+
+  constructor(private router: Router) {
+    this.skipIntro = this.router.navigated;
+    this.showingIntro = !this.router.navigated;
+  }
 
   private en = {
     loginTitle: 'PLATFORM ACCESS',

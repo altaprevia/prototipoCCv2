@@ -14,6 +14,7 @@ import * as THREE from 'three';
       inset: 0;
       z-index: 0;
       pointer-events: none;
+      overflow: hidden;
     }
     :host div {
       position: fixed;
@@ -42,6 +43,7 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
   private animFrameId: number = 0;
   private resizeHandler: (() => void) | null = null;
   private introCompleted = false;
+  private isMobile: boolean = false;
   private pointObjects: any[] = [];
   private arcObjects: any[] = [];
 
@@ -67,7 +69,7 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
 
   private buildScene(containerEl: HTMLElement, width: number, height: number) {
     const R = 100;
-    const isMobile = window.innerWidth < 768;
+    this.isMobile = window.innerWidth < 768;
 
     function latLngToVec3(lat: number, lng: number, radius: number) {
       const phi = (90 - lat) * Math.PI / 180;
@@ -94,7 +96,13 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
     this.scene = new THREE.Scene();
 
     const aspect = width / height;
-    this.camera = new THREE.PerspectiveCamera(45, aspect, 0.1, 2000);
+    const baseAspect = 16 / 9;
+    const baseVFov = 45;
+    const baseHFov = 2 * Math.atan(Math.tan(baseVFov * Math.PI / 360) * baseAspect);
+    const vFov = aspect > baseAspect
+      ? 2 * Math.atan(Math.tan(baseHFov / 2) / aspect) * 180 / Math.PI
+      : baseVFov;
+    this.camera = new THREE.PerspectiveCamera(vFov, aspect, 0.1, 2000);
     this.camera.position.set(40, -20, 280);
     this.camera.lookAt(0, 0, 0);
 
@@ -122,11 +130,11 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
     const introDuration = 4500;
     const startTime = performance.now();
 
-    const finalEarthPos = isMobile
+    const finalEarthPos = this.isMobile
       ? { x: 0, y: 10, z: 0 }
       : { x: -150, y: -80, z: 0 };
     const finalEarthRot = { x: -0.4, y: 0.15, z: 0.15 };
-    const finalScale = isMobile ? 0.55 : 1;
+    const finalScale = this.isMobile ? 0.55 : 1;
 
     const introEarthPos = { x: 0, y: -150, z: 0 };
     const centerEarthPos = { x: 0, y: 0, z: 0 };
@@ -459,7 +467,7 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
       });
 
       this.earthGroup.children.forEach((child: any) => {
-        if (!isMobile && child.userData && child.userData['isClouds']) {
+        if (!this.isMobile && child.userData && child.userData['isClouds']) {
           child.rotation.y += 0.0003;
         }
       });
@@ -477,18 +485,24 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
     animate();
 
     this.resizeHandler = () => {
-      this.camera.aspect = window.innerWidth / window.innerHeight;
+      const newW = window.innerWidth;
+      const newH = window.innerHeight;
+      const newAspect = newW / newH;
+      this.camera.fov = newAspect > baseAspect
+        ? 2 * Math.atan(Math.tan(baseHFov / 2) / newAspect) * 180 / Math.PI
+        : baseVFov;
+      this.camera.aspect = newAspect;
       this.camera.updateProjectionMatrix();
-      this.renderer.setSize(window.innerWidth, window.innerHeight);
+      this.renderer.setSize(newW, newH);
 
       if (this.introCompleted) {
-        const newIsMobile = window.innerWidth < 768;
-        if (newIsMobile !== isMobile) {
-          const pos = newIsMobile ? { x: 0, y: 10, z: 0 } : { x: -150, y: -80, z: 0 };
-          const scale = newIsMobile ? 0.55 : 1;
-          this.earthGroup.position.set(pos.x, pos.y, pos.z);
-          this.earthGroup.scale.setScalar(scale);
-        }
+        this.isMobile = newW < 768;
+        const pos = this.isMobile
+          ? { x: 0, y: 10, z: 0 }
+          : { x: -150, y: -80, z: 0 };
+        const scale = this.isMobile ? 0.55 : 1;
+        this.earthGroup.position.set(pos.x, pos.y, pos.z);
+        this.earthGroup.scale.setScalar(scale);
       }
     };
     window.addEventListener('resize', this.resizeHandler);

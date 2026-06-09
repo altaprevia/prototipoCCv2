@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import gsap from 'gsap';
+import { tsParticles } from '@tsparticles/engine';
+import { loadFull } from 'tsparticles';
 
 @Component({
   selector: 'app-not-found',
@@ -8,8 +11,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   template: `
     <div class="min-h-screen flex flex-col font-georama">
-      <!-- Header -->
-      <div class="h-16 bg-white border-b border-gray-200 flex items-center px-6">
+      <div class="h-16 border-b border-gray-200 flex items-center px-6 bg-gray-50">
         <div class="flex items-center gap-2">
           <img
             src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
@@ -18,111 +20,65 @@ import { CommonModule } from '@angular/common';
           >
         </div>
         <div class="flex-1"></div>
-
-        <!-- Desktop: mostrar todo -->
-        <div class="hidden md:flex items-center gap-4">
-          <button class="p-2 hover:bg-gray-100 rounded-full transition-colors">
-            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
-            </svg>
-          </button>
-          <div class="w-8 h-8 rounded-full overflow-hidden border border-gray-200">
-            <img src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2F9af5d64fbec94756a2836871198fcdd9" alt="User" class="w-full h-full object-cover">
-          </div>
-          <button (click)="toggleLanguage()" class="cc-btn cc-btn-compact flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
-            </svg>
-            {{ language === 'es' ? 'Español' : 'English' }}
-          </button>
-          <button (click)="logout()" class="cc-btn cc-btn-compact flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-            </svg>
-            {{ logoutText }}
-          </button>
-        </div>
-
-        <!-- Mobile: mostrar logo, notificaciones, avatar y hamburguesa -->
-        <div class="flex md:hidden items-center gap-3">
-          <button class="p-2 hover:bg-gray-100 rounded-full transition-colors">
-            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
-            </svg>
-          </button>
-          <div class="w-8 h-8 rounded-full overflow-hidden border border-gray-200">
-            <img src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2F9af5d64fbec94756a2836871198fcdd9" alt="User" class="w-full h-full object-cover">
-          </div>
-          <button (click)="toggleMenu()" class="p-2 hover:bg-gray-100 rounded-full transition-colors">
-            <svg *ngIf="!menuOpen" class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-            </svg>
-            <svg *ngIf="menuOpen" class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-          </button>
-        </div>
+        <button (click)="toggleLanguage()" class="cc-btn cc-btn-compact flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+          </svg>
+          {{ language === 'es' ? 'Español' : 'English' }}
+        </button>
       </div>
 
-      <!-- Mobile Menu -->
-      <div *ngIf="menuOpen" class="md:hidden bg-white border-b border-gray-200 px-6 py-4">
-        <div class="flex flex-col gap-3">
-          <button
-            (click)="toggleLanguage(); closeMenu()"
-            class="cc-btn cc-btn-compact flex items-center gap-2 justify-start w-full"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
-            </svg>
-            {{ language === 'es' ? 'Español' : 'English' }}
-          </button>
-          <button
-            (click)="logout(); closeMenu()"
-            class="cc-btn cc-btn-compact flex items-center gap-2 justify-start w-full"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-            </svg>
-            {{ logoutText }}
-          </button>
-        </div>
-      </div>
+      <div class="flex-1 flex items-center justify-center p-6 bg-slate-200 bg-grid-light relative overflow-hidden">
+        <div id="particles-container" class="absolute inset-0 z-0 pointer-events-none"></div>
 
-      <!-- 404 Content -->
-      <div class="flex-1 flex items-center justify-center p-6 bg-gradient-to-br from-slate-50 to-slate-100">
-        <div class="max-w-2xl w-full bg-gray-100 rounded-xl border border-gray-400 p-12 text-center">
-          <!-- 404 Image -->
-          <div class="mb-8">
-            <img
-              src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2F2dd52e62a986422ebee6a11c3f8d64a6"
-              alt="404 Error"
-              class="w-40 h-40 mx-auto"
-            >
+        <div #cardEl class="max-w-lg w-full bg-white/95 rounded-xl border border-slate-300 p-8 text-center relative z-10 shadow-xl">
+          <div #svgContainer class="mb-1 flex justify-center">
+            <svg viewBox="0 0 220 210" class="w-64 h-auto max-h-56">
+              <defs>
+                <filter id="neonGlow404" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur1" />
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur2" />
+                  <feMerge>
+                    <feMergeNode in="blur2" />
+                    <feMergeNode in="blur1" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+              <g #floatGroup>
+                <g #cloudGroup transform="translate(-7.5, -18.3) scale(1.35)">
+                  <path d="M125.46 31.6585C119.206 25.7301 111.022 22.227 102.315 22.3871C94.776 22.6569 87.5212 25.0936 81.7433 30.0395L81.5868 30.1735C80.6027 30.9879 79.6834 31.9008 78.8524 32.8703C78.7159 33.0304 78.5785 33.1898 78.4408 33.3488L78.1904 33.6326C77.9209 33.9411 77.7087 34.1627 77.3267 34.3193C73.5915 31.5009 69.2353 29.7118 64.6395 28.88L64.3383 28.8261C62.7906 28.5322 61.2618 28.488 59.6903 28.4833L59.3637 28.4827C57.6308 28.4764 55.9449 28.558 54.235 28.8563L53.9801 28.9038C49.092 29.8132 44.4297 31.8552 40.5582 34.9877C40.4497 35.0761 40.3409 35.1642 40.2319 35.2521C38.8841 36.2803 37.6104 37.4895 36.5692 38.8278C35.856 39.4984 35.856 39.4984 34.8977 39.7878C34.4632 39.9258 34.0295 40.0655 33.5973 40.2105C28.6576 41.9059 24.453 45.8235 22.1582 50.4698L22.0482 50.6952C21.6231 51.5617 21.2431 52.4325 20.9527 53.3537L20.8727 53.6167C20.6521 54.3412 20.6521 54.3412 20.2817 56.1884H112.967H154.01C154.01 55.4079 154.01 55.4079 152.197 53.0095C152.063 52.8348 151.929 52.6603 151.797 52.4837C148.794 48.456 144.244 45.6319 139.323 44.6341L139.047 44.5802C137.269 44.2327 135.509 44.2357 133.705 44.2643L133.436 44.2692C133.332 44.0109 133.229 43.7523 133.129 43.4921C132.029 40.6017 130.605 37.8722 128.726 35.4047C128.587 35.2247 128.449 35.0447 128.312 34.8634C127.447 33.7158 126.495 32.6559 125.46 31.6585Z"
+                        fill="none" stroke="#64748b" stroke-width="1.8"
+                        stroke-linecap="round" stroke-linejoin="round"
+                        filter="url(#neonGlow404)" />
+                </g>
+                <path #lightningEl
+                      d="m474-317 187-272H519l63-217H374v332h100v157Zm-22 73v-208H352v-376h259l-63 217h155L452-244Zm22-230H374h100Z"
+                      fill="#00aeef" stroke="none"
+                      filter="url(#neonGlow404)"
+                      transform="translate(41, 170) scale(0.13)" />
+              </g>
+            </svg>
           </div>
 
-          <!-- Error Message -->
-          <h1 class="text-2xl md:text-3xl font-bold text-slate-900 mb-4">{{ pageNotFoundTitle }}</h1>
-          <p class="text-slate-600 text-sm mb-8">{{ pageNotFoundText }}</p>
+          <h1 #titleEl class="text-5xl md:text-6xl font-bold text-slate-800 mb-2 neon-404" style="letter-spacing: 8px;">404</h1>
+          <h2 class="text-lg md:text-xl font-semibold text-slate-600 mb-4">{{ pageNotFoundTitle }}</h2>
+          <p #descEl class="text-slate-400 text-sm mb-8 max-w-sm mx-auto leading-relaxed">{{ pageNotFoundText }}</p>
 
-          <!-- Back Button -->
-          <button
-            (click)="goHome()"
-            class="cc-btn"
-          >
+          <button #btnEl (click)="goHome()" class="cc-btn">
             {{ backButtonText }}
           </button>
         </div>
       </div>
 
-      <!-- Footer -->
-      <div class="bg-white border-t border-gray-200 px-6 py-4">
+      <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
         <div class="flex flex-wrap items-center justify-between gap-4 text-xs text-gray-500 font-georama">
           <p>© 2024 ClimateConnector. {{ footerText }}</p>
           <div class="flex gap-6">
-            <a href="#" class="hover:text-gray-700 transition-colors">Privacidad</a>
-            <a href="#" class="hover:text-gray-700 transition-colors">Términos de Uso</a>
-            <a href="#" class="hover:text-gray-700 transition-colors">Soporte Técnico</a>
-            <a href="#" class="hover:text-gray-700 transition-colors">Mapa del Sitio</a>
+            <a href="#" class="hover:text-gray-400 transition-colors">Privacidad</a>
+            <a href="#" class="hover:text-gray-400 transition-colors">Términos de Uso</a>
+            <a href="#" class="hover:text-gray-400 transition-colors">Soporte Técnico</a>
+            <a href="#" class="hover:text-gray-400 transition-colors">Mapa del Sitio</a>
           </div>
         </div>
       </div>
@@ -133,17 +89,35 @@ import { CommonModule } from '@angular/common';
       display: block;
       width: 100%;
     }
+    .bg-grid-light {
+      background-color: #e2e8f0;
+      background-image:
+        linear-gradient(rgba(0, 174, 239, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 174, 239, 0.07) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .neon-404 {
+      text-shadow:
+        0 0 7px rgba(0, 174, 239, 0.5),
+        0 0 20px rgba(0, 174, 239, 0.25),
+        0 0 40px rgba(0, 174, 239, 0.1);
+    }
   `]
 })
-export class NotFoundComponent {
+export class NotFoundComponent implements OnInit, OnDestroy {
+  @ViewChild('cardEl', { static: true }) cardEl!: ElementRef;
+  @ViewChild('titleEl', { static: true }) titleEl!: ElementRef;
+  @ViewChild('descEl', { static: true }) descEl!: ElementRef;
+  @ViewChild('btnEl', { static: true }) btnEl!: ElementRef;
+  @ViewChild('floatGroup', { static: true }) floatGroup!: ElementRef;
+  @ViewChild('lightningEl', { static: true }) lightningEl!: ElementRef;
+
   language: 'es' | 'en' = 'es';
-  menuOpen = false;
 
   private en = {
     pageNotFoundTitle: 'PAGE NOT FOUND',
     pageNotFoundText: 'We apologize, the link you are looking for does not exist or has been moved to a new location.',
     backButtonText: 'RETURN TO HOME',
-    logoutText: 'Exit',
     footerText: 'All rights reserved. Professional climate monitoring network.'
   };
 
@@ -151,32 +125,131 @@ export class NotFoundComponent {
     pageNotFoundTitle: 'PÁGINA NO ENCONTRADA',
     pageNotFoundText: 'Lo sentimos, el enlace que buscas no existe o ha sido movido a una nueva ubicación.',
     backButtonText: 'VOLVER AL INICIO',
-    logoutText: 'Salir',
     footerText: 'Todos los derechos reservados. Red de monitoreo climático profesional.'
   };
 
   get pageNotFoundTitle() { return this.language === 'es' ? this.es.pageNotFoundTitle : this.en.pageNotFoundTitle; }
   get pageNotFoundText() { return this.language === 'es' ? this.es.pageNotFoundText : this.en.pageNotFoundText; }
   get backButtonText() { return this.language === 'es' ? this.es.backButtonText : this.en.backButtonText; }
-  get logoutText() { return this.language === 'es' ? this.es.logoutText : this.en.logoutText; }
   get footerText() { return this.language === 'es' ? this.es.footerText : this.en.footerText; }
+
+  private particlesContainer: any = null;
 
   constructor(private router: Router) {}
 
+  ngOnInit() {
+    this.initParticles();
+    this.setupAnimations();
+  }
+
+  ngOnDestroy() {
+    this.particlesContainer?.destroy();
+    gsap.killTweensOf('*');
+  }
+
+  private async initParticles() {
+    await loadFull(tsParticles);
+    this.particlesContainer = await tsParticles.load({
+      id: 'particles-container',
+      options: ({
+        fpsLimit: 60,
+        particles: {
+          number: { value: 80, density: { enable: true } },
+          color: { value: '#1e40af' },
+          opacity: {
+            value: 0.8,
+            random: true,
+            animation: { enable: true, speed: 0.3, minimumValue: 0.3 }
+          },
+          size: {
+            value: 4,
+            random: true,
+            animation: { enable: true, speed: 0.4, minimumValue: 1.5 }
+          },
+          links: { enable: false },
+          move: {
+            enable: true,
+            speed: 0.6,
+            direction: 'none' as const,
+            random: true,
+            straight: false,
+            outModes: { default: 'out' as const }
+          }
+        },
+        interactivity: {
+          events: {
+            onHover: { enable: true, mode: 'bubble' },
+            onClick: { enable: true, mode: 'repulse' }
+          },
+          modes: {
+            bubble: { distance: 200, size: 6, duration: 2, opacity: 0.9 },
+            repulse: { distance: 200, duration: 0.4 }
+          }
+        },
+        background: { color: 'transparent' }
+      }) as any
+    });
+  }
+
+  private setupAnimations() {
+    const card = this.cardEl?.nativeElement;
+    const title = this.titleEl?.nativeElement;
+    const desc = this.descEl?.nativeElement;
+    const btn = this.btnEl?.nativeElement;
+    const floatGroup = this.floatGroup?.nativeElement;
+    const lightning = this.lightningEl?.nativeElement;
+
+    if (floatGroup) {
+      gsap.to(floatGroup, {
+        y: 3,
+        duration: 2.5,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut'
+      });
+    }
+
+    if (lightning) {
+      gsap.set(lightning, { opacity: 0 });
+      const flashTl = gsap.timeline({ repeat: -1, repeatDelay: 0.6 });
+      flashTl
+        .to(lightning, { opacity: 1, duration: 0.04 })
+        .to(lightning, { opacity: 0, duration: 0.06 })
+        .to(lightning, { opacity: 1, duration: 0.02 })
+        .to(lightning, { opacity: 0, duration: 0.3 });
+    }
+
+    if (card) {
+      gsap.fromTo(card,
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }
+      );
+    }
+
+    if (title) {
+      gsap.fromTo(title,
+        { opacity: 0, letterSpacing: '12px' },
+        { opacity: 1, letterSpacing: '8px', duration: 0.8, delay: 0.3, ease: 'power2.out' }
+      );
+    }
+
+    if (desc) {
+      gsap.fromTo(desc,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, delay: 0.5, ease: 'power2.out' }
+      );
+    }
+
+    if (btn) {
+      gsap.fromTo(btn,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, delay: 0.7, ease: 'power2.out' }
+      );
+    }
+  }
+
   toggleLanguage() {
     this.language = this.language === 'es' ? 'en' : 'es';
-  }
-
-  toggleMenu() {
-    this.menuOpen = !this.menuOpen;
-  }
-
-  closeMenu() {
-    this.menuOpen = false;
-  }
-
-  logout() {
-    this.router.navigate(['/login']);
   }
 
   goHome() {
