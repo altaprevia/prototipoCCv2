@@ -33,30 +33,50 @@ import { GlobeBannerComponent } from '../components/globe-banner';
     >
       <!-- Desktop layout -->
       <div class="hidden md:flex flex-1">
-        <!-- Left side - Branding (transparent, globe visible behind) -->
-        <div class="md:w-1/2 flex-col relative">
-          <div class="p-4">
-            <a href="https://canalclima.com/" target="_blank">
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2F637d28ba8e164481b22cf6c6cf2c694c"
-                alt="Canal Clima"
-                class="h-8 w-auto"
-              >
-            </a>
-          </div>
-          <div class="flex-1 flex flex-col justify-start items-center pt-8 pb-4 px-8">
-            <img
-              src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
-              alt="Climate Connector"
-              class="w-48 h-auto object-contain mb-4"
-            >
-            <div class="max-w-md text-center">
-              <p class="text-gray-900 font-georama text-sm px-4 py-2">
-                {{ brandingText }}
-              </p>
-            </div>
-          </div>
-        </div>
+         <!-- Left side - Branding (transparent, globe visible behind) -->
+         <div class="md:w-1/2 flex flex-col relative">
+           <div class="p-4">
+             <a href="https://canalclima.com/" target="_blank">
+               <img
+                 src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2F637d28ba8e164481b22cf6c6cf2c694c"
+                 alt="Canal Clima"
+                 class="h-8 w-auto"
+               >
+             </a>
+           </div>
+            <div class="flex-1 flex flex-col justify-start items-center pt-4 pb-2 px-8">
+             <img
+               src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
+               alt="Climate Connector"
+                class="w-40 h-auto object-contain mb-2"
+             >
+              <h2 class="text-xl font-mulish font-bold text-center text-gray-900 mb-2">{{ headline }}</h2>
+              <p class="text-center text-xs text-gray-600 mb-8 max-w-lg font-georama leading-relaxed">{{ description }}</p>
+
+             <div class="grid grid-cols-4 gap-4 max-w-2xl w-full">
+               <div class="flex flex-col items-center text-center">
+                  <img src="/icons/satellite.svg" alt="Monitoreo" class="w-8 h-8 mb-1">
+                  <h3 class="text-xs font-mulish font-bold text-gray-900 mb-0.5">{{ feature1Title }}</h3>
+                 <p class="text-xs text-gray-600 font-georama leading-tight">{{ feature1Desc }}</p>
+               </div>
+               <div class="flex flex-col items-center text-center">
+                  <img src="/icons/chart.svg" alt="Pronósticos" class="w-8 h-8 mb-1">
+                  <h3 class="text-xs font-mulish font-bold text-gray-900 mb-0.5">{{ feature2Title }}</h3>
+                 <p class="text-xs text-gray-600 font-georama leading-tight">{{ feature2Desc }}</p>
+               </div>
+               <div class="flex flex-col items-center text-center">
+                  <img src="/icons/globe.svg" alt="Datos" class="w-8 h-8 mb-1">
+                  <h3 class="text-xs font-mulish font-bold text-gray-900 mb-0.5">{{ feature3Title }}</h3>
+                 <p class="text-xs text-gray-600 font-georama leading-tight">{{ feature3Desc }}</p>
+               </div>
+               <div class="flex flex-col items-center text-center">
+                  <img src="/icons/screen.svg" alt="Plataforma" class="w-8 h-8 mb-1">
+                  <h3 class="text-xs font-mulish font-bold text-gray-900 mb-0.5">{{ feature4Title }}</h3>
+                 <p class="text-xs text-gray-600 font-georama leading-tight">{{ feature4Desc }}</p>
+               </div>
+             </div>
+           </div>
+         </div>
 
         <!-- Right side - Login Form (blue background) -->
         <div class="md:w-1/2 bg-slate-900 flex flex-col">
@@ -277,7 +297,17 @@ export class LoginComponent {
     privacyText: 'Privacy',
     termsText: 'Terms of Use',
     supportText: 'Technical Support',
-    sitemapText: 'Site Map'
+    sitemapText: 'Site Map',
+    headline: 'We connect data. We deliver decisions.',
+    description: 'At Canal Clima we transform environmental data into reliable information and tools that drive informed decisions to protect lives, optimize resources and build resilience.',
+    feature1Title: 'Real-time monitoring',
+    feature1Desc: 'Continuous tracking of meteorological and environmental variables.',
+    feature2Title: 'Accurate forecasts',
+    feature2Desc: 'Advanced models to anticipate weather with high precision.',
+    feature3Title: 'Impactful data',
+    feature3Desc: 'Reliable information for risk management and decision making.',
+    feature4Title: 'Comprehensive platform',
+    feature4Desc: 'Tools and APIs to visualize, integrate and share data.'
   };
 
   private es = {
@@ -297,7 +327,17 @@ export class LoginComponent {
     privacyText: 'Privacidad',
     termsText: 'Términos de Uso',
     supportText: 'Soporte Técnico',
-    sitemapText: 'Mapa del Sitio'
+    sitemapText: 'Mapa del Sitio',
+    headline: 'Conectamos datos. Entregamos decisiones.',
+    description: 'En Canal Clima transformamos datos ambientales en información confiable y herramientas que impulsan decisiones informadas para proteger vidas, optimizar recursos y construir resiliencia.',
+    feature1Title: 'Monitoreo en tiempo real',
+    feature1Desc: 'Seguimiento continuo de variables meteorológicas y ambientales.',
+    feature2Title: 'Pronósticos precisos',
+    feature2Desc: 'Modelos avanzados para anticipar el tiempo con alta precisión.',
+    feature3Title: 'Datos que impactan',
+    feature3Desc: 'Información confiable para la gestión de riesgos y la toma de decisiones.',
+    feature4Title: 'Plataforma integral',
+    feature4Desc: 'Herramientas y APIs para visualizar, integrar y compartir datos.'
   };
 
   get loginTitle() { return this.language === 'es' ? this.es.loginTitle : this.en.loginTitle; }
@@ -317,6 +357,16 @@ export class LoginComponent {
   get termsText() { return this.language === 'es' ? this.es.termsText : this.en.termsText; }
   get supportText() { return this.language === 'es' ? this.es.supportText : this.en.supportText; }
   get sitemapText() { return this.language === 'es' ? this.es.sitemapText : this.en.sitemapText; }
+  get headline() { return this.language === 'es' ? this.es.headline : this.en.headline; }
+  get description() { return this.language === 'es' ? this.es.description : this.en.description; }
+  get feature1Title() { return this.language === 'es' ? this.es.feature1Title : this.en.feature1Title; }
+  get feature1Desc() { return this.language === 'es' ? this.es.feature1Desc : this.en.feature1Desc; }
+  get feature2Title() { return this.language === 'es' ? this.es.feature2Title : this.en.feature2Title; }
+  get feature2Desc() { return this.language === 'es' ? this.es.feature2Desc : this.en.feature2Desc; }
+  get feature3Title() { return this.language === 'es' ? this.es.feature3Title : this.en.feature3Title; }
+  get feature3Desc() { return this.language === 'es' ? this.es.feature3Desc : this.en.feature3Desc; }
+  get feature4Title() { return this.language === 'es' ? this.es.feature4Title : this.en.feature4Title; }
+  get feature4Desc() { return this.language === 'es' ? this.es.feature4Desc : this.en.feature4Desc; }
 
   toggleLanguage() {
     this.language = this.language === 'es' ? 'en' : 'es';

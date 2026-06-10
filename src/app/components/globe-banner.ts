@@ -44,6 +44,7 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
   private resizeHandler: (() => void) | null = null;
   private introCompleted = false;
   private isMobile: boolean = false;
+  private isUltraWide: boolean = false;
   private pointObjects: any[] = [];
   private arcObjects: any[] = [];
 
@@ -70,6 +71,7 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
   private buildScene(containerEl: HTMLElement, width: number, height: number) {
     const R = 100;
     this.isMobile = window.innerWidth < 768;
+    this.isUltraWide = window.innerWidth > 1920;
 
     function latLngToVec3(lat: number, lng: number, radius: number) {
       const phi = (90 - lat) * Math.PI / 180;
@@ -132,9 +134,11 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
 
     const finalEarthPos = this.isMobile
       ? { x: 0, y: 10, z: 0 }
-      : { x: -150, y: -80, z: 0 };
-    const finalEarthRot = { x: -0.4, y: 0.15, z: 0.15 };
-    const finalScale = this.isMobile ? 0.55 : 1;
+      : this.isUltraWide
+        ? { x: -100, y: -90, z: 0 }
+        : { x: -100, y: -120, z: 0 };
+    const finalEarthRot = { x: -0.6, y: 0.15, z: 0.15 };
+    const finalScale = this.isMobile ? 0.55 : (this.isUltraWide ? 1.0 : 1);
 
     const introEarthPos = { x: 0, y: -150, z: 0 };
     const centerEarthPos = { x: 0, y: 0, z: 0 };
@@ -497,10 +501,13 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
 
       if (this.introCompleted) {
         this.isMobile = newW < 768;
+        this.isUltraWide = newW > 1920;
         const pos = this.isMobile
           ? { x: 0, y: 10, z: 0 }
-          : { x: -150, y: -80, z: 0 };
-        const scale = this.isMobile ? 0.55 : 1;
+          : this.isUltraWide
+            ? { x: -150, y: -120, z: 0 }
+            : { x: -100, y: -120, z: 0 };
+        const scale = this.isMobile ? 0.55 : (this.isUltraWide ? 1.0 : 1);
         this.earthGroup.position.set(pos.x, pos.y, pos.z);
         this.earthGroup.scale.setScalar(scale);
       }
