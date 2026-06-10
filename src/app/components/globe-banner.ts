@@ -98,13 +98,15 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
     this.scene = new THREE.Scene();
 
     const aspect = width / height;
-    const baseAspect = 16 / 9;
-    const baseVFov = 45;
-    const baseHFov = 2 * Math.atan(Math.tan(baseVFov * Math.PI / 360) * baseAspect);
-    const vFov = aspect > baseAspect
-      ? 2 * Math.atan(Math.tan(baseHFov / 2) / aspect) * 180 / Math.PI
-      : baseVFov;
-    this.camera = new THREE.PerspectiveCamera(vFov, aspect, 0.1, 2000);
+    const frustumSize = 200;
+    this.camera = new THREE.OrthographicCamera(
+      -frustumSize * aspect / 2,
+      frustumSize * aspect / 2,
+      frustumSize / 2,
+      -frustumSize / 2,
+      0.1,
+      2000
+    );
     this.camera.position.set(40, -20, 280);
     this.camera.lookAt(0, 0, 0);
 
@@ -135,9 +137,9 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
     const finalEarthPos = this.isMobile
       ? { x: 0, y: 10, z: 0 }
       : this.isUltraWide
-        ? { x: -100, y: -90, z: 0 }
-        : { x: -100, y: -120, z: 0 };
-    const finalEarthRot = { x: -0.6, y: 0.15, z: 0.15 };
+        ? { x: -150, y: -90, z: 0 }
+        : { x: -110, y: -120, z: 0 };
+    const finalEarthRot = { x: -0.45, y: -0.15, z: 0 };
     const finalScale = this.isMobile ? 0.55 : (this.isUltraWide ? 1.0 : 1);
 
     const introEarthPos = { x: 0, y: -150, z: 0 };
@@ -364,9 +366,9 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
             ? feature.geometry.coordinates.flat()
             : feature.geometry.coordinates;
           coords.forEach((ring: any[]) => {
-            const pts = ring.map(c => latLngToVec3(c[1], c[0], R * 1.005));
+            const pts = ring.map(c => latLngToVec3(c[1], c[0], R * 1.01));
             const geo = new THREE.BufferGeometry().setFromPoints(pts);
-            const mat = new THREE.LineBasicMaterial({ color: 0x00ffff, transparent: true, opacity: 0.9 });
+            const mat = new THREE.LineBasicMaterial({ color: 0x00ffff, transparent: true, opacity: 0.9, depthTest: false });
             const line = new THREE.Line(geo, mat);
             this.earthGroup.add(line);
           });
@@ -492,10 +494,10 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
       const newW = window.innerWidth;
       const newH = window.innerHeight;
       const newAspect = newW / newH;
-      this.camera.fov = newAspect > baseAspect
-        ? 2 * Math.atan(Math.tan(baseHFov / 2) / newAspect) * 180 / Math.PI
-        : baseVFov;
-      this.camera.aspect = newAspect;
+      this.camera.left = -frustumSize * newAspect / 2;
+      this.camera.right = frustumSize * newAspect / 2;
+      this.camera.top = frustumSize / 2;
+      this.camera.bottom = -frustumSize / 2;
       this.camera.updateProjectionMatrix();
       this.renderer.setSize(newW, newH);
 
@@ -505,8 +507,8 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
         const pos = this.isMobile
           ? { x: 0, y: 10, z: 0 }
           : this.isUltraWide
-            ? { x: -150, y: -120, z: 0 }
-            : { x: -100, y: -120, z: 0 };
+            ? { x: -130, y: -90, z: 0 }
+            : { x: -130, y: -120, z: 0 };
         const scale = this.isMobile ? 0.55 : (this.isUltraWide ? 1.0 : 1);
         this.earthGroup.position.set(pos.x, pos.y, pos.z);
         this.earthGroup.scale.setScalar(scale);
