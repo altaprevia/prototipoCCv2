@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import gsap from 'gsap';
 import { tsParticles } from '@tsparticles/engine';
@@ -8,10 +8,10 @@ import { loadFull } from 'tsparticles';
 @Component({
   selector: 'app-not-found',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   template: `
     <div class="min-h-screen flex flex-col font-georama">
-      <div class="h-16 border-b border-gray-200 flex items-center px-6 bg-gray-50">
+      <div class="h-16 border-b border-gray-200 flex items-center px-6 bg-gray-50 relative">
         <div class="flex items-center gap-2">
           <img
             src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
@@ -19,8 +19,8 @@ import { loadFull } from 'tsparticles';
             class="h-8 w-auto"
           >
         </div>
-        <div class="flex-1"></div>
-        <button (click)="toggleLanguage()" class="cc-btn cc-btn-compact flex items-center gap-2">
+        <a routerLink="/design-system" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-2 text-sm font-georama font-medium text-gray-800 hover:bg-gray-100 rounded-md transition-colors">Estilo</a>
+        <button (click)="toggleLanguage()" class="cc-btn cc-btn-compact ml-auto flex items-center gap-2">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
           </svg>
