@@ -3,11 +3,15 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { GlobeBannerComponent } from '../components/globe-banner';
+import { FormFieldComponent } from '../shared/form-field';
+import { getBrandingCopy, BrandingCopy } from '../shared/branding-copy';
+
+type FieldState = 'default' | 'error' | 'success';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule, GlobeBannerComponent],
+  imports: [CommonModule, RouterLink, FormsModule, GlobeBannerComponent, FormFieldComponent],
   template: `
     <!-- Globe background (fixed full-screen, z-0) -->
     <app-globe-banner (animationComplete)="onGlobeReady()" [skipAnimation]="skipIntro"></app-globe-banner>
@@ -21,7 +25,7 @@ import { GlobeBannerComponent } from '../components/globe-banner';
       <img
         src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
         alt="Climate Connector"
-        class="w-48 h-auto"
+        class="w-40 h-auto drop-shadow-md"
       >
     </div>
 
@@ -34,7 +38,7 @@ import { GlobeBannerComponent } from '../components/globe-banner';
       <!-- Desktop layout -->
       <div class="hidden md:flex flex-1">
          <!-- Left side - Branding (transparent, globe visible behind) -->
-         <div class="md:w-1/2 flex flex-col relative">
+         <div class="md:w-1/2 flex flex-col relative min-h-0">
            <div class="p-4">
              <a href="https://canalclima.com/" target="_blank">
                <img
@@ -44,43 +48,35 @@ import { GlobeBannerComponent } from '../components/globe-banner';
                >
              </a>
            </div>
-            <div class="flex-1 flex flex-col justify-start items-center pt-4 pb-2 px-8">
+            <div class="flex-1 min-h-0 overflow-y-auto flex flex-col justify-start items-center pt-4 pb-2 px-8">
              <img
                src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
                alt="Climate Connector"
-                class="w-40 h-auto object-contain mb-2"
+               class="w-40 h-auto object-contain mb-1"
              >
-              <h2 class="text-xl font-mulish font-bold text-center text-gray-900 mb-2">{{ headline }}</h2>
-              <p class="text-center text-xs text-gray-600 mb-8 max-w-lg font-georama leading-relaxed">{{ description }}</p>
+             <span class="text-[10px] uppercase tracking-widest font-bold text-gris-medio mb-3">v2.0 · Professional Climate Network</span>
+              <h2 class="text-xl font-mulish font-bold text-center text-gray-900 mb-2">{{ branding.headline }}</h2>
+              <p class="text-center text-xs text-gray-600 mb-8 max-w-lg font-georama leading-relaxed">{{ branding.description }}</p>
 
              <div class="grid grid-cols-4 gap-4 max-w-2xl w-full">
-               <div class="flex flex-col items-center text-center">
-                  <img src="/icons/satellite.svg" alt="Monitoreo" class="w-8 h-8 mb-1">
-                  <h3 class="text-xs font-mulish font-bold text-gray-900 mb-0.5">{{ feature1Title }}</h3>
-                 <p class="text-xs text-gray-600 font-georama leading-tight">{{ feature1Desc }}</p>
-               </div>
-               <div class="flex flex-col items-center text-center">
-                  <img src="/icons/chart.svg" alt="Pronósticos" class="w-8 h-8 mb-1">
-                  <h3 class="text-xs font-mulish font-bold text-gray-900 mb-0.5">{{ feature2Title }}</h3>
-                 <p class="text-xs text-gray-600 font-georama leading-tight">{{ feature2Desc }}</p>
-               </div>
-               <div class="flex flex-col items-center text-center">
-                  <img src="/icons/globe.svg" alt="Datos" class="w-8 h-8 mb-1">
-                  <h3 class="text-xs font-mulish font-bold text-gray-900 mb-0.5">{{ feature3Title }}</h3>
-                 <p class="text-xs text-gray-600 font-georama leading-tight">{{ feature3Desc }}</p>
-               </div>
-               <div class="flex flex-col items-center text-center">
-                  <img src="/icons/screen.svg" alt="Plataforma" class="w-8 h-8 mb-1">
-                  <h3 class="text-xs font-mulish font-bold text-gray-900 mb-0.5">{{ feature4Title }}</h3>
-                 <p class="text-xs text-gray-600 font-georama leading-tight">{{ feature4Desc }}</p>
-               </div>
+               @for (f of branding.features; track f.icon) {
+                 <div class="flex flex-col items-center text-center">
+                   <img [src]="'/icons/' + f.icon + '.svg'" [alt]="f.title" class="w-8 h-8 mb-1">
+                   <h3 class="text-xs font-mulish font-bold text-gray-900 mb-0.5">{{ f.title }}</h3>
+                   <p class="text-xs text-gray-600 font-georama leading-tight">{{ f.desc }}</p>
+                 </div>
+               }
              </div>
            </div>
          </div>
 
-        <!-- Right side - Login Form (blue background) -->
-        <div class="md:w-1/2 bg-slate-900 flex flex-col">
-          <div class="flex justify-between items-center p-4">
+        <!-- Right side - Login Form (gradient background) -->
+        <div class="md:w-1/2 flex flex-col relative overflow-hidden bg-gradient-to-br from-petroleo via-[#0E2D4D] to-baltico">
+          <!-- Decorative blobs -->
+          <div class="pointer-events-none absolute -top-24 -right-24 w-80 h-80 rounded-full bg-cian/25 blur-3xl"></div>
+          <div class="pointer-events-none absolute -bottom-32 -left-20 w-[28rem] h-[28rem] rounded-full bg-cyan-400/15 blur-3xl"></div>
+
+          <div class="relative z-10 flex justify-between items-center p-4">
             <div class="flex-1"></div>
             <button (click)="toggleLanguage()" class="cc-btn cc-btn-compact flex items-center gap-2">
               <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -90,55 +86,92 @@ import { GlobeBannerComponent } from '../components/globe-banner';
             </button>
           </div>
 
-          <div class="flex-1 flex items-center justify-center p-6">
+          <div class="relative z-10 flex-1 min-h-0 overflow-y-auto flex items-center justify-center p-6">
             <div class="w-full max-w-sm">
-              <div class="bg-white rounded-xl p-6 shadow-xl">
-                <h1 class="text-2xl font-mulish font-bold text-center text-gray-900 mb-1">{{ loginTitle }}</h1>
-                <p class="text-center text-xs text-gray-600 mb-4 font-georama">{{ loginSubtitle }}</p>
+              <div class="bg-white rounded-2xl p-7 ring-1 ring-white/40 shadow-2xl shadow-petroleo/40">
+                <!-- Brand lockup -->
+                <div class="flex items-center justify-center gap-2 mb-4">
+                  <img
+                    src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
+                    alt="Climate Connector"
+                    class="h-6 w-auto"
+                  >
+                  <span class="h-4 w-px bg-gris-base"></span>
+                  <span class="text-[11px] font-mulish font-semibold text-gris-medio uppercase tracking-wider">Secure Access</span>
+                </div>
 
-                <form (ngSubmit)="onLogin()" class="space-y-3">
-                  <div>
-                    <label class="block text-xs font-mulish font-semibold text-gray-700 uppercase tracking-wider mb-1">
-                      {{ usernameLbl }}
-                    </label>
-                    <input
-                      type="text"
-                      [(ngModel)]="username"
-                      name="username"
-                      [placeholder]="usernamePlaceholder"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-lg font-georama text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
+                <div class="flex items-center justify-center gap-2 mb-1">
+                  <span class="material-symbols-outlined text-baltico text-[18px]">verified_user</span>
+                  <h1 class="text-[22px] font-mulish font-bold text-center text-petroleo tracking-tight">{{ loginTitle }}</h1>
+                </div>
+                <p class="text-center text-sm text-gris-dark mb-5 font-georama">{{ loginSubtitle }}</p>
+
+                <form (ngSubmit)="onLogin()" class="space-y-4" novalidate>
+                  <app-form-field
+                    [label]="usernameLbl"
+                    type="text"
+                    [placeholder]="usernamePlaceholder"
+                    name="username"
+                    autocomplete="username"
+                    leadingIcon="person"
+                    [required]="true"
+                    [(ngModel)]="username"
+                    [state]="usernameState"
+                    [errorMessage]="usernameError"
+                    [successMessage]="usernameSuccess"
+                    (blurred)="usernameTouched = true"
+                  ></app-form-field>
+
+                  <app-form-field
+                    [label]="passwordLbl"
+                    [type]="showPassword ? 'text' : 'password'"
+                    [placeholder]="passwordPlaceholder"
+                    name="password"
+                    autocomplete="current-password"
+                    leadingIcon="lock"
+                    [required]="true"
+                    [(ngModel)]="password"
+                    [state]="passwordState"
+                    [errorMessage]="passwordError"
+                    [successMessage]="passwordSuccess"
+                    [hasTrailing]="true"
+                    (blurred)="passwordTouched = true"
+                  >
+                    <button
+                      trailing
+                      type="button"
+                      (click)="togglePasswordVisibility()"
+                      [attr.aria-label]="showPasswordAria"
+                      [attr.aria-pressed]="showPassword"
+                      class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full text-gris-medio hover:text-baltico hover:bg-blue-bg transition-colors focus:outline-none focus:ring-2 focus:ring-cian/40"
                     >
-                  </div>
+                      <span class="material-symbols-outlined text-[20px]">
+                        {{ showPassword ? 'visibility_off' : 'visibility' }}
+                      </span>
+                    </button>
+                  </app-form-field>
 
-                  <div>
-                    <label class="block text-xs font-mulish font-semibold text-gray-700 uppercase tracking-wider mb-1">
-                      {{ passwordLbl }}
-                    </label>
-                    <input
-                      type="password"
-                      [(ngModel)]="password"
-                      name="password"
-                      [placeholder]="passwordPlaceholder"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-lg font-georama text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
-                    >
-                  </div>
-
-                  <button type="submit" class="cc-btn w-full">
+                  <button
+                    type="submit"
+                    class="cc-btn w-full mt-1"
+                  >
                     {{ loginBtn }} →
                   </button>
                 </form>
 
-                <div class="mt-4 pt-3 border-t border-gray-200">
-                  <a routerLink="/forgot-password" class="block text-left text-[#006281] hover:text-[#004a63] font-georama font-semibold text-xs transition-colors mb-1">
-                    {{ forgotPasswordText }}
+                <div class="mt-5 pt-4 border-t border-dashed border-gris-base space-y-2">
+                  <a routerLink="/forgot-password" class="cc-link-quiet">
+                    <span class="material-symbols-outlined cc-link-quiet__icon text-[18px]">lock_reset</span>
+                    <span>{{ forgotPasswordText }}</span>
                   </a>
-                  <a href="https://canalclima.com/index.php/contacto/" target="_blank" class="block text-left text-[#006281] hover:text-[#004a63] font-georama font-semibold text-xs transition-colors">
-                    {{ requestAccessText }}
+                  <a href="https://canalclima.com/index.php/contacto/" target="_blank" rel="noopener" class="cc-link-quiet">
+                    <span class="material-symbols-outlined cc-link-quiet__icon text-[18px]">contact_support</span>
+                    <span>{{ requestAccessText }}</span>
                   </a>
                 </div>
 
-                <p class="text-center text-xs text-gray-500 mt-3 font-georama leading-relaxed">
-                  {{ contactText }} <span class="font-semibold">+57 316 584 7114</span> {{ contactText2 }}
+                <p class="text-center text-[13px] text-gris-dark mt-4 font-georama leading-relaxed">
+                  {{ contactText }} <span class="font-semibold text-petroleo">+57 316 584 7114</span> {{ contactText2 }}
                 </p>
               </div>
             </div>
@@ -189,61 +222,101 @@ import { GlobeBannerComponent } from '../components/globe-banner';
         <!-- Spacer to push form down, globe visible here -->
         <div class="flex-1 min-h-[25vh]"></div>
 
-        <!-- Login Form Section (blue background) -->
-        <div class="bg-slate-900 px-4 pt-6 pb-4">
-          <div class="bg-white rounded-xl p-5 shadow-xl">
-            <h1 class="text-lg font-mulish font-bold text-center text-gray-900 mb-1">{{ loginTitle }}</h1>
-            <p class="text-center text-xs text-gray-600 mb-4 font-georama">{{ loginSubtitle }}</p>
+        <!-- Login Form Section (gradient background) -->
+        <div class="relative overflow-hidden bg-gradient-to-t from-petroleo to-baltico px-4 pt-6 pb-4">
+          <div class="pointer-events-none absolute -top-12 right-0 w-64 h-64 rounded-full bg-cian/20 blur-3xl"></div>
+          <div class="pointer-events-none absolute -bottom-16 -left-10 w-72 h-72 rounded-full bg-cyan-400/15 blur-3xl"></div>
 
-            <form (ngSubmit)="onLogin()" class="space-y-3">
-              <div>
-                <label class="block text-xs font-mulish font-semibold text-gray-700 uppercase tracking-wider mb-1">
-                  {{ usernameLbl }}
-                </label>
-                <input
-                  type="text"
-                  [(ngModel)]="username"
-                  name="username"
-                  [placeholder]="usernamePlaceholder"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-lg font-georama text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
+          <div class="relative bg-white rounded-2xl p-6 ring-1 ring-white/40 shadow-2xl shadow-petroleo/40">
+            <!-- Brand lockup -->
+            <div class="flex items-center justify-center gap-2 mb-3">
+              <img
+                src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
+                alt="Climate Connector"
+                class="h-5 w-auto"
+              >
+              <span class="h-4 w-px bg-gris-base"></span>
+              <span class="text-[10px] font-mulish font-semibold text-gris-medio uppercase tracking-wider">Secure Access</span>
+            </div>
+
+            <div class="flex items-center justify-center gap-2 mb-1">
+              <span class="material-symbols-outlined text-baltico text-[16px]">verified_user</span>
+              <h1 class="text-lg font-mulish font-bold text-center text-petroleo tracking-tight">{{ loginTitle }}</h1>
+            </div>
+            <p class="text-center text-xs text-gris-dark mb-4 font-georama">{{ loginSubtitle }}</p>
+
+            <form (ngSubmit)="onLogin()" class="space-y-4" novalidate>
+              <app-form-field
+                [label]="usernameLbl"
+                type="text"
+                [placeholder]="usernamePlaceholder"
+                name="username-m"
+                autocomplete="username"
+                leadingIcon="person"
+                [required]="true"
+                [(ngModel)]="username"
+                [state]="usernameState"
+                [errorMessage]="usernameError"
+                [successMessage]="usernameSuccess"
+                (blurred)="usernameTouched = true"
+              ></app-form-field>
+
+              <app-form-field
+                [label]="passwordLbl"
+                [type]="showPassword ? 'text' : 'password'"
+                [placeholder]="passwordPlaceholder"
+                name="password-m"
+                autocomplete="current-password"
+                leadingIcon="lock"
+                [required]="true"
+                [(ngModel)]="password"
+                [state]="passwordState"
+                [errorMessage]="passwordError"
+                [successMessage]="passwordSuccess"
+                [hasTrailing]="true"
+                (blurred)="passwordTouched = true"
+              >
+                <button
+                  trailing
+                  type="button"
+                  (click)="togglePasswordVisibility()"
+                  [attr.aria-label]="showPasswordAria"
+                  [attr.aria-pressed]="showPassword"
+                  class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full text-gris-medio hover:text-baltico hover:bg-blue-bg transition-colors focus:outline-none focus:ring-2 focus:ring-cian/40"
                 >
-              </div>
+                  <span class="material-symbols-outlined text-[20px]">
+                    {{ showPassword ? 'visibility_off' : 'visibility' }}
+                  </span>
+                </button>
+              </app-form-field>
 
-              <div>
-                <label class="block text-xs font-mulish font-semibold text-gray-700 uppercase tracking-wider mb-1">
-                  {{ passwordLbl }}
-                </label>
-                <input
-                  type="password"
-                  [(ngModel)]="password"
-                  name="password"
-                  [placeholder]="passwordPlaceholder"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-lg font-georama text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
-                >
-              </div>
-
-              <button type="submit" class="cc-btn w-full">
+              <button
+                type="submit"
+                class="cc-btn w-full mt-1"
+              >
                 {{ loginBtn }} →
               </button>
             </form>
 
-            <div class="mt-4 pt-3 border-t border-gray-200">
-              <a routerLink="/forgot-password" class="block text-left text-[#006281] hover:text-[#004a63] font-georama font-semibold text-xs transition-colors mb-1">
-                {{ forgotPasswordText }}
+            <div class="mt-5 pt-4 border-t border-dashed border-gris-base space-y-2">
+              <a routerLink="/forgot-password" class="cc-link-quiet">
+                <span class="material-symbols-outlined cc-link-quiet__icon text-[18px]">lock_reset</span>
+                <span>{{ forgotPasswordText }}</span>
               </a>
-              <a href="https://canalclima.com/index.php/contacto/" target="_blank" class="block text-left text-[#006281] hover:text-[#004a63] font-georama font-semibold text-xs transition-colors">
-                {{ requestAccessText }}
+              <a href="https://canalclima.com/index.php/contacto/" target="_blank" rel="noopener" class="cc-link-quiet">
+                <span class="material-symbols-outlined cc-link-quiet__icon text-[18px]">contact_support</span>
+                <span>{{ requestAccessText }}</span>
               </a>
             </div>
 
-            <p class="text-center text-xs text-gray-500 mt-3 font-georama leading-relaxed">
-              {{ contactText }} <span class="font-semibold">+57 316 584 7114</span> {{ contactText2 }}
+            <p class="text-center text-[13px] text-gris-dark mt-4 font-georama leading-relaxed">
+              {{ contactText }} <span class="font-semibold text-petroleo">+57 316 584 7114</span> {{ contactText2 }}
             </p>
           </div>
         </div>
 
         <!-- Footer -->
-        <div class="px-4 py-3 text-center bg-slate-900">
+        <div class="px-4 py-3 text-center bg-petroleo">
           <p class="text-xs text-gray-400 font-georama">© 2024 ClimateConnector. {{ footerText }}</p>
           <div class="flex justify-center gap-4 mt-1">
             <a href="#" class="text-xs text-gray-400 hover:text-gray-300 transition-colors">Privacidad</a>
@@ -259,21 +332,19 @@ import { GlobeBannerComponent } from '../components/globe-banner';
       display: block;
       width: 100%;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fade-in {
-      animation: fadeIn 0.8s ease-out forwards;
-    }
   `]
 })
 export class LoginComponent {
   username = '';
   password = '';
+  showPassword = false;
+  usernameTouched = false;
+  passwordTouched = false;
   language: 'es' | 'en' = 'es';
   showingIntro = true;
   skipIntro = false;
+
+  private static readonly MIN_PASSWORD_LENGTH = 6;
 
   constructor(private router: Router) {
     this.skipIntro = this.router.navigated;
@@ -285,29 +356,25 @@ export class LoginComponent {
     loginSubtitle: 'Access the control and monitoring panel',
     usernameLbl: 'USERNAME',
     usernamePlaceholder: 'Enter your username',
+    usernameRequired: 'Please enter your username.',
+    usernameOk: 'Username looks good.',
     passwordLbl: 'PASSWORD',
     passwordPlaceholder: 'Enter your password',
+    passwordRequired: 'Please enter your password.',
+    passwordShort: 'Password must be at least 6 characters.',
+    passwordOk: 'Password meets the requirements.',
     loginBtn: 'LOGIN',
     forgotPasswordText: 'Forgot your password?',
     requestAccessText: 'Request access to the platform',
     contactText: 'If you are not a customer, we appreciate you contacting the sales area at phone',
     contactText2: 'to assign our services.',
     footerText: 'All rights reserved. Professional climate monitoring network.',
-    brandingText: 'Canal Clima provides weather forecasts in Spanish for Colombia, Latin America and the world.',
     privacyText: 'Privacy',
     termsText: 'Terms of Use',
     supportText: 'Technical Support',
     sitemapText: 'Site Map',
-    headline: 'We connect data. We deliver decisions.',
-    description: 'At Canal Clima we transform environmental data into reliable information and tools that drive informed decisions to protect lives, optimize resources and build resilience.',
-    feature1Title: 'Real-time monitoring',
-    feature1Desc: 'Continuous tracking of meteorological and environmental variables.',
-    feature2Title: 'Accurate forecasts',
-    feature2Desc: 'Advanced models to anticipate weather with high precision.',
-    feature3Title: 'Impactful data',
-    feature3Desc: 'Reliable information for risk management and decision making.',
-    feature4Title: 'Comprehensive platform',
-    feature4Desc: 'Tools and APIs to visualize, integrate and share data.'
+    showPasswordLabel: 'Show password',
+    hidePasswordLabel: 'Hide password'
   };
 
   private es = {
@@ -315,58 +382,87 @@ export class LoginComponent {
     loginSubtitle: 'Acceda al panel de control y monitoreo',
     usernameLbl: 'NOMBRE DE USUARIO',
     usernamePlaceholder: 'Ingrese su usuario',
+    usernameRequired: 'Ingrese su usuario.',
+    usernameOk: 'Nombre de usuario válido.',
     passwordLbl: 'CONTRASEÑA',
     passwordPlaceholder: 'Ingrese su contraseña',
+    passwordRequired: 'Ingrese su contraseña.',
+    passwordShort: 'La contraseña debe tener al menos 6 caracteres.',
+    passwordOk: 'Contraseña válida.',
     loginBtn: 'INGRESAR',
     forgotPasswordText: '¿Olvidó su contraseña?',
     requestAccessText: 'Solicitar acceso a la plataforma',
     contactText: 'Si usted no es un cliente, agradecemos contactar con el área comercial al teléfono',
     contactText2: 'para asignar nuestros servicios.',
     footerText: 'Todos los derechos reservados. Red de monitoreo climático profesional.',
-    brandingText: 'Canal Clima provee pronósticos del estado del tiempo en español para Colombia, Latinoamérica y el mundo.',
     privacyText: 'Privacidad',
     termsText: 'Términos de Uso',
     supportText: 'Soporte Técnico',
     sitemapText: 'Mapa del Sitio',
-    headline: 'Conectamos datos. Entregamos decisiones.',
-    description: 'En Canal Clima transformamos datos ambientales en información confiable y herramientas que impulsan decisiones informadas para proteger vidas, optimizar recursos y construir resiliencia.',
-    feature1Title: 'Monitoreo en tiempo real',
-    feature1Desc: 'Seguimiento continuo de variables meteorológicas y ambientales.',
-    feature2Title: 'Pronósticos precisos',
-    feature2Desc: 'Modelos avanzados para anticipar el tiempo con alta precisión.',
-    feature3Title: 'Datos que impactan',
-    feature3Desc: 'Información confiable para la gestión de riesgos y la toma de decisiones.',
-    feature4Title: 'Plataforma integral',
-    feature4Desc: 'Herramientas y APIs para visualizar, integrar y compartir datos.'
+    showPasswordLabel: 'Mostrar contraseña',
+    hidePasswordLabel: 'Ocultar contraseña'
   };
 
-  get loginTitle() { return this.language === 'es' ? this.es.loginTitle : this.en.loginTitle; }
-  get loginSubtitle() { return this.language === 'es' ? this.es.loginSubtitle : this.en.loginSubtitle; }
-  get usernameLbl() { return this.language === 'es' ? this.es.usernameLbl : this.en.usernameLbl; }
-  get usernamePlaceholder() { return this.language === 'es' ? this.es.usernamePlaceholder : this.en.usernamePlaceholder; }
-  get passwordLbl() { return this.language === 'es' ? this.es.passwordLbl : this.en.passwordLbl; }
-  get passwordPlaceholder() { return this.language === 'es' ? this.es.passwordPlaceholder : this.en.passwordPlaceholder; }
-  get loginBtn() { return this.language === 'es' ? this.es.loginBtn : this.en.loginBtn; }
-  get forgotPasswordText() { return this.language === 'es' ? this.es.forgotPasswordText : this.en.forgotPasswordText; }
-  get requestAccessText() { return this.language === 'es' ? this.es.requestAccessText : this.en.requestAccessText; }
-  get contactText() { return this.language === 'es' ? this.es.contactText : this.en.contactText; }
-  get contactText2() { return this.language === 'es' ? this.es.contactText2 : this.en.contactText2; }
-  get footerText() { return this.language === 'es' ? this.es.footerText : this.en.footerText; }
-  get brandingText() { return this.language === 'es' ? this.es.brandingText : this.en.brandingText; }
-  get privacyText() { return this.language === 'es' ? this.es.privacyText : this.en.privacyText; }
-  get termsText() { return this.language === 'es' ? this.es.termsText : this.en.termsText; }
-  get supportText() { return this.language === 'es' ? this.es.supportText : this.en.supportText; }
-  get sitemapText() { return this.language === 'es' ? this.es.sitemapText : this.en.sitemapText; }
-  get headline() { return this.language === 'es' ? this.es.headline : this.en.headline; }
-  get description() { return this.language === 'es' ? this.es.description : this.en.description; }
-  get feature1Title() { return this.language === 'es' ? this.es.feature1Title : this.en.feature1Title; }
-  get feature1Desc() { return this.language === 'es' ? this.es.feature1Desc : this.en.feature1Desc; }
-  get feature2Title() { return this.language === 'es' ? this.es.feature2Title : this.en.feature2Title; }
-  get feature2Desc() { return this.language === 'es' ? this.es.feature2Desc : this.en.feature2Desc; }
-  get feature3Title() { return this.language === 'es' ? this.es.feature3Title : this.en.feature3Title; }
-  get feature3Desc() { return this.language === 'es' ? this.es.feature3Desc : this.en.feature3Desc; }
-  get feature4Title() { return this.language === 'es' ? this.es.feature4Title : this.en.feature4Title; }
-  get feature4Desc() { return this.language === 'es' ? this.es.feature4Desc : this.en.feature4Desc; }
+  get t() { return this.language === 'es' ? this.es : this.en; }
+  get loginTitle() { return this.t.loginTitle; }
+  get loginSubtitle() { return this.t.loginSubtitle; }
+  get usernameLbl() { return this.t.usernameLbl; }
+  get usernamePlaceholder() { return this.t.usernamePlaceholder; }
+  get passwordLbl() { return this.t.passwordLbl; }
+  get passwordPlaceholder() { return this.t.passwordPlaceholder; }
+  get loginBtn() { return this.t.loginBtn; }
+  get forgotPasswordText() { return this.t.forgotPasswordText; }
+  get requestAccessText() { return this.t.requestAccessText; }
+  get contactText() { return this.t.contactText; }
+  get contactText2() { return this.t.contactText2; }
+  get footerText() { return this.t.footerText; }
+  get privacyText() { return this.t.privacyText; }
+  get termsText() { return this.t.termsText; }
+  get supportText() { return this.t.supportText; }
+  get sitemapText() { return this.t.sitemapText; }
+  get branding(): BrandingCopy { return getBrandingCopy(this.language); }
+  get showPasswordAria() { return this.showPassword ? this.t.hidePasswordLabel : this.t.showPasswordLabel; }
+
+  get usernameError(): string {
+    if (!this.usernameTouched) return '';
+    if (!this.username.trim()) return this.t.usernameRequired;
+    return '';
+  }
+
+  get usernameSuccess(): string {
+    return this.usernameTouched && this.username.trim().length > 0 ? this.t.usernameOk : '';
+  }
+
+  get usernameState(): FieldState {
+    if (this.usernameError) return 'error';
+    if (this.usernameTouched && this.username.trim().length > 0) return 'success';
+    return 'default';
+  }
+
+  get passwordError(): string {
+    if (!this.passwordTouched) return '';
+    if (!this.password) return this.t.passwordRequired;
+    if (this.password.length < LoginComponent.MIN_PASSWORD_LENGTH) return this.t.passwordShort;
+    return '';
+  }
+
+  get passwordSuccess(): string {
+    return this.passwordTouched && this.password.length >= LoginComponent.MIN_PASSWORD_LENGTH ? this.t.passwordOk : '';
+  }
+
+  get passwordState(): FieldState {
+    if (this.passwordError) return 'error';
+    if (this.passwordTouched && this.password.length >= LoginComponent.MIN_PASSWORD_LENGTH) return 'success';
+    return 'default';
+  }
+
+  isFormValid(): boolean {
+    return this.username.trim().length > 0 && this.password.length >= LoginComponent.MIN_PASSWORD_LENGTH;
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
 
   toggleLanguage() {
     this.language = this.language === 'es' ? 'en' : 'es';
@@ -379,6 +475,9 @@ export class LoginComponent {
   }
 
   onLogin() {
+    this.usernameTouched = true;
+    this.passwordTouched = true;
+    if (!this.isFormValid()) return;
     window.location.href = '/loading';
   }
 }

@@ -50,6 +50,81 @@
     @apply px-4 py-2 rounded-xl text-xs;
     letter-spacing: 0.03em;
   }
+
+  .cc-btn-primary {
+    @apply h-[48px] px-6 rounded-lg font-mulish font-semibold text-sm transition-all flex items-center justify-center gap-2;
+    background-color: #006281;
+    color: #ffffff;
+    box-shadow: 0 10px 25px -10px rgba(0, 98, 129, 0.55);
+  }
+  .cc-btn-primary:hover {
+    background-color: #004a61;
+  }
+  .cc-btn-primary:active {
+    background-color: #003647;
+  }
+  .cc-btn-primary:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(0, 170, 238, 0.30);
+  }
+  .cc-btn-primary:disabled {
+    background-color: #AEB6BD;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+
+  .cc-input {
+    @apply h-[48px] w-full px-4 bg-white border-2 rounded-lg text-sm text-petroleo placeholder-gris-medio transition-colors duration-200;
+    border-color: #D7DCE1;
+  }
+  .cc-input:hover {
+    border-color: #AEB6BD;
+  }
+  .cc-input:focus {
+    outline: none;
+    border-color: #00AAEE;
+    box-shadow: 0 0 0 4px rgba(0, 170, 238, 0.20);
+  }
+  .cc-input--error {
+    background-color: #FBEAE8;
+    border-color: #C2362B;
+  }
+  .cc-input--error:focus {
+    border-color: #C2362B;
+    box-shadow: 0 0 0 4px rgba(194, 54, 43, 0.20);
+  }
+  .cc-input--success {
+    background-color: #E5F3FA;
+    border-color: #00AAEE;
+  }
+  .cc-input--success:focus {
+    border-color: #00AAEE;
+    box-shadow: 0 0 0 4px rgba(0, 170, 238, 0.20);
+  }
+
+  .cc-input-hint {
+    @apply text-xs mt-1 flex items-center gap-1 font-medium;
+  }
+  .cc-input-hint--error {
+    color: #C2362B;
+  }
+  .cc-input-hint--success {
+    color: #006281;
+  }
+
+  .cc-link-quiet {
+    @apply flex items-center gap-2 text-sm font-georama font-semibold transition-all duration-200;
+    color: #006281;
+  }
+  .cc-link-quiet:hover {
+    color: #004a61;
+  }
+  .cc-link-quiet .cc-link-quiet__icon {
+    transition: transform 0.2s ease;
+  }
+  .cc-link-quiet:hover .cc-link-quiet__icon {
+    transform: translateX(2px);
+  }
 }
 
 html, body {

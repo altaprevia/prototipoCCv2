@@ -3,11 +3,15 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { GlobeBannerComponent } from '../components/globe-banner';
+import { FormFieldComponent } from '../shared/form-field';
+import { getBrandingCopy, BrandingCopy } from '../shared/branding-copy';
+
+type FieldState = 'default' | 'error' | 'success';
 
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule, GlobeBannerComponent],
+  imports: [CommonModule, RouterLink, FormsModule, GlobeBannerComponent, FormFieldComponent],
   template: `
     <!-- Globe background (fixed full-screen, z-0) -->
     <app-globe-banner [skipAnimation]="true"></app-globe-banner>
@@ -15,8 +19,8 @@ import { GlobeBannerComponent } from '../components/globe-banner';
     <!-- Desktop layout -->
     <div class="hidden md:flex min-h-screen flex-col font-georama relative z-10">
       <div class="flex-1 flex">
-        <!-- Left side - Branding -->
-        <div class="md:w-1/2 flex-col">
+        <!-- Left side - Branding (transparent, globe visible behind) -->
+        <div class="md:w-1/2 flex flex-col relative min-h-0">
           <div class="p-4">
             <a href="https://canalclima.com/" target="_blank">
               <img
@@ -26,23 +30,34 @@ import { GlobeBannerComponent } from '../components/globe-banner';
               >
             </a>
           </div>
-          <div class="flex-1 flex flex-col justify-start items-center pt-8 pb-4 px-8">
+          <div class="flex-1 min-h-0 overflow-y-auto flex flex-col justify-start items-center pt-4 pb-2 px-8">
             <img
               src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
               alt="Climate Connector"
-              class="w-48 h-auto object-contain mb-4"
+              class="w-40 h-auto object-contain mb-1"
             >
-            <div class="max-w-md text-center">
-              <p class="text-gray-900 font-georama text-sm px-4 py-2">
-                {{ brandingText }}
-              </p>
+            <span class="text-[10px] uppercase tracking-widest font-bold text-gris-medio mb-3">v2.0 · Professional Climate Network</span>
+            <h2 class="text-xl font-mulish font-bold text-center text-gray-900 mb-2">{{ branding.headline }}</h2>
+            <p class="text-center text-xs text-gray-600 mb-8 max-w-lg font-georama leading-relaxed">{{ branding.description }}</p>
+
+            <div class="grid grid-cols-4 gap-4 max-w-2xl w-full">
+              @for (f of branding.features; track f.icon) {
+                <div class="flex flex-col items-center text-center">
+                  <img [src]="'/icons/' + f.icon + '.svg'" [alt]="f.title" class="w-8 h-8 mb-1">
+                  <h3 class="text-xs font-mulish font-bold text-gray-900 mb-0.5">{{ f.title }}</h3>
+                  <p class="text-xs text-gray-600 font-georama leading-tight">{{ f.desc }}</p>
+                </div>
+              }
             </div>
           </div>
         </div>
 
         <!-- Right side - Forgot Password Form -->
-        <div class="md:w-1/2 bg-slate-900 flex flex-col">
-          <div class="flex justify-between items-center p-6">
+        <div class="md:w-1/2 flex flex-col relative overflow-hidden bg-gradient-to-br from-petroleo via-[#0E2D4D] to-baltico">
+          <div class="pointer-events-none absolute -top-24 -right-24 w-80 h-80 rounded-full bg-cian/25 blur-3xl"></div>
+          <div class="pointer-events-none absolute -bottom-32 -left-20 w-[28rem] h-[28rem] rounded-full bg-cyan-400/15 blur-3xl"></div>
+
+          <div class="relative z-10 flex justify-between items-center p-6">
             <div class="flex-1"></div>
             <button (click)="toggleLanguage()" class="cc-btn cc-btn-compact flex items-center gap-2">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -52,32 +67,51 @@ import { GlobeBannerComponent } from '../components/globe-banner';
             </button>
           </div>
 
-          <div class="flex-1 flex items-center justify-center p-6 md:p-12">
+          <div class="relative z-10 flex-1 min-h-0 overflow-y-auto flex items-center justify-center p-6 md:p-12">
             <div class="w-full max-w-md">
-              <div class="bg-white rounded-xl p-8 md:p-10 shadow-xl">
+              <div class="bg-white rounded-2xl p-8 md:p-10 ring-1 ring-white/40 shadow-2xl shadow-petroleo/40">
                 <div *ngIf="!submitted">
-                  <h1 class="text-2xl md:text-3xl font-mulish font-bold text-center text-gray-900 mb-2">{{ title }}</h1>
-                  <p class="text-center text-sm text-gray-600 mb-8 font-georama">{{ subtitle }}</p>
+                  <!-- Brand lockup -->
+                  <div class="flex items-center justify-center gap-2 mb-4">
+                    <img
+                      src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
+                      alt="Climate Connector"
+                      class="h-6 w-auto"
+                    >
+                    <span class="h-4 w-px bg-gris-base"></span>
+                    <span class="text-[11px] font-mulish font-semibold text-gris-medio uppercase tracking-wider">Secure Access</span>
+                  </div>
 
-                  <form (ngSubmit)="onSubmit()" class="space-y-5">
-                    <div>
-                      <label class="block text-xs font-mulish font-semibold text-gray-700 uppercase tracking-wider mb-2">
-                        {{ emailLbl }}
-                      </label>
-                      <input
-                        type="email"
-                        [(ngModel)]="email"
-                        name="email"
-                        [placeholder]="emailPlaceholder"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg font-georama text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
-                      >
-                    </div>
+                  <div class="flex items-center justify-center gap-2 mb-2">
+                    <span class="material-symbols-outlined text-baltico text-[20px]">lock_reset</span>
+                    <h1 class="text-2xl md:text-[26px] font-mulish font-bold text-center text-petroleo tracking-tight">{{ title }}</h1>
+                  </div>
+                  <p class="text-center text-sm text-gris-dark mb-7 font-georama">{{ subtitle }}</p>
 
-                    <div class="flex gap-3">
+                  <form (ngSubmit)="onSubmit()" class="space-y-5" novalidate>
+                    <app-form-field
+                      [label]="emailLbl"
+                      type="email"
+                      [placeholder]="emailPlaceholder"
+                      name="email"
+                      autocomplete="email"
+                      leadingIcon="mail"
+                      [required]="true"
+                      [(ngModel)]="email"
+                      [state]="emailState"
+                      [errorMessage]="emailError"
+                      [successMessage]="emailSuccess"
+                      (blurred)="emailTouched = true"
+                    ></app-form-field>
+
+                    <div class="flex gap-3 pt-1">
                       <a routerLink="/login" class="cc-btn flex-1 text-center py-3 whitespace-nowrap">
                         {{ cancelBtn }}
                       </a>
-                      <button type="submit" class="cc-btn flex-1 py-3 whitespace-nowrap">
+                      <button
+                        type="submit"
+                        class="cc-btn flex-1 whitespace-nowrap"
+                      >
                         {{ submitBtn }} →
                       </button>
                     </div>
@@ -85,11 +119,11 @@ import { GlobeBannerComponent } from '../components/globe-banner';
                 </div>
 
                 <div *ngIf="submitted" class="text-center">
-                  <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #2d6281;">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                  </svg>
-                  <h2 class="text-2xl font-mulish font-bold text-gray-900 mb-2">{{ successTitle }}</h2>
-                  <p class="text-gray-600 mb-6 font-georama">{{ successMessage }}</p>
+                  <div class="mx-auto mb-4 w-16 h-16 rounded-full bg-blue-bg flex items-center justify-center">
+                    <span class="material-symbols-outlined text-baltico text-[36px]">mark_email_read</span>
+                  </div>
+                  <h2 class="text-2xl font-mulish font-bold text-petroleo mb-2">{{ successTitle }}</h2>
+                  <p class="text-gris-dark mb-6 font-georama">{{ successMessage }}</p>
                   <a routerLink="/login" class="cc-btn inline-block">
                     {{ backToLoginBtn }} →
                   </a>
@@ -145,32 +179,53 @@ import { GlobeBannerComponent } from '../components/globe-banner';
       <!-- Spacer for globe -->
       <div class="flex-1 min-h-[25vh]"></div>
 
-      <!-- Forgot Password Form Section (blue background) -->
-      <div class="bg-slate-900 px-4 pt-6 pb-4">
-        <div class="bg-white rounded-xl p-5 shadow-xl">
+      <!-- Forgot Password Form Section (gradient background) -->
+      <div class="relative overflow-hidden bg-gradient-to-t from-petroleo to-baltico px-4 pt-6 pb-4">
+        <div class="pointer-events-none absolute -top-12 right-0 w-64 h-64 rounded-full bg-cian/20 blur-3xl"></div>
+        <div class="pointer-events-none absolute -bottom-16 -left-10 w-72 h-72 rounded-full bg-cyan-400/15 blur-3xl"></div>
+
+        <div class="relative bg-white rounded-2xl p-6 ring-1 ring-white/40 shadow-2xl shadow-petroleo/40">
           <div *ngIf="!submitted">
-            <h1 class="text-lg font-mulish font-bold text-center text-gray-900 mb-1">{{ title }}</h1>
-            <p class="text-center text-xs text-gray-600 mb-4 font-georama">{{ subtitle }}</p>
+            <div class="flex items-center justify-center gap-2 mb-3">
+              <img
+                src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
+                alt="Climate Connector"
+                class="h-5 w-auto"
+              >
+              <span class="h-4 w-px bg-gris-base"></span>
+              <span class="text-[10px] font-mulish font-semibold text-gris-medio uppercase tracking-wider">Secure Access</span>
+            </div>
 
-            <form (ngSubmit)="onSubmit()" class="space-y-3">
-              <div>
-                <label class="block text-xs font-mulish font-semibold text-gray-700 uppercase tracking-wider mb-1">
-                  {{ emailLbl }}
-                </label>
-                <input
-                  type="email"
-                  [(ngModel)]="email"
-                  name="email"
-                  [placeholder]="emailPlaceholder"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-lg font-georama text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
-                >
-              </div>
+            <div class="flex items-center justify-center gap-2 mb-1">
+              <span class="material-symbols-outlined text-baltico text-[18px]">lock_reset</span>
+              <h1 class="text-lg font-mulish font-bold text-center text-petroleo tracking-tight">{{ title }}</h1>
+            </div>
+            <p class="text-center text-xs text-gris-dark mb-4 font-georama">{{ subtitle }}</p>
 
-              <div class="flex gap-3">
+            <form (ngSubmit)="onSubmit()" class="space-y-4" novalidate>
+              <app-form-field
+                [label]="emailLbl"
+                type="email"
+                [placeholder]="emailPlaceholder"
+                name="email-m"
+                autocomplete="email"
+                leadingIcon="mail"
+                [required]="true"
+                [(ngModel)]="email"
+                [state]="emailState"
+                [errorMessage]="emailError"
+                [successMessage]="emailSuccess"
+                (blurred)="emailTouched = true"
+              ></app-form-field>
+
+              <div class="flex gap-3 pt-1">
                 <a routerLink="/login" class="cc-btn flex-1 text-center py-3 whitespace-nowrap">
                   {{ cancelBtn }}
                 </a>
-                <button type="submit" class="cc-btn flex-1 py-3 whitespace-nowrap">
+                <button
+                  type="submit"
+                  class="cc-btn flex-1 whitespace-nowrap"
+                >
                   {{ submitBtn }} →
                 </button>
               </div>
@@ -178,11 +233,11 @@ import { GlobeBannerComponent } from '../components/globe-banner';
           </div>
 
           <div *ngIf="submitted" class="text-center">
-            <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #2d6281;">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-            </svg>
-            <h2 class="text-xl font-mulish font-bold text-gray-900 mb-2">{{ successTitle }}</h2>
-            <p class="text-gray-600 mb-6 font-georama text-sm">{{ successMessage }}</p>
+            <div class="mx-auto mb-4 w-14 h-14 rounded-full bg-blue-bg flex items-center justify-center">
+              <span class="material-symbols-outlined text-baltico text-[32px]">mark_email_read</span>
+            </div>
+            <h2 class="text-xl font-mulish font-bold text-petroleo mb-2">{{ successTitle }}</h2>
+            <p class="text-gris-dark mb-6 font-georama text-sm">{{ successMessage }}</p>
             <a routerLink="/login" class="cc-btn inline-block">
               {{ backToLoginBtn }} →
             </a>
@@ -191,7 +246,7 @@ import { GlobeBannerComponent } from '../components/globe-banner';
       </div>
 
       <!-- Mobile footer -->
-      <div class="px-4 py-3 text-center bg-slate-900">
+      <div class="px-4 py-3 text-center bg-petroleo">
         <p class="text-xs text-gray-400 font-georama">© 2024 ClimateConnector. {{ footerText }}</p>
         <div class="flex justify-center gap-4 mt-1">
           <a href="#" class="text-xs text-gray-400 hover:text-gray-300 transition-colors">{{ privacyText }}</a>
@@ -211,6 +266,7 @@ import { GlobeBannerComponent } from '../components/globe-banner';
 })
 export class ForgotPasswordComponent {
   email = '';
+  emailTouched = false;
   language: 'es' | 'en' = 'es';
   submitted = false;
 
@@ -219,13 +275,15 @@ export class ForgotPasswordComponent {
     subtitle: 'Enter your institutional email to receive the recovery instructions.',
     emailLbl: 'EMAIL',
     emailPlaceholder: 'Enter your email',
+    emailRequired: 'Please enter your email.',
+    emailInvalid: 'Please enter a valid email address.',
+    emailOk: 'Email looks good.',
     cancelBtn: 'CANCEL',
     submitBtn: 'SEND',
     successTitle: 'Email Sent!',
     successMessage: 'Recovery instructions have been sent to your email.',
     backToLoginBtn: 'BACK TO LOGIN',
     footerText: 'All rights reserved. Professional climate monitoring network.',
-    brandingText: 'Canal Clima provides weather forecasts in Spanish for Colombia, Latin America and the world.',
     privacyText: 'Privacy',
     termsText: 'Terms of Use',
     supportText: 'Technical Support',
@@ -237,40 +295,71 @@ export class ForgotPasswordComponent {
     subtitle: 'Ingresa tu correo electrónico institucional para recibir las instrucciones de recuperación.',
     emailLbl: 'CORREO ELECTRÓNICO',
     emailPlaceholder: 'Ingrese su correo',
+    emailRequired: 'Ingrese su correo electrónico.',
+    emailInvalid: 'Ingrese un correo electrónico válido.',
+    emailOk: 'Correo electrónico válido.',
     cancelBtn: 'CANCELAR',
     submitBtn: 'ENVIAR',
     successTitle: '¡Correo Enviado!',
     successMessage: 'Se han enviado las instrucciones de recuperación a tu correo electrónico.',
     backToLoginBtn: 'VOLVER AL LOGIN',
     footerText: 'Todos los derechos reservados. Red de monitoreo climático profesional.',
-    brandingText: 'Canal Clima provee pronósticos del estado del tiempo en español para Colombia, Latinoamérica y el mundo.',
     privacyText: 'Privacidad',
     termsText: 'Términos de Uso',
     supportText: 'Soporte Técnico',
     sitemapText: 'Mapa del Sitio'
   };
 
-  get title() { return this.language === 'es' ? this.es.title : this.en.title; }
-  get subtitle() { return this.language === 'es' ? this.es.subtitle : this.en.subtitle; }
-  get emailLbl() { return this.language === 'es' ? this.es.emailLbl : this.en.emailLbl; }
-  get emailPlaceholder() { return this.language === 'es' ? this.es.emailPlaceholder : this.en.emailPlaceholder; }
-  get cancelBtn() { return this.language === 'es' ? this.es.cancelBtn : this.en.cancelBtn; }
-  get submitBtn() { return this.language === 'es' ? this.es.submitBtn : this.en.submitBtn; }
-  get successTitle() { return this.language === 'es' ? this.es.successTitle : this.en.successTitle; }
-  get successMessage() { return this.language === 'es' ? this.es.successMessage : this.en.successMessage; }
-  get backToLoginBtn() { return this.language === 'es' ? this.es.backToLoginBtn : this.en.backToLoginBtn; }
-  get footerText() { return this.language === 'es' ? this.es.footerText : this.en.footerText; }
-  get brandingText() { return this.language === 'es' ? this.es.brandingText : this.en.brandingText; }
-  get privacyText() { return this.language === 'es' ? this.es.privacyText : this.en.privacyText; }
-  get termsText() { return this.language === 'es' ? this.es.termsText : this.en.termsText; }
-  get supportText() { return this.language === 'es' ? this.es.supportText : this.en.supportText; }
-  get sitemapText() { return this.language === 'es' ? this.es.sitemapText : this.en.sitemapText; }
+  get t() { return this.language === 'es' ? this.es : this.en; }
+  get title() { return this.t.title; }
+  get subtitle() { return this.t.subtitle; }
+  get emailLbl() { return this.t.emailLbl; }
+  get emailPlaceholder() { return this.t.emailPlaceholder; }
+  get cancelBtn() { return this.t.cancelBtn; }
+  get submitBtn() { return this.t.submitBtn; }
+  get successTitle() { return this.t.successTitle; }
+  get successMessage() { return this.t.successMessage; }
+  get backToLoginBtn() { return this.t.backToLoginBtn; }
+  get footerText() { return this.t.footerText; }
+  get privacyText() { return this.t.privacyText; }
+  get termsText() { return this.t.termsText; }
+  get supportText() { return this.t.supportText; }
+  get sitemapText() { return this.t.sitemapText; }
+  get branding(): BrandingCopy { return getBrandingCopy(this.language); }
+
+  private isWellFormedEmail(value: string): boolean {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+  }
+
+  get emailError(): string {
+    if (!this.emailTouched) return '';
+    const v = this.email.trim();
+    if (!v) return this.t.emailRequired;
+    if (!this.isWellFormedEmail(v)) return this.t.emailInvalid;
+    return '';
+  }
+
+  get emailSuccess(): string {
+    return this.emailTouched && this.isWellFormedEmail(this.email.trim()) ? this.t.emailOk : '';
+  }
+
+  get emailState(): FieldState {
+    if (this.emailError) return 'error';
+    if (this.emailTouched && this.isWellFormedEmail(this.email.trim())) return 'success';
+    return 'default';
+  }
+
+  isEmailValid(): boolean {
+    return this.isWellFormedEmail(this.email.trim());
+  }
 
   toggleLanguage() {
     this.language = this.language === 'es' ? 'en' : 'es';
   }
 
   onSubmit() {
+    this.emailTouched = true;
+    if (!this.isEmailValid()) return;
     this.submitted = true;
   }
 }
