@@ -103,7 +103,7 @@
   }
 
   .cc-input-hint {
-    @apply text-xs mt-1 flex items-center gap-1 font-medium;
+    @apply text-xs mt-0.5 flex items-center gap-1 font-medium;
   }
   .cc-input-hint--error {
     color: #C2362B;

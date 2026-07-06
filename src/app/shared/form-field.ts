@@ -20,7 +20,7 @@ export type FormFieldState = 'default' | 'error' | 'success';
       <label
         *ngIf="label"
         [for]="fieldId"
-        class="block text-[11px] font-mulish font-bold uppercase tracking-wider mb-1.5"
+        class="block text-[11px] font-mulish font-bold uppercase tracking-wider mb-1"
         [class.text-petroleo]="state !== 'error'"
         [class.text-red]="state === 'error'"
       >

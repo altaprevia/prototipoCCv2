@@ -36,7 +36,7 @@ type FieldState = 'default' | 'error' | 'success';
       [class.pointer-events-none]="showingIntro"
     >
       <!-- Desktop layout -->
-      <div class="hidden md:flex flex-1">
+      <div class="hidden md:flex flex-1 min-h-0">
          <!-- Left side - Branding (transparent, globe visible behind) -->
          <div class="md:w-1/2 flex flex-col relative min-h-0">
            <div class="p-4">
@@ -48,20 +48,19 @@ type FieldState = 'default' | 'error' | 'success';
                >
              </a>
            </div>
-            <div class="flex-1 min-h-0 overflow-y-auto flex flex-col justify-start items-center pt-4 pb-2 px-8">
+            <div class="flex-1 min-h-0 overflow-y-auto flex flex-col justify-start items-center pt-3 pb-2 px-6">
              <img
                src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
                alt="Climate Connector"
-               class="w-40 h-auto object-contain mb-1"
+               class="w-32 h-auto object-contain mb-1"
              >
-             <span class="text-[10px] uppercase tracking-widest font-bold text-gris-medio mb-3">v2.0 · Professional Climate Network</span>
-              <h2 class="text-xl font-mulish font-bold text-center text-gray-900 mb-2">{{ branding.headline }}</h2>
-              <p class="text-center text-xs text-gray-600 mb-8 max-w-lg font-georama leading-relaxed">{{ branding.description }}</p>
+              <h2 class="text-lg font-mulish font-bold text-center text-gray-900 mb-1">{{ branding.headline }}</h2>
+              <p class="text-center text-xs text-gray-600 mb-5 max-w-lg font-georama leading-relaxed">{{ branding.description }}</p>
 
-             <div class="grid grid-cols-4 gap-4 max-w-2xl w-full">
+             <div class="grid grid-cols-4 gap-3 max-w-2xl w-full">
                @for (f of branding.features; track f.icon) {
                  <div class="flex flex-col items-center text-center">
-                   <img [src]="'/icons/' + f.icon + '.svg'" [alt]="f.title" class="w-8 h-8 mb-1">
+                   <img [src]="'/icons/' + f.icon + '.svg'" [alt]="f.title" class="w-7 h-7 mb-1">
                    <h3 class="text-xs font-mulish font-bold text-gray-900 mb-0.5">{{ f.title }}</h3>
                    <p class="text-xs text-gray-600 font-georama leading-tight">{{ f.desc }}</p>
                  </div>
@@ -71,7 +70,7 @@ type FieldState = 'default' | 'error' | 'success';
          </div>
 
         <!-- Right side - Login Form (gradient background) -->
-        <div class="md:w-1/2 flex flex-col relative overflow-hidden bg-gradient-to-br from-petroleo via-[#0E2D4D] to-baltico">
+        <div class="md:w-1/2 flex flex-col relative overflow-hidden bg-gradient-to-br from-petroleo via-[#0E2D4D] to-baltico min-h-0">
           <!-- Decorative blobs -->
           <div class="pointer-events-none absolute -top-24 -right-24 w-80 h-80 rounded-full bg-cian/25 blur-3xl"></div>
           <div class="pointer-events-none absolute -bottom-32 -left-20 w-[28rem] h-[28rem] rounded-full bg-cyan-400/15 blur-3xl"></div>
@@ -88,25 +87,14 @@ type FieldState = 'default' | 'error' | 'success';
 
           <div class="relative z-10 flex-1 min-h-0 overflow-y-auto flex items-center justify-center p-6">
             <div class="w-full max-w-sm">
-              <div class="bg-white rounded-2xl p-7 ring-1 ring-white/40 shadow-2xl shadow-petroleo/40">
-                <!-- Brand lockup -->
-                <div class="flex items-center justify-center gap-2 mb-4">
-                  <img
-                    src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
-                    alt="Climate Connector"
-                    class="h-6 w-auto"
-                  >
-                  <span class="h-4 w-px bg-gris-base"></span>
-                  <span class="text-[11px] font-mulish font-semibold text-gris-medio uppercase tracking-wider">Secure Access</span>
-                </div>
-
-                <div class="flex items-center justify-center gap-2 mb-1">
+              <div class="bg-white rounded-2xl p-5 ring-1 ring-white/40 shadow-2xl shadow-petroleo/40">
+                <div class="flex items-center justify-center gap-2 mb-0.5">
                   <span class="material-symbols-outlined text-baltico text-[18px]">verified_user</span>
-                  <h1 class="text-[22px] font-mulish font-bold text-center text-petroleo tracking-tight">{{ loginTitle }}</h1>
+                  <h1 class="text-xl font-mulish font-bold text-center text-petroleo tracking-tight">{{ loginTitle }}</h1>
                 </div>
-                <p class="text-center text-sm text-gris-dark mb-5 font-georama">{{ loginSubtitle }}</p>
+                <p class="text-center text-sm text-gris-dark mb-3 font-georama">{{ loginSubtitle }}</p>
 
-                <form (ngSubmit)="onLogin()" class="space-y-4" novalidate>
+                <form (ngSubmit)="onLogin()" class="flex flex-col gap-2.5" novalidate>
                   <app-form-field
                     [label]="usernameLbl"
                     type="text"
@@ -159,7 +147,7 @@ type FieldState = 'default' | 'error' | 'success';
                   </button>
                 </form>
 
-                <div class="mt-5 pt-4 border-t border-dashed border-gris-base space-y-2">
+                <div class="mt-3 pt-2 border-t border-dashed border-gris-base space-y-2">
                   <a routerLink="/forgot-password" class="cc-link-quiet">
                     <span class="material-symbols-outlined cc-link-quiet__icon text-[18px]">lock_reset</span>
                     <span>{{ forgotPasswordText }}</span>
@@ -170,7 +158,7 @@ type FieldState = 'default' | 'error' | 'success';
                   </a>
                 </div>
 
-                <p class="text-center text-[13px] text-gris-dark mt-4 font-georama leading-relaxed">
+                <p class="text-center text-[13px] text-gris-dark mt-2 font-georama leading-relaxed">
                   {{ contactText }} <span class="font-semibold text-petroleo">+57 316 584 7114</span> {{ contactText2 }}
                 </p>
               </div>
@@ -180,7 +168,7 @@ type FieldState = 'default' | 'error' | 'success';
       </div>
 
       <!-- Desktop footer -->
-      <div class="hidden md:flex bg-white border-t border-gray-200 px-4 py-2">
+      <div class="hidden md:flex bg-white border-t border-gray-200 px-4 py-1.5">
         <div class="flex flex-wrap items-center justify-between gap-2 text-xs text-gray-500 font-georama w-full">
           <p>© 2024 ClimateConnector. {{ footerText }}</p>
           <div class="flex gap-4">
@@ -211,41 +199,30 @@ type FieldState = 'default' | 'error' | 'success';
         </div>
 
         <!-- Branding section -->
-        <div class="flex flex-col items-center px-6 pt-2 pb-4">
+        <div class="flex flex-col items-center px-6 pt-2 pb-3">
           <img
             src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
             alt="Climate Connector"
-            class="w-40 h-auto object-contain"
+            class="w-32 h-auto object-contain"
           >
         </div>
 
         <!-- Spacer to push form down, globe visible here -->
-        <div class="flex-1 min-h-[25vh]"></div>
+        <div class="flex-1 min-h-[20vh]"></div>
 
         <!-- Login Form Section (gradient background) -->
-        <div class="relative overflow-hidden bg-gradient-to-t from-petroleo to-baltico px-4 pt-6 pb-4">
+        <div class="relative overflow-hidden bg-gradient-to-t from-petroleo to-baltico px-4 pt-5 pb-3">
           <div class="pointer-events-none absolute -top-12 right-0 w-64 h-64 rounded-full bg-cian/20 blur-3xl"></div>
           <div class="pointer-events-none absolute -bottom-16 -left-10 w-72 h-72 rounded-full bg-cyan-400/15 blur-3xl"></div>
 
-          <div class="relative bg-white rounded-2xl p-6 ring-1 ring-white/40 shadow-2xl shadow-petroleo/40">
-            <!-- Brand lockup -->
-            <div class="flex items-center justify-center gap-2 mb-3">
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
-                alt="Climate Connector"
-                class="h-5 w-auto"
-              >
-              <span class="h-4 w-px bg-gris-base"></span>
-              <span class="text-[10px] font-mulish font-semibold text-gris-medio uppercase tracking-wider">Secure Access</span>
-            </div>
-
-            <div class="flex items-center justify-center gap-2 mb-1">
+          <div class="relative bg-white rounded-2xl p-5 ring-1 ring-white/40 shadow-2xl shadow-petroleo/40">
+            <div class="flex items-center justify-center gap-2 mb-0.5">
               <span class="material-symbols-outlined text-baltico text-[16px]">verified_user</span>
               <h1 class="text-lg font-mulish font-bold text-center text-petroleo tracking-tight">{{ loginTitle }}</h1>
             </div>
-            <p class="text-center text-xs text-gris-dark mb-4 font-georama">{{ loginSubtitle }}</p>
+            <p class="text-center text-xs text-gris-dark mb-3 font-georama">{{ loginSubtitle }}</p>
 
-            <form (ngSubmit)="onLogin()" class="space-y-4" novalidate>
+            <form (ngSubmit)="onLogin()" class="flex flex-col gap-2.5" novalidate>
               <app-form-field
                 [label]="usernameLbl"
                 type="text"
@@ -298,7 +275,7 @@ type FieldState = 'default' | 'error' | 'success';
               </button>
             </form>
 
-            <div class="mt-5 pt-4 border-t border-dashed border-gris-base space-y-2">
+            <div class="mt-3 pt-2 border-t border-dashed border-gris-base space-y-2">
               <a routerLink="/forgot-password" class="cc-link-quiet">
                 <span class="material-symbols-outlined cc-link-quiet__icon text-[18px]">lock_reset</span>
                 <span>{{ forgotPasswordText }}</span>
@@ -309,14 +286,14 @@ type FieldState = 'default' | 'error' | 'success';
               </a>
             </div>
 
-            <p class="text-center text-[13px] text-gris-dark mt-4 font-georama leading-relaxed">
+            <p class="text-center text-[13px] text-gris-dark mt-2 font-georama leading-relaxed">
               {{ contactText }} <span class="font-semibold text-petroleo">+57 316 584 7114</span> {{ contactText2 }}
             </p>
           </div>
         </div>
 
         <!-- Footer -->
-        <div class="px-4 py-3 text-center bg-petroleo">
+        <div class="px-4 py-2 text-center bg-petroleo">
           <p class="text-xs text-gray-400 font-georama">© 2024 ClimateConnector. {{ footerText }}</p>
           <div class="flex justify-center gap-4 mt-1">
             <a href="#" class="text-xs text-gray-400 hover:text-gray-300 transition-colors">Privacidad</a>
