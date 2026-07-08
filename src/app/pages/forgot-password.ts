@@ -137,7 +137,7 @@ type FieldState = 'default' | 'error' | 'success';
     </div>
 
     <!-- Mobile layout -->
-    <div class="md:hidden flex flex-col min-h-screen font-georama relative z-10">
+    <div class="md:hidden flex flex-col min-h-screen font-georama relative z-10 bg-gradient-to-b from-white from-[0%] via-baltico/40 via-[35%] to-baltico to-[65%]">
       <!-- Header -->
       <div class="flex justify-between items-center px-4 py-3">
         <a href="https://canalclima.com/" target="_blank">
@@ -165,10 +165,10 @@ type FieldState = 'default' | 'error' | 'success';
       </div>
 
       <!-- Spacer for globe -->
-      <div class="flex-1 min-h-[20vh]"></div>
+      <div class="flex-1 min-h-[10vh]"></div>
 
-      <!-- Forgot Password Form Section (gradient background) -->
-      <div class="relative overflow-hidden bg-gradient-to-t from-petroleo to-baltico px-4 pt-5 pb-3">
+      <!-- Forgot Password Form Section (inherits gradient from parent) -->
+      <div class="relative overflow-hidden px-4 pt-10 pb-5 flex flex-col flex-1">
         <div class="pointer-events-none absolute -top-12 right-0 w-64 h-64 rounded-full bg-cian/20 blur-3xl"></div>
         <div class="pointer-events-none absolute -bottom-16 -left-10 w-72 h-72 rounded-full bg-cyan-400/15 blur-3xl"></div>
 
@@ -224,13 +224,16 @@ type FieldState = 'default' | 'error' | 'success';
       </div>
 
       <!-- Mobile footer -->
-      <div class="px-4 py-2 text-center bg-petroleo">
-        <p class="text-xs text-gray-400 font-georama">© 2024 ClimateConnector. {{ footerText }}</p>
-        <div class="flex justify-center gap-4 mt-1">
-          <a href="#" class="text-xs text-gray-400 hover:text-gray-300 transition-colors">{{ privacyText }}</a>
-          <a href="#" class="text-xs text-gray-400 hover:text-gray-300 transition-colors">{{ termsText }}</a>
-          <a href="#" class="text-xs text-gray-400 hover:text-gray-300 transition-colors">{{ supportText }}</a>
-          <a href="#" class="text-xs text-gray-400 hover:text-gray-300 transition-colors">{{ sitemapText }}</a>
+      <div class="px-4 pt-4 pb-3 text-center text-white/80">
+        <p class="text-xs font-georama">© 2024 ClimateConnector. {{ footerText }}</p>
+        <div class="mt-1.5 text-xs font-georama">
+          <a href="#" class="text-white/80 hover:text-cian transition-colors">{{ privacyText }}</a>
+          <span class="text-white/40 mx-2">|</span>
+          <a href="#" class="text-white/80 hover:text-cian transition-colors">{{ termsText }}</a>
+          <span class="text-white/40 mx-2">|</span>
+          <a href="#" class="text-white/80 hover:text-cian transition-colors">{{ supportText }}</a>
+          <span class="text-white/40 mx-2">|</span>
+          <a href="#" class="text-white/80 hover:text-cian transition-colors">{{ sitemapText }}</a>
         </div>
       </div>
     </div>

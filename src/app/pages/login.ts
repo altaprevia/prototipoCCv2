@@ -180,7 +180,7 @@ type FieldState = 'default' | 'error' | 'success';
       </div>
 
       <!-- Mobile layout -->
-      <div class="md:hidden flex flex-col flex-1">
+      <div class="md:hidden flex flex-col flex-1 bg-gradient-to-b from-white from-[0%] via-baltico/40 via-[35%] to-baltico to-[65%]">
         <!-- Header -->
         <div class="flex justify-between items-center p-4">
           <a href="https://canalclima.com/" target="_blank">
@@ -208,97 +208,110 @@ type FieldState = 'default' | 'error' | 'success';
         </div>
 
         <!-- Spacer to push form down, globe visible here -->
-        <div class="flex-1 min-h-[20vh]"></div>
+        <div class="flex-1 min-h-[10vh]"></div>
 
-        <!-- Login Form Section (gradient background) -->
-        <div class="relative overflow-hidden bg-gradient-to-t from-petroleo to-baltico px-4 pt-5 pb-3">
+        <!-- Login Form Section (inherits gradient from parent) -->
+        <div class="relative overflow-hidden pt-10 pb-5 flex flex-col">
           <div class="pointer-events-none absolute -top-12 right-0 w-64 h-64 rounded-full bg-cian/20 blur-3xl"></div>
-          <div class="pointer-events-none absolute -bottom-16 -left-10 w-72 h-72 rounded-full bg-cyan-400/15 blur-3xl"></div>
+          <div class="pointer-events-none absolute top-1/3 -left-10 w-72 h-72 rounded-full bg-cyan-400/15 blur-3xl"></div>
 
-          <div class="relative bg-white rounded-2xl p-5 ring-1 ring-white/40 shadow-2xl shadow-petroleo/40">
-            <div class="flex items-center justify-center gap-2 mb-0.5">
-              <span class="material-symbols-outlined text-baltico text-[16px]">verified_user</span>
-              <h1 class="text-lg font-mulish font-bold text-center text-petroleo tracking-tight">{{ loginTitle }}</h1>
-            </div>
-            <p class="text-center text-xs text-gris-dark mb-3 font-georama">{{ loginSubtitle }}</p>
+          <div class="relative px-4 flex-1 flex flex-col">
+            <div class="relative bg-white rounded-3xl p-6 ring-1 ring-white/40 shadow-2xl shadow-petroleo/40">
+              <div class="flex items-start gap-3 mb-4">
+                <div class="w-12 h-12 rounded-full bg-blue-bg flex items-center justify-center shrink-0">
+                  <span class="material-symbols-outlined text-baltico text-[24px]">verified_user</span>
+                </div>
+                <div class="pt-0.5">
+                  <h1 class="text-2xl font-mulish font-bold text-petroleo tracking-tight leading-tight">{{ loginTitle }}</h1>
+                  <p class="text-sm text-gris-dark font-georama mt-0.5">{{ loginSubtitle }}</p>
+                </div>
+              </div>
 
-            <form (ngSubmit)="onLogin()" class="flex flex-col gap-2.5" novalidate>
-              <app-form-field
-                [label]="usernameLbl"
-                type="text"
-                [placeholder]="usernamePlaceholder"
-                name="username-m"
-                autocomplete="username"
-                leadingIcon="person"
-                [required]="true"
-                [(ngModel)]="username"
-                [state]="usernameState"
-                [errorMessage]="usernameError"
-                [successMessage]="usernameSuccess"
-                (blurred)="usernameTouched = true"
-              ></app-form-field>
+              <form (ngSubmit)="onLogin()" class="flex flex-col gap-2.5" novalidate>
+                <app-form-field
+                  [label]="usernameLbl"
+                  type="text"
+                  [placeholder]="usernamePlaceholder"
+                  name="username-m"
+                  autocomplete="username"
+                  leadingIcon="person"
+                  [required]="true"
+                  [(ngModel)]="username"
+                  [state]="usernameState"
+                  [errorMessage]="usernameError"
+                  [successMessage]="usernameSuccess"
+                  (blurred)="usernameTouched = true"
+                ></app-form-field>
 
-              <app-form-field
-                [label]="passwordLbl"
-                [type]="showPassword ? 'text' : 'password'"
-                [placeholder]="passwordPlaceholder"
-                name="password-m"
-                autocomplete="current-password"
-                leadingIcon="lock"
-                [required]="true"
-                [(ngModel)]="password"
-                [state]="passwordState"
-                [errorMessage]="passwordError"
-                [successMessage]="passwordSuccess"
-                [hasTrailing]="true"
-                (blurred)="passwordTouched = true"
-              >
-                <button
-                  trailing
-                  type="button"
-                  (click)="togglePasswordVisibility()"
-                  [attr.aria-label]="showPasswordAria"
-                  [attr.aria-pressed]="showPassword"
-                  class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full text-gris-medio hover:text-baltico hover:bg-blue-bg transition-colors focus:outline-none focus:ring-2 focus:ring-cian/40"
+                <app-form-field
+                  [label]="passwordLbl"
+                  [type]="showPassword ? 'text' : 'password'"
+                  [placeholder]="passwordPlaceholder"
+                  name="password-m"
+                  autocomplete="current-password"
+                  leadingIcon="lock"
+                  [required]="true"
+                  [(ngModel)]="password"
+                  [state]="passwordState"
+                  [errorMessage]="passwordError"
+                  [successMessage]="passwordSuccess"
+                  [hasTrailing]="true"
+                  (blurred)="passwordTouched = true"
                 >
-                  <span class="material-symbols-outlined text-[20px]">
-                    {{ showPassword ? 'visibility_off' : 'visibility' }}
-                  </span>
+                  <button
+                    trailing
+                    type="button"
+                    (click)="togglePasswordVisibility()"
+                    [attr.aria-label]="showPasswordAria"
+                    [attr.aria-pressed]="showPassword"
+                    class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full text-gris-medio hover:text-baltico hover:bg-blue-bg transition-colors focus:outline-none focus:ring-2 focus:ring-cian/40"
+                  >
+                    <span class="material-symbols-outlined text-[20px]">
+                      {{ showPassword ? 'visibility_off' : 'visibility' }}
+                    </span>
+                  </button>
+                </app-form-field>
+
+                <button
+                  type="submit"
+                  class="cc-btn w-full mt-1"
+                >
+                  {{ loginBtn }} →
                 </button>
-              </app-form-field>
+              </form>
 
-              <button
-                type="submit"
-                class="cc-btn w-full mt-1"
-              >
-                {{ loginBtn }} →
-              </button>
-            </form>
+              <div class="mt-4 space-y-2.5">
+                <a routerLink="/forgot-password" class="cc-link-quiet">
+                  <span class="material-symbols-outlined cc-link-quiet__icon text-[18px]">lock_reset</span>
+                  <span>{{ forgotPasswordText }}</span>
+                </a>
+                <a href="https://canalclima.com/index.php/contacto/" target="_blank" rel="noopener" class="cc-link-quiet">
+                  <span class="material-symbols-outlined cc-link-quiet__icon text-[18px]">help</span>
+                  <span>{{ requestAccessText }}</span>
+                </a>
+              </div>
 
-            <div class="mt-3 pt-2 border-t border-dashed border-gris-base space-y-2">
-              <a routerLink="/forgot-password" class="cc-link-quiet">
-                <span class="material-symbols-outlined cc-link-quiet__icon text-[18px]">lock_reset</span>
-                <span>{{ forgotPasswordText }}</span>
-              </a>
-              <a href="https://canalclima.com/index.php/contacto/" target="_blank" rel="noopener" class="cc-link-quiet">
-                <span class="material-symbols-outlined cc-link-quiet__icon text-[18px]">contact_support</span>
-                <span>{{ requestAccessText }}</span>
-              </a>
+              <div class="mt-4 p-3 rounded-xl bg-blue-bg border border-blue-border flex items-start gap-3">
+                <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0">
+                  <span class="material-symbols-outlined text-baltico text-[22px]">headset_mic</span>
+                </div>
+                <p class="text-[13px] text-petroleo font-georama leading-relaxed">
+                  {{ contactText }} <span class="font-semibold">+57 316 584 7114</span> {{ contactText2 }}
+                </p>
+              </div>
             </div>
-
-            <p class="text-center text-[13px] text-gris-dark mt-2 font-georama leading-relaxed">
-              {{ contactText }} <span class="font-semibold text-petroleo">+57 316 584 7114</span> {{ contactText2 }}
-            </p>
           </div>
-        </div>
 
-        <!-- Footer -->
-        <div class="px-4 py-2 text-center bg-petroleo">
-          <p class="text-xs text-gray-400 font-georama">© 2024 ClimateConnector. {{ footerText }}</p>
-          <div class="flex justify-center gap-4 mt-1">
-            <a href="#" class="text-xs text-gray-400 hover:text-gray-300 transition-colors">Privacidad</a>
-            <a href="#" class="text-xs text-gray-400 hover:text-gray-300 transition-colors">Términos</a>
-            <a href="#" class="text-xs text-gray-400 hover:text-gray-300 transition-colors">Soporte</a>
+          <!-- Footer (integrated in gradient) -->
+          <div class="relative px-4 pt-5 pb-3 text-center text-white/80">
+            <p class="text-xs font-georama">© 2024 ClimateConnector. {{ footerText }}</p>
+            <div class="mt-1.5 text-xs font-georama">
+              <a href="#" class="text-white/80 hover:text-cian transition-colors">Privacidad</a>
+              <span class="text-white/40 mx-2">|</span>
+              <a href="#" class="text-white/80 hover:text-cian transition-colors">Términos</a>
+              <span class="text-white/40 mx-2">|</span>
+              <a href="#" class="text-white/80 hover:text-cian transition-colors">Soporte</a>
+            </div>
           </div>
         </div>
       </div>
@@ -329,7 +342,7 @@ export class LoginComponent {
   }
 
   private en = {
-    loginTitle: 'PLATFORM ACCESS',
+    loginTitle: 'Welcome',
     loginSubtitle: 'Access the control and monitoring panel',
     usernameLbl: 'USERNAME',
     usernamePlaceholder: 'Enter your username',
@@ -355,7 +368,7 @@ export class LoginComponent {
   };
 
   private es = {
-    loginTitle: 'INGRESO A LA PLATAFORMA',
+    loginTitle: 'Bienvenido',
     loginSubtitle: 'Acceda al panel de control y monitoreo',
     usernameLbl: 'NOMBRE DE USUARIO',
     usernamePlaceholder: 'Ingrese su usuario',
