@@ -74,7 +74,7 @@
   }
 
   .cc-input {
-    @apply h-[48px] w-full px-4 bg-white border-2 rounded-lg text-sm text-petroleo placeholder-gris-medio transition-colors duration-200;
+    @apply h-[48px] w-full px-4 bg-white border-2 rounded-2xl text-sm text-petroleo placeholder-gris-medio transition-colors duration-200;
     border-color: #D7DCE1;
   }
   .cc-input:hover {

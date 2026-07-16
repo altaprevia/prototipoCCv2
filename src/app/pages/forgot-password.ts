@@ -30,23 +30,27 @@ type FieldState = 'default' | 'error' | 'success';
               >
             </a>
           </div>
-          <div class="flex-1 min-h-0 overflow-y-auto flex flex-col justify-start items-center pt-3 pb-2 px-6">
-            <img
-              src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
-              alt="Climate Connector"
-              class="w-32 h-auto object-contain mb-1"
-            >
-            <h2 class="text-lg font-mulish font-bold text-center text-gray-900 mb-1.5">{{ branding.headline }}</h2>
-            <p class="text-center text-xs text-gray-600 mb-6 max-w-lg font-georama leading-relaxed">{{ branding.description }}</p>
+          <div class="flex-1 min-h-0 overflow-y-auto flex flex-col items-center pt-3 pb-2 px-6 relative">
+            <div class="flex flex-col items-center">
+              <img
+                src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
+                alt="Climate Connector"
+                class="w-32 h-auto object-contain mb-1"
+              >
+              <h2 class="text-lg font-mulish font-bold text-center text-gray-900 mb-1.5">{{ branding.headline }}</h2>
+              <p class="text-center text-xs text-gray-600 mb-6 max-w-lg font-georama leading-relaxed">{{ branding.description }}</p>
+            </div>
 
-            <div class="grid grid-cols-4 gap-3 max-w-2xl w-full">
-              @for (f of branding.features; track f.icon) {
-                <div class="flex flex-col items-center text-center">
-                  <img [src]="'/icons/' + f.icon + '.svg'" [alt]="f.title" class="w-7 h-7 mb-1">
-                  <h3 class="text-xs font-mulish font-bold text-gray-900 mb-0.5">{{ f.title }}</h3>
-                  <p class="text-xs text-gray-600 font-georama leading-tight">{{ f.desc }}</p>
-                </div>
-              }
+            <div class="absolute top-[29%] left-0 right-0 px-6">
+              <div class="grid grid-cols-4 gap-3 max-w-2xl mx-auto">
+                @for (f of branding.features; track f.icon) {
+                  <div class="flex flex-col items-center text-center">
+                    <img [src]="'/icons/' + f.icon + '.svg'" [alt]="f.title" class="w-7 h-7 mb-1">
+                    <h3 class="text-xs font-mulish font-bold text-gray-900 mb-0.5">{{ f.title }}</h3>
+                    <p class="text-xs text-gray-600 font-georama leading-tight">{{ f.desc }}</p>
+                  </div>
+                }
+              </div>
             </div>
           </div>
         </div>
@@ -68,7 +72,7 @@ type FieldState = 'default' | 'error' | 'success';
 
           <div class="relative z-10 flex-1 min-h-0 overflow-y-auto flex items-center justify-center p-6 md:p-12">
             <div class="w-full max-w-md">
-              <div class="bg-white rounded-2xl p-5 md:p-7 ring-1 ring-white/40 shadow-2xl shadow-petroleo/40">
+              <div class="bg-white rounded-2xl p-6 ring-1 ring-white/40 shadow-2xl shadow-petroleo/40">
                 <div *ngIf="!submitted">
                   <div class="flex items-center justify-center gap-2 mb-1">
                     <span class="material-symbols-outlined text-baltico text-[20px]">lock_reset</span>

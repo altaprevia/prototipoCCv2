@@ -48,25 +48,29 @@ type FieldState = 'default' | 'error' | 'success';
                >
              </a>
            </div>
-            <div class="flex-1 min-h-0 overflow-y-auto flex flex-col justify-start items-center pt-3 pb-2 px-6">
-             <img
-               src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
-               alt="Climate Connector"
-               class="w-32 h-auto object-contain mb-1"
-             >
-              <h2 class="text-lg font-mulish font-bold text-center text-gray-900 mb-1">{{ branding.headline }}</h2>
-              <p class="text-center text-xs text-gray-600 mb-5 max-w-lg font-georama leading-relaxed">{{ branding.description }}</p>
+             <div class="flex-1 min-h-0 overflow-y-auto flex flex-col items-center pt-3 pb-2 px-6 relative">
+              <div class="flex flex-col items-center">
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
+                  alt="Climate Connector"
+                  class="w-32 h-auto object-contain mb-1"
+                >
+                 <h2 class="text-lg font-mulish font-bold text-center text-gray-900 mb-1">{{ branding.headline }}</h2>
+                 <p class="text-center text-xs text-gray-600 mb-5 max-w-lg font-georama leading-relaxed">{{ branding.description }}</p>
+              </div>
 
-             <div class="grid grid-cols-4 gap-3 max-w-2xl w-full">
-               @for (f of branding.features; track f.icon) {
-                 <div class="flex flex-col items-center text-center">
-                   <img [src]="'/icons/' + f.icon + '.svg'" [alt]="f.title" class="w-7 h-7 mb-1">
-                   <h3 class="text-xs font-mulish font-bold text-gray-900 mb-0.5">{{ f.title }}</h3>
-                   <p class="text-xs text-gray-600 font-georama leading-tight">{{ f.desc }}</p>
-                 </div>
-               }
-             </div>
-           </div>
+              <div class="absolute top-[29%] left-0 right-0 px-6">
+                <div class="grid grid-cols-4 gap-3 max-w-2xl mx-auto">
+                  @for (f of branding.features; track f.icon) {
+                    <div class="flex flex-col items-center text-center">
+                      <img [src]="'/icons/' + f.icon + '.svg'" [alt]="f.title" class="w-7 h-7 mb-1">
+                      <h3 class="text-xs font-mulish font-bold text-gray-900 mb-0.5">{{ f.title }}</h3>
+                      <p class="text-xs text-gray-600 font-georama leading-tight">{{ f.desc }}</p>
+                    </div>
+                  }
+                </div>
+              </div>
+            </div>
          </div>
 
         <!-- Right side - Login Form (gradient background) -->
@@ -86,8 +90,8 @@ type FieldState = 'default' | 'error' | 'success';
           </div>
 
           <div class="relative z-10 flex-1 min-h-0 overflow-y-auto flex items-center justify-center p-6">
-            <div class="w-full max-w-sm">
-              <div class="bg-white rounded-2xl p-5 ring-1 ring-white/40 shadow-2xl shadow-petroleo/40">
+            <div class="w-full max-w-md">
+              <div class="bg-white rounded-2xl p-6 ring-1 ring-white/40 shadow-2xl shadow-petroleo/40">
                 <div class="flex items-center justify-center gap-2 mb-0.5">
                   <span class="material-symbols-outlined text-baltico text-[18px]">verified_user</span>
                   <h1 class="text-xl font-mulish font-bold text-center text-petroleo tracking-tight">{{ loginTitle }}</h1>
@@ -131,13 +135,23 @@ type FieldState = 'default' | 'error' | 'success';
                       (click)="togglePasswordVisibility()"
                       [attr.aria-label]="showPasswordAria"
                       [attr.aria-pressed]="showPassword"
-                      class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full text-gris-medio hover:text-baltico hover:bg-blue-bg transition-colors focus:outline-none focus:ring-2 focus:ring-cian/40"
+                      class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-2xl text-gris-medio hover:text-baltico hover:bg-blue-bg transition-colors focus:outline-none focus:ring-2 focus:ring-cian/40"
                     >
                       <span class="material-symbols-outlined text-[20px]">
                         {{ showPassword ? 'visibility_off' : 'visibility' }}
                       </span>
                     </button>
                   </app-form-field>
+
+                  <label class="flex items-center gap-2 cursor-pointer select-none mt-0.5">
+                    <input
+                      type="checkbox"
+                      name="remember"
+                      [(ngModel)]="rememberMe"
+                      class="w-4 h-4 rounded border-2 border-gris-medio text-baltico focus:ring-2 focus:ring-cian/40 focus:ring-offset-0 focus:border-baltico transition-colors"
+                    >
+                    <span class="text-sm text-petroleo font-georama">{{ keepSessionText }}</span>
+                  </label>
 
                   <button
                     type="submit"
@@ -216,7 +230,7 @@ type FieldState = 'default' | 'error' | 'success';
           <div class="pointer-events-none absolute top-1/3 -left-10 w-72 h-72 rounded-full bg-cyan-400/15 blur-3xl"></div>
 
           <div class="relative px-4 flex-1 flex flex-col">
-            <div class="relative bg-white rounded-3xl p-6 ring-1 ring-white/40 shadow-2xl shadow-petroleo/40">
+            <div class="relative bg-white rounded-2xl p-6 ring-1 ring-white/40 shadow-2xl shadow-petroleo/40">
               <div class="flex items-start gap-3 mb-4">
                 <div class="w-12 h-12 rounded-full bg-blue-bg flex items-center justify-center shrink-0">
                   <span class="material-symbols-outlined text-baltico text-[24px]">verified_user</span>
@@ -264,13 +278,23 @@ type FieldState = 'default' | 'error' | 'success';
                     (click)="togglePasswordVisibility()"
                     [attr.aria-label]="showPasswordAria"
                     [attr.aria-pressed]="showPassword"
-                    class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full text-gris-medio hover:text-baltico hover:bg-blue-bg transition-colors focus:outline-none focus:ring-2 focus:ring-cian/40"
+                    class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-2xl text-gris-medio hover:text-baltico hover:bg-blue-bg transition-colors focus:outline-none focus:ring-2 focus:ring-cian/40"
                   >
                     <span class="material-symbols-outlined text-[20px]">
                       {{ showPassword ? 'visibility_off' : 'visibility' }}
                     </span>
                   </button>
-                </app-form-field>
+                  </app-form-field>
+
+                <label class="flex items-center gap-2 cursor-pointer select-none mt-0.5">
+                  <input
+                    type="checkbox"
+                    name="remember-m"
+                    [(ngModel)]="rememberMe"
+                    class="w-4 h-4 rounded border-2 border-gris-medio text-baltico focus:ring-2 focus:ring-cian/40 focus:ring-offset-0 focus:border-baltico transition-colors"
+                  >
+                  <span class="text-sm text-petroleo font-georama">{{ keepSessionText }}</span>
+                </label>
 
                 <button
                   type="submit"
@@ -327,6 +351,7 @@ type FieldState = 'default' | 'error' | 'success';
 export class LoginComponent {
   username = '';
   password = '';
+  rememberMe = false;
   showPassword = false;
   usernameTouched = false;
   passwordTouched = false;
@@ -354,6 +379,7 @@ export class LoginComponent {
     passwordShort: 'Password must be at least 6 characters.',
     passwordOk: 'Password meets the requirements.',
     loginBtn: 'LOGIN',
+    keepSessionText: 'Keep me signed in',
     forgotPasswordText: 'Forgot your password?',
     requestAccessText: 'Request access to the platform',
     contactText: 'If you are not a customer, we appreciate you contacting the sales area at phone',
@@ -380,6 +406,7 @@ export class LoginComponent {
     passwordShort: 'La contraseña debe tener al menos 6 caracteres.',
     passwordOk: 'Contraseña válida.',
     loginBtn: 'INGRESAR',
+    keepSessionText: 'Mantener sesión activa',
     forgotPasswordText: '¿Olvidó su contraseña?',
     requestAccessText: 'Solicitar acceso a la plataforma',
     contactText: 'Si usted no es un cliente, agradecemos contactar con el área comercial al teléfono',
@@ -401,6 +428,7 @@ export class LoginComponent {
   get passwordLbl() { return this.t.passwordLbl; }
   get passwordPlaceholder() { return this.t.passwordPlaceholder; }
   get loginBtn() { return this.t.loginBtn; }
+  get keepSessionText() { return this.t.keepSessionText; }
   get forgotPasswordText() { return this.t.forgotPasswordText; }
   get requestAccessText() { return this.t.requestAccessText; }
   get contactText() { return this.t.contactText; }

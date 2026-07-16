@@ -138,9 +138,13 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
       ? { x: 0, y: 10, z: 0 }
       : this.isUltraWide
         ? { x: -150, y: -90, z: 0 }
-        : { x: -110, y: -120, z: 0 };
+        : { x: -110, y: -20 - 100 * Math.max(0.75, Math.min(1.0, height / 864)), z: 0 };
     const finalEarthRot = { x: -0.45, y: -0.15, z: 0 };
-    const finalScale = this.isMobile ? 0.55 : (this.isUltraWide ? 1.0 : 1);
+    const finalScale = this.isMobile
+      ? 0.55
+      : this.isUltraWide
+        ? 1.0
+        : Math.max(0.75, Math.min(1.0, height / 864));
 
     const introEarthPos = { x: 0, y: -150, z: 0 };
     const centerEarthPos = { x: 0, y: 0, z: 0 };
@@ -504,12 +508,16 @@ export class GlobeBannerComponent implements AfterViewInit, OnDestroy {
       if (this.introCompleted) {
         this.isMobile = newW < 768;
         this.isUltraWide = newW > 1920;
+        const scale = this.isMobile
+          ? 0.55
+          : this.isUltraWide
+            ? 1.0
+            : Math.max(0.75, Math.min(1.0, newH / 864));
         const pos = this.isMobile
           ? { x: 0, y: 10, z: 0 }
           : this.isUltraWide
-            ? { x: -130, y: -90, z: 0 }
-            : { x: -130, y: -120, z: 0 };
-        const scale = this.isMobile ? 0.55 : (this.isUltraWide ? 1.0 : 1);
+        ? { x: -150, y: -90, z: 0 }
+            : { x: -110, y: -20 - 100 * scale, z: 0 };
         this.earthGroup.position.set(pos.x, pos.y, pos.z);
         this.earthGroup.scale.setScalar(scale);
       }
