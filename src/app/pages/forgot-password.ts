@@ -141,7 +141,7 @@ type FieldState = 'default' | 'error' | 'success';
     </div>
 
     <!-- Mobile layout -->
-    <div class="md:hidden flex flex-col min-h-screen font-georama relative z-10 bg-gradient-to-b from-white from-[0%] via-baltico/40 via-[35%] to-baltico to-[65%]">
+    <div class="md:hidden flex flex-col min-h-screen font-georama relative z-10" style="background: linear-gradient(to bottom, white 0%, rgba(0,98,129,0) 15%, rgba(0,98,129,0.4) 35%, rgba(0,98,129,1) 65%);">
       <!-- Header -->
       <div class="flex justify-between items-center px-4 py-3">
         <a href="https://canalclima.com/" target="_blank">
