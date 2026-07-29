@@ -33,7 +33,7 @@ type FieldState = 'default' | 'error' | 'success';
           <div class="flex-1 min-h-0 overflow-y-auto flex flex-col items-center pt-3 pb-2 px-6 relative">
             <div class="flex flex-col items-center">
               <img
-                src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
+                src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fb2dabcde44f14e6b8f9554d3b9a52e18"
                 alt="Climate Connector"
                 class="w-32 h-auto object-contain mb-1"
               >
@@ -162,7 +162,7 @@ type FieldState = 'default' | 'error' | 'success';
       <!-- Branding section -->
       <div class="flex flex-col items-center px-6 pt-2 pb-3">
         <img
-          src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
+          src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fb2dabcde44f14e6b8f9554d3b9a52e18"
           alt="Climate Connector"
           class="w-32 h-auto object-contain"
         >

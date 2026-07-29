@@ -44,7 +44,7 @@ interface Station {
     <!-- Header -->
     <div class="h-16 border-b border-gray-200 flex items-center px-6 bg-gray-50 relative">
       <div class="flex items-center gap-2">
-        <img src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fca1ae3e32aff44c69d5f1f5c5fc638ce"
+        <img src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fb2dabcde44f14e6b8f9554d3b9a52e18"
              alt="Climate Connector" class="h-8 w-auto">
       </div>
       <a routerLink="/design-system" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-2 text-sm font-georama font-medium text-gray-800 hover:bg-gray-100 rounded-md transition-colors">Estilo</a>
