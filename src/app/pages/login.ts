@@ -39,6 +39,7 @@ type FieldState = 'default' | 'error' | 'success';
       <div class="hidden md:flex flex-1 min-h-0">
          <!-- Left side - Branding (transparent, globe visible behind) -->
          <div class="md:w-1/2 flex flex-col relative min-h-0">
+           <div class="cc-left-particles" aria-hidden="true"></div>
            <div class="p-4">
              <a href="https://canalclima.com/" target="_blank">
                <img
@@ -48,24 +49,20 @@ type FieldState = 'default' | 'error' | 'success';
                >
              </a>
            </div>
-             <div class="flex-1 min-h-0 overflow-y-auto flex flex-col items-center pt-3 pb-2 px-6 relative">
-              <div class="flex flex-col items-center">
-                <img
-                  src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fb2dabcde44f14e6b8f9554d3b9a52e18"
-                  alt="Climate Connector"
-                  class="w-32 h-auto object-contain mb-1"
-                >
-                 <h2 class="text-lg font-mulish font-bold text-center text-gray-900 mb-1">{{ branding.headline }}</h2>
-                 <p class="text-center text-xs text-gray-600 mb-5 max-w-lg font-georama leading-relaxed">{{ branding.description }}</p>
+             <div class="relative z-10 flex-1 min-h-0 flex flex-col items-center justify-start gap-[2vh] lg:gap-[3vh] pt-[1.5vh] lg:pt-[3vh] xl:pt-[4vh] pb-2 px-6">
+              <div class="flex flex-col items-center px-6 max-w-[420px]">
+                 <h2 class="text-lg lg:text-xl font-mulish font-bold text-center text-gray-900 mb-1">{{ branding.headline }}</h2>
+                 <p class="text-center text-xs lg:text-sm text-gray-600 mb-0 max-w-lg font-georama leading-relaxed">{{ branding.description }}</p>
               </div>
 
-              <div class="absolute top-[29%] left-0 right-0 px-6">
-                <div class="grid grid-cols-4 gap-3 max-w-2xl mx-auto">
+              <div class="w-full px-6">
+                <div class="grid grid-cols-4 gap-3 lg:gap-4 max-w-2xl mx-auto">
                   @for (f of branding.features; track f.icon) {
-                    <div class="flex flex-col items-center text-center">
-                      <img [src]="'/icons/' + f.icon + '.svg'" [alt]="f.title" class="w-7 h-7 mb-1">
-                      <h3 class="text-xs font-mulish font-bold text-gray-900 mb-0.5">{{ f.title }}</h3>
-                      <p class="text-xs text-gray-600 font-georama leading-tight">{{ f.desc }}</p>
+                    <div class="cc-feature-card group">
+                      <div class="mb-2 flex h-14 w-14 lg:h-16 lg:w-16 xl:h-20 xl:w-20 items-center justify-center rounded-2xl bg-blue-bg/80">
+                        <img [src]="'/icons/' + f.icon + '.svg'" [alt]="f.title" class="w-8 h-8 lg:w-9 lg:h-9 xl:w-11 xl:h-11">
+                      </div>
+                      <h3 class="text-xs lg:text-sm font-mulish font-bold text-gray-900 mb-0.5">{{ f.title }}</h3>
                     </div>
                   }
                 </div>
@@ -79,26 +76,32 @@ type FieldState = 'default' | 'error' | 'success';
           <div class="pointer-events-none absolute -top-24 -right-24 w-80 h-80 rounded-full bg-cian/25 blur-3xl"></div>
           <div class="pointer-events-none absolute -bottom-32 -left-20 w-[28rem] h-[28rem] rounded-full bg-cyan-400/15 blur-3xl"></div>
 
-          <div class="relative z-10 flex justify-between items-center p-4">
+          <div class="relative z-10 flex justify-between items-center p-3">
             <div class="flex-1"></div>
             <button (click)="toggleLanguage()" class="cc-btn cc-btn-compact flex items-center gap-2">
-              <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
               </svg>
-              <span class="text-white text-sm">{{ language === 'es' ? 'ES' : 'EN' }}</span>
+              <span class="text-sm">{{ language === 'es' ? 'ES' : 'EN' }}</span>
             </button>
           </div>
 
-          <div class="relative z-10 flex-1 min-h-0 overflow-y-auto flex items-center justify-center p-6">
+          <div class="relative z-10 flex-1 min-h-0 overflow-y-auto flex items-center justify-center p-4">
             <div class="w-full max-w-md">
-              <div class="bg-white rounded-2xl p-6 ring-1 ring-white/40 shadow-2xl shadow-petroleo/40">
+              <div class="bg-white rounded-2xl p-5 ring-1 ring-white/40 shadow-2xl shadow-petroleo/40">
+                <div class="flex justify-center mb-1">
+                  <img
+                    src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fb2dabcde44f14e6b8f9554d3b9a52e18"
+                    alt="Climate Connector"
+                    class="w-32 h-auto object-contain"
+                  >
+                </div>
                 <div class="flex items-center justify-center gap-2 mb-0.5">
-                  <span class="material-symbols-outlined text-baltico text-[18px]">verified_user</span>
                   <h1 class="text-xl font-mulish font-bold text-center text-petroleo tracking-tight">{{ loginTitle }}</h1>
                 </div>
-                <p class="text-center text-sm text-gris-dark mb-3 font-georama">{{ loginSubtitle }}</p>
+                <p class="text-center text-sm text-gris-dark mb-2 font-georama">{{ loginSubtitle }}</p>
 
-                <form (ngSubmit)="onLogin()" class="flex flex-col gap-2.5" novalidate>
+                <form (ngSubmit)="onLogin()" class="flex flex-col gap-2" novalidate>
                   <app-form-field
                     [label]="usernameLbl"
                     type="text"
@@ -155,13 +158,13 @@ type FieldState = 'default' | 'error' | 'success';
 
                   <button
                     type="submit"
-                    class="cc-btn w-full mt-1"
+                    class="cc-btn w-full mt-0.5"
                   >
                     {{ loginBtn }} →
                   </button>
                 </form>
 
-                <div class="mt-3 pt-2 border-t border-dashed border-gris-base space-y-2">
+                <div class="mt-2 pt-1.5 border-t border-dashed border-gris-base space-y-1">
                   <a routerLink="/forgot-password" class="cc-link-quiet">
                     <span class="material-symbols-outlined cc-link-quiet__icon text-[18px]">lock_reset</span>
                     <span>{{ forgotPasswordText }}</span>
@@ -172,7 +175,7 @@ type FieldState = 'default' | 'error' | 'success';
                   </a>
                 </div>
 
-                <p class="text-center text-[13px] text-gris-dark mt-2 font-georama leading-relaxed">
+                <p class="text-center text-[13px] text-gris-dark mt-1.5 font-georama leading-relaxed">
                   {{ contactText }} <span class="font-semibold text-petroleo">+57 316 584 7114</span> {{ contactText2 }}
                 </p>
               </div>
@@ -217,7 +220,7 @@ type FieldState = 'default' | 'error' | 'success';
           <img
             src="https://cdn.builder.io/api/v1/image/assets%2F44e06fd51c6944eca5eec48df5075424%2Fb2dabcde44f14e6b8f9554d3b9a52e18"
             alt="Climate Connector"
-            class="w-32 h-auto object-contain"
+            class="w-40 h-auto object-contain"
           >
         </div>
 
@@ -230,7 +233,7 @@ type FieldState = 'default' | 'error' | 'success';
           <div class="pointer-events-none absolute top-1/3 -left-10 w-72 h-72 rounded-full bg-cyan-400/15 blur-3xl"></div>
 
           <div class="relative px-4 flex-1 flex flex-col">
-            <div class="relative bg-white rounded-2xl p-6 ring-1 ring-white/40 shadow-2xl shadow-petroleo/40">
+            <div class="cc-shell-card p-6 sm:p-7">
               <div class="flex items-start gap-3 mb-4">
                 <div class="w-12 h-12 rounded-full bg-blue-bg flex items-center justify-center shrink-0">
                   <span class="material-symbols-outlined text-baltico text-[24px]">verified_user</span>
@@ -345,6 +348,139 @@ type FieldState = 'default' | 'error' | 'success';
     :host {
       display: block;
       width: 100%;
+    }
+
+    .cc-left-particles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.48;
+      background-image:
+        radial-gradient(circle at 8% 12%, rgba(15, 23, 110, 0.75) 0 1.8px, transparent 2.1px),
+        radial-gradient(circle at 17% 31%, rgba(29, 78, 216, 0.66) 0 1.5px, transparent 1.9px),
+        radial-gradient(circle at 27% 18%, rgba(30, 58, 138, 0.7) 0 1.6px, transparent 2px),
+        radial-gradient(circle at 39% 41%, rgba(30, 64, 175, 0.62) 0 1.7px, transparent 2px),
+        radial-gradient(circle at 48% 22%, rgba(37, 99, 235, 0.64) 0 1.5px, transparent 1.9px),
+        radial-gradient(circle at 61% 34%, rgba(8, 47, 73, 0.72) 0 1.4px, transparent 1.8px),
+        radial-gradient(circle at 74% 16%, rgba(30, 64, 175, 0.67) 0 1.8px, transparent 2.1px),
+        radial-gradient(circle at 86% 27%, rgba(14, 116, 144, 0.62) 0 1.4px, transparent 1.8px),
+        radial-gradient(circle at 11% 62%, rgba(23, 37, 84, 0.72) 0 1.7px, transparent 2px),
+        radial-gradient(circle at 25% 73%, rgba(29, 78, 216, 0.64) 0 1.5px, transparent 1.9px),
+        radial-gradient(circle at 38% 66%, rgba(30, 64, 175, 0.68) 0 1.6px, transparent 2px),
+        radial-gradient(circle at 52% 78%, rgba(12, 74, 110, 0.66) 0 1.4px, transparent 1.8px),
+        radial-gradient(circle at 67% 69%, rgba(30, 58, 138, 0.69) 0 1.7px, transparent 2px),
+        radial-gradient(circle at 81% 74%, rgba(37, 99, 235, 0.62) 0 1.5px, transparent 1.9px),
+        radial-gradient(circle at 93% 61%, rgba(30, 64, 175, 0.7) 0 1.8px, transparent 2.1px),
+        radial-gradient(circle at 5% 88%, rgba(14, 116, 144, 0.62) 0 1.4px, transparent 1.8px),
+        radial-gradient(circle at 44% 92%, rgba(30, 64, 175, 0.68) 0 1.6px, transparent 2px),
+        radial-gradient(circle at 88% 89%, rgba(15, 23, 110, 0.73) 0 1.8px, transparent 2.1px),
+        radial-gradient(circle at 20% 49%, rgba(23, 37, 84, 0.72) 0 1.5px, transparent 1.9px),
+        radial-gradient(circle at 57% 52%, rgba(30, 64, 175, 0.66) 0 1.4px, transparent 1.8px),
+        radial-gradient(circle at 71% 48%, rgba(14, 116, 144, 0.62) 0 1.3px, transparent 1.7px),
+        radial-gradient(circle at 34% 55%, rgba(29, 78, 216, 0.64) 0 1.4px, transparent 1.8px),
+        radial-gradient(circle at 90% 44%, rgba(30, 58, 138, 0.68) 0 1.5px, transparent 1.9px),
+        radial-gradient(circle at 6% 43%, rgba(37, 99, 235, 0.62) 0 1.3px, transparent 1.7px),
+        radial-gradient(circle at 47% 36%, rgba(15, 23, 110, 0.72) 0 1.4px, transparent 1.8px);
+      background-size:
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px;
+      animation: ccParticleFloat 30s linear infinite;
+      z-index: 0;
+    }
+
+    .cc-left-particles::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 13% 9%, rgba(224, 242, 254, 0.75) 0 0.8px, transparent 1.1px),
+        radial-gradient(circle at 29% 27%, rgba(191, 219, 254, 0.62) 0 0.75px, transparent 1px),
+        radial-gradient(circle at 43% 14%, rgba(186, 230, 253, 0.68) 0 0.8px, transparent 1.1px),
+        radial-gradient(circle at 58% 32%, rgba(191, 219, 254, 0.58) 0 0.7px, transparent 0.95px),
+        radial-gradient(circle at 72% 21%, rgba(224, 242, 254, 0.72) 0 0.8px, transparent 1.1px),
+        radial-gradient(circle at 84% 37%, rgba(186, 230, 253, 0.63) 0 0.7px, transparent 0.95px),
+        radial-gradient(circle at 7% 56%, rgba(191, 219, 254, 0.63) 0 0.75px, transparent 1px),
+        radial-gradient(circle at 24% 72%, rgba(224, 242, 254, 0.75) 0 0.8px, transparent 1.1px),
+        radial-gradient(circle at 46% 63%, rgba(186, 230, 253, 0.61) 0 0.7px, transparent 0.95px),
+        radial-gradient(circle at 63% 79%, rgba(191, 219, 254, 0.65) 0 0.75px, transparent 1px),
+        radial-gradient(circle at 79% 67%, rgba(224, 242, 254, 0.72) 0 0.8px, transparent 1.1px),
+        radial-gradient(circle at 91% 83%, rgba(186, 230, 253, 0.62) 0 0.7px, transparent 0.95px),
+        radial-gradient(circle at 36% 46%, rgba(224, 242, 254, 0.7) 0 0.75px, transparent 1px),
+        radial-gradient(circle at 54% 57%, rgba(191, 219, 254, 0.62) 0 0.7px, transparent 0.95px),
+        radial-gradient(circle at 68% 49%, rgba(186, 230, 253, 0.64) 0 0.75px, transparent 1px),
+        radial-gradient(circle at 15% 47%, rgba(224, 242, 254, 0.72) 0 0.8px, transparent 1.1px),
+        radial-gradient(circle at 82% 53%, rgba(191, 219, 254, 0.6) 0 0.7px, transparent 0.95px);
+      background-size:
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px,
+        420px 300px;
+      opacity: 0.52;
+      animation: ccParticleFloatReverse 36s linear infinite;
+    }
+
+    .cc-left-particles::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+      opacity: 0.35;
+    }
+
+    @keyframes ccParticleFloat {
+      0% {
+        background-position: 0 0, 0 0, 0 0, 0 0;
+      }
+      100% {
+        background-position: 140px -84px, -110px 78px, 98px -66px, -90px 62px;
+      }
+    }
+
+    @keyframes ccParticleFloatReverse {
+      0% {
+        background-position: 0 0, 0 0;
+      }
+      100% {
+        background-position: -88px 64px, 76px -58px;
+      }
     }
   `]
 })

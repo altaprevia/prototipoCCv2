@@ -13,8 +13,8 @@ export interface BrandingCopy {
 }
 
 const es: BrandingCopy = {
-  headline: 'Conectamos datos. Entregamos decisiones.',
-  description: 'En Canal Clima transformamos datos ambientales en información confiable y herramientas que impulsan decisiones informadas para proteger vidas, optimizar recursos y construir resiliencia.',
+  headline: 'Monitoreo continuo. Decisiones estratégicas.',
+  description: 'Plataforma que integra y organiza los datos procesados por Canal Clima, ofreciendo un punto único de acceso para la consulta, visualización y descarga de información',
   features: [
     {
       icon: 'satellite',
@@ -40,8 +40,8 @@ const es: BrandingCopy = {
 };
 
 const en: BrandingCopy = {
-  headline: 'We connect data. We deliver decisions.',
-  description: 'At Canal Clima we transform environmental data into reliable information and tools that drive informed decisions to protect lives, optimize resources and build resilience.',
+  headline: 'Continuous monitoring. Strategic decisions.',
+  description: 'Platform that integrates and organizes the geoscientific data processed by Canal Clima, offering a single point of access for consulting, visualization and data download.',
   features: [
     {
       icon: 'satellite',

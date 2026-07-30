@@ -51,6 +51,22 @@
     letter-spacing: 0.03em;
   }
 
+  .cc-shell-card {
+    @apply rounded-[28px] border border-white/60 bg-white/95 shadow-[0_24px_80px_-28px_rgba(0,98,129,0.45)] backdrop-blur-xl;
+  }
+
+  .cc-pill {
+    @apply inline-flex items-center rounded-full border border-white/70 bg-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-white/95 shadow-sm backdrop-blur;
+  }
+
+  .cc-pill--dark {
+    @apply border-slate-200 bg-slate-50 text-petroleo/80 shadow-none;
+  }
+
+  .cc-feature-card {
+    @apply flex flex-col items-center p-1 text-center;
+  }
+
   .cc-btn-primary {
     @apply h-[48px] px-6 rounded-lg font-mulish font-semibold text-sm transition-all flex items-center justify-center gap-2;
     background-color: #006281;
@@ -113,11 +129,12 @@
   }
 
   .cc-link-quiet {
-    @apply flex items-center gap-2 text-sm font-georama font-semibold transition-all duration-200;
+    @apply flex items-center gap-2 rounded-xl px-3 py-1.5 text-sm font-georama font-semibold transition-all duration-200;
     color: #006281;
   }
   .cc-link-quiet:hover {
     color: #004a61;
+    background-color: rgba(0, 98, 129, 0.06);
   }
   .cc-link-quiet .cc-link-quiet__icon {
     transition: transform 0.2s ease;
