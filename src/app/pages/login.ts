@@ -78,7 +78,7 @@ type FieldState = 'default' | 'error' | 'success';
 
           <div class="relative z-10 flex justify-between items-center p-3">
             <div class="flex-1"></div>
-            <button (click)="toggleLanguage()" class="cc-btn cc-btn-compact flex items-center gap-2">
+            <button (click)="toggleLanguage()" class="cc-btn cc-btn-compact cc-btn-lang flex items-center gap-2">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
               </svg>
@@ -158,7 +158,7 @@ type FieldState = 'default' | 'error' | 'success';
 
                   <button
                     type="submit"
-                    class="cc-btn w-full mt-0.5"
+                    class="cc-btn-primary w-full mt-0.5"
                   >
                     {{ loginBtn }} →
                   </button>
@@ -207,7 +207,7 @@ type FieldState = 'default' | 'error' | 'success';
               class="h-8 w-auto"
             >
           </a>
-          <button (click)="toggleLanguage()" class="cc-btn cc-btn-compact flex items-center gap-2">
+          <button (click)="toggleLanguage()" class="cc-btn cc-btn-compact cc-btn-lang flex items-center gap-2">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
             </svg>
@@ -301,7 +301,7 @@ type FieldState = 'default' | 'error' | 'success';
 
                 <button
                   type="submit"
-                  class="cc-btn w-full mt-1"
+                  class="cc-btn-primary w-full mt-1"
                 >
                   {{ loginBtn }} →
                 </button>

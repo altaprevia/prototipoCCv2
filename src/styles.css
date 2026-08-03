@@ -28,17 +28,14 @@
   }
 
   .cc-btn {
-    @apply inline-flex items-center justify-center gap-2 px-8 py-3 rounded-2xl font-mulish font-semibold transition-colors duration-300 ease-out;
-    background-color: #c9d8de;
+    @apply inline-flex items-center justify-center gap-2 h-[48px] px-6 rounded-lg border-2 border-baltico bg-white text-baltico font-mulish font-semibold text-sm transition-colors duration-200 ease-out;
     color: #006281;
-    box-shadow: inset 0 0 0 2px #a0c8d6;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.02em;
   }
 
   .cc-btn:hover {
     background-color: #006281;
     color: #ffffff;
-    box-shadow: inset 0 0 0 2px #a0c8d6;
   }
 
   .cc-btn:active {
@@ -46,9 +43,36 @@
     color: #ffffff;
   }
 
+  .cc-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(0, 170, 238, 0.30);
+  }
+
+  .cc-btn:disabled {
+    border-color: #AEB6BD;
+    color: #AEB6BD;
+    background-color: #ffffff;
+    cursor: not-allowed;
+  }
+
   .cc-btn-compact {
-    @apply px-4 py-2 rounded-xl text-xs;
+    @apply h-[36px] px-4 rounded-lg text-xs;
     letter-spacing: 0.03em;
+  }
+
+  .cc-btn-lang {
+    @apply border rounded-xl;
+    border-color: #8FB8C7;
+    background-color: #D7E6EC;
+    color: #006281;
+  }
+  .cc-btn-lang:hover {
+    background-color: #006281;
+    color: #ffffff;
+  }
+  .cc-btn-lang:active {
+    background-color: #005873;
+    color: #ffffff;
   }
 
   .cc-shell-card {
@@ -68,10 +92,9 @@
   }
 
   .cc-btn-primary {
-    @apply h-[48px] px-6 rounded-lg font-mulish font-semibold text-sm transition-all flex items-center justify-center gap-2;
+    @apply h-[48px] px-6 rounded-lg border border-transparent font-mulish font-semibold text-sm transition-colors duration-200 flex items-center justify-center gap-2;
     background-color: #006281;
     color: #ffffff;
-    box-shadow: 0 10px 25px -10px rgba(0, 98, 129, 0.55);
   }
   .cc-btn-primary:hover {
     background-color: #004a61;
@@ -85,12 +108,12 @@
   }
   .cc-btn-primary:disabled {
     background-color: #AEB6BD;
-    box-shadow: none;
+    color: #6A7783;
     cursor: not-allowed;
   }
 
   .cc-input {
-    @apply h-[48px] w-full px-4 bg-white border-2 rounded-2xl text-sm text-petroleo placeholder-gris-medio transition-colors duration-200;
+    @apply h-[48px] w-full px-4 bg-white border-2 rounded-lg text-sm text-petroleo placeholder-gris-medio transition-colors duration-200;
     border-color: #D7DCE1;
   }
   .cc-input:hover {

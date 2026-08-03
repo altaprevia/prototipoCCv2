@@ -65,7 +65,7 @@ import { loadFull } from 'tsparticles';
           <h2 class="text-lg md:text-xl font-semibold text-slate-600 mb-4">{{ pageNotFoundTitle }}</h2>
           <p #descEl class="text-slate-400 text-sm mb-8 max-w-sm mx-auto leading-relaxed">{{ pageNotFoundText }}</p>
 
-          <button #btnEl (click)="goHome()" class="cc-btn">
+          <button #btnEl (click)="goHome()" class="cc-btn-primary">
             {{ backButtonText }}
           </button>
         </div>
