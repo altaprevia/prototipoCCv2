@@ -120,9 +120,14 @@ type FieldState = 'default' | 'error' | 'success';
                   </div>
                   <h2 class="text-2xl font-mulish font-bold text-petroleo mb-2">{{ successTitle }}</h2>
                   <p class="text-gris-dark mb-6 font-georama">{{ successMessage }}</p>
-                  <a routerLink="/login" class="cc-btn-primary inline-block">
-                    {{ backToLoginBtn }} →
-                  </a>
+                  <div class="flex gap-3 justify-center pt-1">
+                    <a routerLink="/change-password" class="cc-btn-primary flex-1 whitespace-nowrap">
+                      {{ changePasswordBtn }} →
+                    </a>
+                    <a routerLink="/login" class="cc-btn flex-1 text-center py-3 whitespace-nowrap">
+                      {{ backToLoginBtn }}
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -224,9 +229,14 @@ type FieldState = 'default' | 'error' | 'success';
             </div>
             <h2 class="text-xl font-mulish font-bold text-petroleo mb-2">{{ successTitle }}</h2>
             <p class="text-gris-dark mb-6 font-georama text-sm">{{ successMessage }}</p>
-            <a routerLink="/login" class="cc-btn-primary inline-block">
-              {{ backToLoginBtn }} →
-            </a>
+            <div class="flex flex-col gap-3 pt-1">
+              <a routerLink="/change-password" class="cc-btn-primary w-full whitespace-nowrap">
+                {{ changePasswordBtn }} →
+              </a>
+              <a routerLink="/login" class="cc-btn w-full text-center py-3 whitespace-nowrap">
+                {{ backToLoginBtn }}
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -404,6 +414,7 @@ export class ForgotPasswordComponent {
     submitBtn: 'SEND',
     successTitle: 'Email Sent!',
     successMessage: 'Recovery instructions have been sent to your email.',
+    changePasswordBtn: 'CHANGE PASSWORD',
     backToLoginBtn: 'BACK TO LOGIN',
     footerText: 'All rights reserved. Professional climate monitoring network.',
     privacyText: 'Privacy',
@@ -424,6 +435,7 @@ export class ForgotPasswordComponent {
     submitBtn: 'ENVIAR',
     successTitle: '¡Correo Enviado!',
     successMessage: 'Se han enviado las instrucciones de recuperación a tu correo electrónico.',
+    changePasswordBtn: 'CAMBIAR CONTRASEÑA',
     backToLoginBtn: 'VOLVER AL LOGIN',
     footerText: 'Todos los derechos reservados. Red de monitoreo climático profesional.',
     privacyText: 'Privacidad',
@@ -440,6 +452,7 @@ export class ForgotPasswordComponent {
   get cancelBtn() { return this.t.cancelBtn; }
   get submitBtn() { return this.t.submitBtn; }
   get successTitle() { return this.t.successTitle; }
+  get changePasswordBtn() { return this.t.changePasswordBtn; }
   get successMessage() { return this.t.successMessage; }
   get backToLoginBtn() { return this.t.backToLoginBtn; }
   get footerText() { return this.t.footerText; }

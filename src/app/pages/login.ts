@@ -632,6 +632,8 @@ export class LoginComponent {
     this.usernameTouched = true;
     this.passwordTouched = true;
     if (!this.isFormValid()) return;
-    window.location.href = '/loading';
+    // TODO(mock): en producción el backend indica si el usuario es de "primer
+    // acceso" (creado desde administración) y redirige a /change-password.
+    window.location.href = '/change-password';
   }
 }
